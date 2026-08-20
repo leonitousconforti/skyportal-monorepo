@@ -1,28 +1,18 @@
 # Releasing
 
-> **Not active yet.** `knope.toml` is configured and `knope prepare-release
---dry-run` works, but the GitHub workflows described below (release, PyPI and
-> npm publishing, the change-file check on pull requests) are not in the
-> repository yet. This document describes the intended flow.
+> **Not active yet.** `knope.toml` works (`knope prepare-release --dry-run`),
+> but every job in `release.yml`, `publish-python.yml` and `publish-npm.yml` is
+> guarded by `if: false`. Remove the guards and add the secrets below to enable.
 
-Every package in this repository releases **together**: one version, one
-`vX.Y.Z` tag, one changelog, one GitHub release, two registries.
-
-| directory                | distribution          | registry |
-| ------------------------ | --------------------- | -------- |
-| `packages/api-models-py` | `skyportal-py-models` | PyPI     |
-| `packages/client-py`     | `skyportal-py`        | PyPI     |
-| `packages/api-models-ts` | `skyportal-js-models` | npm      |
-| `packages/client-ts`     | `skyportal-js`        | npm      |
-
-[knope](https://knope.tech) drives it, configured in `knope.toml`. Nobody
-edits a version number or `CHANGELOG.md` by hand.
+All four packages release together: one version, one `vX.Y.Z` tag, one
+`CHANGELOG.md`, one GitHub release, uploads to PyPI and npm.
+[knope](https://knope.tech) drives it from `knope.toml`; nobody edits versions
+or the changelog by hand.
 
 ## Change files
 
-Every user-facing change to any package gets a Markdown file in `.changeset/`,
-written by `nix develop -c knope document-change` or by hand, named anything
-ending in `.md`:
+One Markdown file per user-facing change in `.changeset/`, via
+`knope document-change` or by hand:
 
 ```markdown
 ---
@@ -32,53 +22,26 @@ default: minor
 `fetch_sources` / `fetchSources` gained the `include_hosts` filter.
 ```
 
-`default` is the one package knope knows about (all four published packages
-release together), and the change type is `major`, `minor` or `patch`. While
-the version is below 1.0, knope follows the usual 0.x convention: `major`
-bumps the minor number and `minor`/`patch` bump the patch number. The body
-becomes the changelog entry, so write it for users and name the package when it
-is not obvious which one you changed. knope reads _every_ `.md` file in that
-directory, so nothing else may live there.
+`default` is the single package knope manages; the type is `major`, `minor` or
+`patch` (below 1.0, `major` bumps the minor number and the others bump the
+patch). The body is the changelog entry. knope reads every `.md` in that
+directory, so nothing else goes there.
 
-Pull requests that change nothing user-facing (CI, docs, internal refactors)
-can skip the file by carrying the `skip-changelog` label; CI fails otherwise.
+## Flow
 
-## Day to day
+1. Push to `main` runs `knope prepare-release`: bumps both `pyproject.toml`
+   files (and the `skyportal-py-models==` pin), both `package.json` files,
+   prepends to `CHANGELOG.md`, deletes the change files, opens or updates the
+   `release` PR. No change files, no PR.
+2. Merging that PR runs `knope release`: tags `vX.Y.Z`, publishes the GitHub
+   release.
+3. The GitHub release triggers `publish-python.yml` (`uv build`, PyPI trusted
+   publishing) and `publish-npm.yml` (`pnpm build`, `pnpm -r publish` with
+   provenance).
 
-1. A pull request adds its change file (above).
-2. On every push to `main`, `release.yml` runs `knope prepare-release`, which
-   reads the pending change files, bumps all four `pyproject.toml` /
-   `package.json` versions (and the exact `skyportal-py-models` pin inside
-   `skyportal-py`), prepends a section to `CHANGELOG.md`, deletes the consumed
-   change files, and opens or force-updates the `release` pull request. Nothing
-   happens if there are no change files.
-3. Merging the release pull request runs `knope release`, which tags the merge
-   commit `vX.Y.Z` and publishes a GitHub release with the changelog section as
-   its notes.
-4. The published GitHub release triggers `publish-python.yml` (builds both
-   wheels with uv, uploads via PyPI trusted publishing) and `publish-npm.yml`
-   (builds both packages with pnpm, uploads via npm trusted publishing with
-   provenance). Both run inside the Nix dev shell, so they use the same
-   toolchain as `nix flake check`.
+## Setup
 
-## Checking locally
-
-    nix develop -c knope prepare-release --dry-run    # what the next release would be
-    nix flake check                                    # includes a lockstep-versions check
-
-## Secrets and setup
-
-- `KNOPE_TOKEN`: a fine-grained personal access token with contents and
-  pull-request write access to this repository. `prepare-release` pushes the
-  `release` branch and opens the PR with it; a PR opened with the default
-  `GITHUB_TOKEN` would not trigger CI.
-- PyPI: register both distributions as trusted publishers pointing at
-  `publish-python.yml`.
-- npm: register both packages as trusted publishers pointing at
-  `publish-npm.yml`.
-
-## Adding a package
-
-Add its `pyproject.toml` or `package.json` to `versioned_files` in
-`knope.toml` at the current shared version, add it to the relevant publish
-workflow, and register it with the registry. It joins the existing train.
+- `KNOPE_TOKEN` secret: fine-grained PAT with contents and pull-requests write
+  (a PR opened with `GITHUB_TOKEN` would not trigger CI).
+- PyPI: trusted publishers for both distributions on `publish-python.yml`.
+- npm: trusted publishers for both packages on `publish-npm.yml`.

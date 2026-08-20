@@ -1,22 +1,11 @@
 # skyportal-js
 
-First-party TypeScript client for the [SkyPortal](https://skyportal.io) API.
-
-A port of [skyportal-py](https://github.com/leonitousconforti/skyportal-py):
-the same endpoint surface, the same names, the same strict models.
-
-The request and response schemas live in the sibling package
-[`skyportal-js-models`](../api-models-ts); every endpoint module here
-re-exports the models it uses, so `Sources.Source` is the same schema whether
-imported from `skyportal-js` or `skyportal-js-models`.
+TypeScript client for the [SkyPortal](https://skyportal.io) API: one typed
+function per endpoint, bound as methods on a `fetch`-based client. Schemas come
+from [`skyportal-js-models`](../api-models-ts) and are re-exported by each
+endpoint module.
 
 ## Usage
-
-Each endpoint is a plain function with explicit types for path parameters,
-query arguments, payloads, and responses ([valibot](https://valibot.dev)
-schemas). `createClient` returns a `SkyPortal` client: a `fetch`-based
-transport preconfigured with the instance's base URL and token header, with
-every endpoint function bound as a method.
 
 ```ts
 import { createClient } from "skyportal-js/Client";
@@ -123,15 +112,4 @@ const streams = await Http.get(client, "/api/streams");
 
 ## Development
 
-The dev environment is managed with [nix](https://nixos.org) and
-[pnpm](https://pnpm.io):
-
-```sh
-nix develop # or `direnv allow` with nix-direnv
-pnpm install
-pnpm codegen # regenerate src/index.ts
-pnpm check   # typecheck
-pnpm lint    # oxlint + oxfmt
-pnpm test    # vitest
-pnpm build   # tsc + babel into dist/
-```
+See [docs/CONTRIBUTING.md](../../docs/CONTRIBUTING.md).

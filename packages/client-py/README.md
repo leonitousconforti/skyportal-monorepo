@@ -1,20 +1,11 @@
 # skyportal-py
 
-First-party Python client for the [SkyPortal](https://skyportal.io) API.
-
-The request and response models live in the sibling package
-[`skyportal-py-models`](../api-models-py) (`skyportal_py_models`); every
-endpoint module here re-exports the models it uses, so `sources.SourcePost`
-and `skyportal_py_models.sources.SourcePost` are the same class.
+Python client for the [SkyPortal](https://skyportal.io) API: one typed function
+per endpoint, bound as methods on an `httpx.Client`. Models come from
+[`skyportal-py-models`](../api-models-py) and are re-exported by each endpoint
+module.
 
 ## Usage
-
-Each endpoint is a plain function with explicit types for path parameters,
-query arguments, payloads, and responses (pydantic models). `create_client`
-returns a `SkyPortal` client: an
-[httpx](https://www.python-httpx.org)`.Client` subclass preconfigured with
-the instance's base URL and token header, with every endpoint function bound
-as a method.
 
 ```python
 from skyportal_py import create_client, sources
@@ -109,13 +100,4 @@ unwrap(client.get("/api/streams"))
 
 ## Development
 
-The dev environment is managed with [nix](https://nixos.org) and
-[uv](https://docs.astral.sh/uv/):
-
-```sh
-nix develop  # or `direnv allow` with nix-direnv
-uv run ruff format
-uv run ruff check
-uv run ty check
-uv run pytest
-```
+See [docs/CONTRIBUTING.md](../../docs/CONTRIBUTING.md).
