@@ -1,6 +1,3 @@
-# Workspace root: not a package itself, it exists so `uv sync` installs every
-# Python package under packages/ editable into one shared virtualenv, and so the
-# lint/type/test tooling is configured once for all of them.
 [project]
 name = "skyportal-monorepo"
 version = "0"
@@ -14,16 +11,12 @@ test = ["pytest", "respx"]
 [tool.uv]
 package = false
 default-groups = ["dev", "test"]
-# Listed explicitly rather than globbed: packages/ also holds the TypeScript
-# packages, and a `packages/*` glob errors on any member without a pyproject.
 workspace = { members = ["packages/api-models-py", "packages/client-py"] }
 
 [tool.uv.sources]
 skyportal-py = { workspace = true }
 skyportal-py-models = { workspace = true }
 
-# Resolve the workspace packages from source rather than through the editable
-# installs, which setuptools implements with an import hook ty cannot follow.
 [tool.ty.environment]
 root = ["packages/api-models-py", "packages/client-py"]
 

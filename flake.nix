@@ -59,7 +59,6 @@
             pkgs.runCommand "check-${name}"
               {
                 nativeBuildInputs = [ venv ];
-                # httpx builds an SSL context on client creation, even offline.
                 SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
               }
               ''
