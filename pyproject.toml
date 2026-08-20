@@ -28,7 +28,7 @@ skyportal-py-models = { workspace = true }
 root = ["packages/api-models-py", "packages/client-py"]
 
 [tool.ty.src]
-include = ["packages/api-models-py", "packages/client-py", "tools"]
+include = ["packages/api-models-py", "packages/client-py"]
 
 [tool.ruff]
 extend-exclude = ["node_modules"]
@@ -77,7 +77,6 @@ convention = "numpy"
 
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**" = ["INP001", "PLR2004", "S101", "S106"]
-"tools/**" = ["INP001", "T201"]
 # Client modules re-export their models with the explicit `X as X` form, which
 # is how type checkers recognise a re-export; ruff's pylint port calls it useless.
 "packages/client-py/skyportal_py/*.py" = ["PLC0414"]

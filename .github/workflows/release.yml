@@ -16,7 +16,9 @@ jobs:
   # A release commit landed on main: tag it and publish the GitHub release,
   # which triggers the PyPI and npm uploads.
   release:
-    if: "startsWith(github.event.head_commit.message, 'chore: release ')"
+    # Disabled until the release pipeline is switched on (see RELEASING.md):
+    # drop the `false &&` to enable.
+    if: "false && startsWith(github.event.head_commit.message, 'chore: release ')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -31,7 +33,9 @@ jobs:
   # Anything else landed on main: fold pending change files into the release
   # pull request (no-op when there are none).
   prepare-release:
-    if: "!startsWith(github.event.head_commit.message, 'chore: release ')"
+    # Disabled until the release pipeline is switched on (see RELEASING.md):
+    # drop the `false &&` to enable.
+    if: "false && !startsWith(github.event.head_commit.message, 'chore: release ')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0

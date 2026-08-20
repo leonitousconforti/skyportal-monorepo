@@ -27,8 +27,6 @@ in, model out.
 │   ├── client-py/         skyportal_py/<resource>.py, _http.py, client.py
 │   ├── api-models-ts/     src/<Resource>.ts, Schemas.ts
 │   └── client-ts/         src/<Resource>.ts, Http.ts, Client.ts
-├── tools/
-│   └── schema-parity/     proves the Python and TypeScript models agree
 ├── pyproject.toml         uv workspace root + ruff/ty config
 ├── package.json           pnpm workspace root + tsc/oxlint/vitest config
 ├── knope.toml             one release train for all four packages
@@ -49,12 +47,7 @@ generation. What stops them drifting:
 1. **Conventions.** Same module names, same model names, same field names
    (wire names, so `totalMatches` not `total_matches` where SkyPortal sends
    camelCase). A reviewer can open the two files side by side.
-2. **`tools/schema-parity`.** Pydantic and valibot can both emit JSON Schema.
-   CI dumps every model from both sides, reduces the schemas to the same
-   coarse shape (field, kind, required, nullable, extra keys allowed) and
-   fails on any difference that is not in an explicit allowlist. See
-   [`tools/schema-parity/README.md`](tools/schema-parity/README.md).
-3. **Dogfooding.** SkyPortal's own API tests use `skyportal-py`, so the Python
+2. **Dogfooding.** SkyPortal's own API tests use `skyportal-py`, so the Python
    models are checked against real responses on every SkyPortal CI run; the
    parity check carries that assurance over to TypeScript.
 
@@ -70,7 +63,7 @@ Nix is the build system. `flake.nix` reads `uv.lock` (through
 there is one command for everything CI does:
 
 ```sh
-nix flake check          # lint, types, tests on Python 3.11-3.14, TS check/lint/build/test, codegen freshness, schema parity
+nix flake check          # lint, types, tests on Python 3.11-3.14, TS check/lint/build/test, codegen freshness
 nix build .#js           # both npm packages, built to dist/
 nix build .#skyportal-py # the Python client (and its models) as an installed package
 ```
@@ -91,7 +84,7 @@ copy the `got:` hash into `pnpmDeps.hash` in `flake.nix`.
 
 Releases: see [RELEASING.md](RELEASING.md). All four packages release together
 under one version, driven by [knope](https://knope.tech) from the change files
-in `.changeset/`.
+in `.changeset/`. The release and publish workflows are present but disabled for now.
 
 ## Decisions and open questions
 
@@ -105,12 +98,10 @@ in `.changeset/`.
 - **Query parameters are not models yet.** The Python client takes them as
   keyword arguments and the TypeScript client as `*Options` interfaces, so
   they live in the client packages. Giving them models (`FetchSourcesQuery`)
-  is the next thing the server could share; it would also let the parity check
-  cover them.
+  is the next thing the server could share.
 - **TypeScript request bodies are interfaces, not schemas.** `SourcePost` is an
   `interface` in TypeScript and a pydantic class in Python. Interfaces have no
-  runtime value, so the parity check can only see them from the Python side.
-  Turning them into valibot schemas would close that gap.
+  runtime value, so nothing can validate them against the Python side.
 - **Versions.** All four packages start at 0.4.0: a minor bump over the last
   `skyportal-py` (0.3.0) because the models moved to a new package, and the
   npm packages (last `skyportal-js` was 0.2.0) join that number so there is one

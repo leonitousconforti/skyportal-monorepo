@@ -1,5 +1,10 @@
 # Releasing
 
+> **Not active yet.** `knope.toml` is configured and `knope prepare-release
+--dry-run` works, but the GitHub workflows described below (release, PyPI and
+> npm publishing, the change-file check on pull requests) are not in the
+> repository yet. This document describes the intended flow.
+
 Every package in this repository releases **together**: one version, one
 `vX.Y.Z` tag, one changelog, one GitHub release, two registries.
 

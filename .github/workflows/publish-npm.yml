@@ -9,6 +9,8 @@ permissions: {}
 
 jobs:
   deploy:
+    # Disabled until the release pipeline is switched on (see RELEASING.md).
+    if: false
     runs-on: ubuntu-latest
     permissions:
       id-token: write # npm trusted publishing + provenance

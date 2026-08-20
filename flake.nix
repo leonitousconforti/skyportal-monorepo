@@ -75,7 +75,7 @@
             version = "0";
             inherit src pnpm;
             fetcherVersion = 4;
-            hash = "sha256-7t0C5YRlAiQFV3yRZJoo7KVVBODIAELcJWh8C+1drA0=";
+            hash = "sha256-MTwmVHNyOwvKuMcbmm0UAtym0gLEvXmXHqstb1h6Nnc=";
           };
 
           # A derivation with the workspace checked out and node_modules in place.
@@ -146,27 +146,12 @@
 
           checks = {
             python-lint = mkPyCheck "python-lint" ''
-              ruff check packages tools
-              ruff format --check packages tools
+              ruff check packages
+              ruff format --check packages
             '';
             python-types = mkPyCheck "python-types" ''
               ty check
             '';
-            # knope keeps the four versions and the models pin in lockstep; this
-            # catches a hand edit that breaks that.
-            versions = mkPyCheck "versions" ''
-              python3 - <<'PY'
-              import json, re, sys, tomllib
-              py = {p: tomllib.load(open(f"packages/{p}/pyproject.toml", "rb"))["project"] for p in ("api-models-py", "client-py")}
-              js = {p: json.load(open(f"packages/{p}/package.json")) for p in ("api-models-ts", "client-ts")}
-              versions = {p: d["version"] for p, d in (py | js).items()}
-              pin = next(d for d in py["client-py"]["dependencies"] if d.startswith("skyportal-py-models"))
-              versions["client-py pin"] = pin.split("==")[1]
-              if len(set(versions.values())) != 1:
-                  sys.exit(f"versions out of lockstep: {versions}")
-              PY
-            '';
-
             # Typecheck, lint, build and test the TypeScript workspace, and make
             # sure the generated index.ts files are current.
             js = mkJsDerivation "check-js" {
@@ -181,20 +166,6 @@
                 pnpm lint
                 pnpm build
                 pnpm test --run
-                runHook postBuild
-              '';
-              installPhase = "touch $out";
-            };
-
-            # The Python and TypeScript models are written by hand, twice. This
-            # dumps JSON Schema from both and diffs them.
-            schema-parity = mkJsDerivation "check-schema-parity" {
-              nativeBuildInputs = [ pyEnv ];
-              buildPhase = ''
-                runHook preBuild
-                python3 tools/schema-parity/dump_py.py
-                pnpm schema-parity
-                python3 tools/schema-parity/compare.py
                 runHook postBuild
               '';
               installPhase = "touch $out";

@@ -14,5 +14,4 @@ body = SourcePost(id="ZTF20abcdef", ra=10.5, dec=-20.25).model_dump(exclude_none
 ```
 
 The TypeScript mirror is [`skyportal-js-models`](../api-models-ts): same module
-names, same model names, same field names. `tools/schema-parity` checks the two
-agree.
+names, same model names, same field names.

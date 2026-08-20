@@ -15,5 +15,4 @@ const body: Sources.SourcePost = { id: "ZTF20abcdef", ra: 10.5, dec: -20.25 };
 ```
 
 The Python mirror is [`skyportal-py-models`](../api-models-py): same module
-names, same model names, same field names. `tools/schema-parity` checks the two
-agree.
+names, same model names, same field names.
