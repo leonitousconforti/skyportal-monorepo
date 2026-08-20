@@ -11,6 +11,7 @@
     "js/ts.preferences.autoImportFileExcludePatterns": [".direnv/**"],
     "editor.defaultFormatter": "EditorConfig.EditorConfig",
 
+    "direnv.restart.automatic": true,
     "python.defaultInterpreterPath": "python",
     "ty.importStrategy": "fromEnvironment",
     "python.analysis.extraPaths": ["packages/api-models-py", "packages/client-py"],
