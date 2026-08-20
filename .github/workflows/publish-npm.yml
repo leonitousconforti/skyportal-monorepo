@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   deploy:
-    # Disabled until the release pipeline is switched on (see RELEASING.md).
+    # Disabled until the release pipeline is switched on (see docs/RELEASING.md).
     if: false
     runs-on: ubuntu-latest
     permissions:

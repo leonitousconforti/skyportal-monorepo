@@ -30,7 +30,7 @@ in, model out.
 ├── pyproject.toml         uv workspace root + ruff/ty config
 ├── package.json           pnpm workspace root + tsc/oxlint/vitest config
 ├── knope.toml             one release train for all four packages
-├── .changeset/            change files, one per user-facing change (see RELEASING.md)
+├── .changeset/            change files, one per user-facing change (see docs/RELEASING.md)
 └── flake.nix              dev shell: uv, node, pnpm
 ```
 
@@ -57,6 +57,8 @@ Schema -> valibot), without touching the clients.
 
 ## Developing
 
+[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) has the full workflow; the short version:
+
 Nix is the build system. `flake.nix` reads `uv.lock` (through
 [uv2nix](https://github.com/pyproject-nix/uv2nix)) and `pnpm-lock.yaml`
 (through nixpkgs' pnpm support) and turns both workspaces into derivations, so
@@ -82,7 +84,7 @@ pnpm test
 When `pnpm-lock.yaml` changes, `nix build .#js` fails with a hash mismatch;
 copy the `got:` hash into `pnpmDeps.hash` in `flake.nix`.
 
-Releases: see [RELEASING.md](RELEASING.md). All four packages release together
+Releases: see [RELEASING.md](docs/RELEASING.md). All four packages release together
 under one version, driven by [knope](https://knope.tech) from the change files
 in `.changeset/`. The release and publish workflows are present but disabled for now.
 

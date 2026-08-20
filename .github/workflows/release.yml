@@ -1,7 +1,7 @@
 name: Release
 
 # knope owns versions, the changelog, tags and GitHub releases for every
-# package in the repository. See RELEASING.md.
+# package in the repository. See docs/RELEASING.md.
 on:
   push:
     branches: [main]
@@ -16,7 +16,7 @@ jobs:
   # A release commit landed on main: tag it and publish the GitHub release,
   # which triggers the PyPI and npm uploads.
   release:
-    # Disabled until the release pipeline is switched on (see RELEASING.md):
+    # Disabled until the release pipeline is switched on (see docs/RELEASING.md):
     # drop the `false &&` to enable.
     if: "false && startsWith(github.event.head_commit.message, 'chore: release ')"
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
   # Anything else landed on main: fold pending change files into the release
   # pull request (no-op when there are none).
   prepare-release:
-    # Disabled until the release pipeline is switched on (see RELEASING.md):
+    # Disabled until the release pipeline is switched on (see docs/RELEASING.md):
     # drop the `false &&` to enable.
     if: "false && !startsWith(github.event.head_commit.message, 'chore: release ')"
     runs-on: ubuntu-latest
