@@ -58,6 +58,6 @@
     },
     "dependencies": {
         "skyportal-js-models": "workspace:^",
-        "valibot": "1.1.0"
+        "valibot": "1.4.2"
     }
 }
