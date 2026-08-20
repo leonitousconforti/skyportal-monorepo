@@ -2,6 +2,9 @@ packages:
   - packages/api-models-ts
   - packages/client-ts
 
+# pnpm comes from nixpkgs (flake.nix); never self-update to a pinned version.
+managePackageManagerVersions: false
+
 hoist: false
 hoistPattern: []
 autoInstallPeers: false

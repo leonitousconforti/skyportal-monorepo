@@ -1,5 +1,9 @@
 name: CI
 
+# Everything CI knows how to do is a flake check: Python lint/types/tests on
+# every supported interpreter, the TypeScript typecheck/lint/build/tests, the
+# codegen freshness check and the schema-parity comparison. Run the same thing
+# locally with `nix flake check`.
 on:
   push:
     # Renovate uses `automergeType: branch`, pushing straight to renovate/**
@@ -16,63 +20,10 @@ concurrency:
 permissions: {}
 
 jobs:
-  python-check:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-      - run: uv sync --locked
-      - run: uv run --no-sync ruff check
-      - run: uv run --no-sync ruff format --check
-      - run: uv run --no-sync ty check
-      - run: python3 tools/check_published_versions.py
-
-  python-test:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-        with:
-          python-version: ${{ matrix.python-version }}
-      - run: uv sync --locked
-      - run: uv run --no-sync pytest packages
-
-  typescript:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm clean
-      - run: pnpm codegen
-      - run: git add packages && git diff-index --cached HEAD --exit-code packages
-      - run: pnpm check
-      - run: pnpm lint
-      - run: pnpm build
-      - run: pnpm test
-
-  # The Python and TypeScript model packages are written by hand, twice. This
-  # job is what keeps them honest: each side emits JSON Schema for every model
-  # and tools/schema-parity/compare.py diffs the two.
-  schema-parity:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-      - run: uv sync --locked
-      - run: pnpm install --frozen-lockfile
-      - run: uv run --no-sync python tools/schema-parity/dump_py.py
-      - run: pnpm schema-parity
-      - run: uv run --no-sync python tools/schema-parity/compare.py
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix flake check --keep-going --print-build-logs

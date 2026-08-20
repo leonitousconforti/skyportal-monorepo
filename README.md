@@ -65,18 +65,30 @@ Schema -> valibot), without touching the clients.
 
 ## Developing
 
+Nix is the build system. `flake.nix` reads `uv.lock` (through
+[uv2nix](https://github.com/pyproject-nix/uv2nix)) and `pnpm-lock.yaml`
+(through nixpkgs' pnpm support) and turns both workspaces into derivations, so
+there is one command for everything CI does:
+
 ```sh
-nix develop          # or `direnv allow`; provides uv, node, pnpm
-uv sync              # both Python packages, editable, one venv
-pnpm install         # both TypeScript packages
-
-uv run ruff check && uv run ruff format --check && uv run ty check
-uv run pytest packages
-pnpm check && pnpm lint && pnpm build && pnpm test
-
-uv run python tools/schema-parity/dump_py.py && pnpm schema-parity \
-  && uv run python tools/schema-parity/compare.py
+nix flake check          # lint, types, tests on Python 3.11-3.14, TS check/lint/build/test, codegen freshness, schema parity
+nix build .#js           # both npm packages, built to dist/
+nix build .#skyportal-py # the Python client (and its models) as an installed package
 ```
+
+uv and pnpm are still there, but only as lockfile editors and for the inner
+loop inside the dev shell:
+
+```sh
+nix develop              # or `direnv allow`; venv (editable) + uv, node, pnpm
+uv lock                  # after changing a pyproject.toml; then re-enter the shell
+pnpm install             # after changing a package.json; update the hash in flake.nix
+pytest packages          # the venv is on PATH
+pnpm test
+```
+
+When `pnpm-lock.yaml` changes, `nix build .#js` fails with a hash mismatch;
+copy the `got:` hash into `pnpmDeps.hash` in `flake.nix`.
 
 Releases: see [RELEASING.md](RELEASING.md). The two Python packages release
 in lockstep (towncrier, `pypi-v*` tags); the two TypeScript packages release

@@ -11,7 +11,7 @@ lockstep**: one version, one tag, one changelog.
 | `packages/client-ts`     | `skyportal-js`        | npm      | `workspace:^` on the models |
 
 All commands run inside the nix dev shell (`nix develop`), which provides uv,
-node and pnpm.
+node and pnpm. CI itself is `nix flake check`; see the README.
 
 ## Python
 
