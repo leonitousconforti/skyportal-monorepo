@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=77"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.8,<0.13"]
+build-backend = "uv_build"
 
 [project]
 name = "skyportal-py"
@@ -25,5 +25,6 @@ source = "https://github.com/skyportal/skyportal-monorepo"
 [tool.uv.sources]
 skyportal-py-models = { workspace = true }
 
-[tool.setuptools.packages.find]
-include = ["skyportal_py*"]
+[tool.uv.build-backend]
+module-name = "skyportal_py"
+module-root = ""
