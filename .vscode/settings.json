@@ -12,7 +12,7 @@
     "editor.defaultFormatter": "EditorConfig.EditorConfig",
 
     "direnv.restart.automatic": true,
-    "python.defaultInterpreterPath": "python",
+    "python.defaultInterpreterPath": "${env:VIRTUAL_ENV}/bin/python",
     "ty.importStrategy": "fromEnvironment",
     "python.analysis.extraPaths": ["packages/api-models-py", "packages/client-py"],
 
