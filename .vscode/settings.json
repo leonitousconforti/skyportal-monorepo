@@ -11,6 +11,10 @@
     "js/ts.preferences.autoImportFileExcludePatterns": [".direnv/**"],
     "editor.defaultFormatter": "EditorConfig.EditorConfig",
 
+    // The workspace packages are installed editable via an executable .pth line,
+    // which Pylance does not follow; name their source roots directly.
+    "python.analysis.extraPaths": ["packages/api-models-py", "packages/client-py"],
+
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.defaultFormatter": "oxc.oxc-vscode"
     },

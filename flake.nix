@@ -129,10 +129,11 @@
               editable = default.pythonSet.overrideScope (
                 workspace.mkEditablePyprojectOverlay { root = "$REPO_ROOT"; }
               );
+              devEnv = editable.mkVirtualEnv "skyportal-monorepo-dev-env" workspace.deps.all;
             in
             pkgs.mkShell {
               packages = [
-                (editable.mkVirtualEnv "skyportal-monorepo-dev-env" workspace.deps.all)
+                devEnv
                 pkgs.uv
                 pkgs.nodejs_24
                 pnpm
@@ -149,6 +150,8 @@
               shellHook = ''
                 unset PYTHONPATH
                 export REPO_ROOT=$(git rev-parse --show-toplevel)
+                # Editors look for a workspace .venv; point it at the Nix-built one.
+                ln -sfn ${devEnv} "$REPO_ROOT/.venv"
               '';
             };
 
