@@ -11,11 +11,7 @@
     "js/ts.preferences.autoImportFileExcludePatterns": [".direnv/**"],
     "editor.defaultFormatter": "EditorConfig.EditorConfig",
 
-    // The direnv extension puts the nix dev shell on PATH, so a bare "python"
-    // is always the current Nix-built venv, whatever its store path.
     "python.defaultInterpreterPath": "python",
-    // The workspace packages are installed editable via an executable .pth line,
-    // which Pylance does not follow; name their source roots directly.
     "python.analysis.extraPaths": ["packages/api-models-py", "packages/client-py"],
 
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
