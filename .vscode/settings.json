@@ -12,6 +12,7 @@
     "editor.defaultFormatter": "EditorConfig.EditorConfig",
 
     "python.defaultInterpreterPath": "python",
+    "ty.importStrategy": "fromEnvironment",
     "python.analysis.extraPaths": ["packages/api-models-py", "packages/client-py"],
 
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {

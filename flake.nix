@@ -142,6 +142,8 @@
                 pkgs.nixfmt
               ];
               env = {
+                # Editors and ty find the interpreter through this.
+                VIRTUAL_ENV = "${devEnv}";
                 # uv edits the lockfile; the venv itself comes from Nix.
                 UV_NO_SYNC = "1";
                 UV_PYTHON = editable.python.interpreter;
