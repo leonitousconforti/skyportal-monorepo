@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.filters import (
     Filter as Filter,
+)
+from skyportal_py_models.filters import (
     FilterPatch as FilterPatch,
+)
+from skyportal_py_models.filters import (
     FilterPost as FilterPost,
+)
+from skyportal_py_models.filters import (
     FilterPostResponse as FilterPostResponse,
 )
 

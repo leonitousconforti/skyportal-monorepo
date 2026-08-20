@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.assignments import (
     Assignment as Assignment,
+)
+from skyportal_py_models.assignments import (
     AssignmentPost as AssignmentPost,
+)
+from skyportal_py_models.assignments import (
     AssignmentPostResponse as AssignmentPostResponse,
+)
+from skyportal_py_models.assignments import (
     FollowupPriority as FollowupPriority,
 )
 

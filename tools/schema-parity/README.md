@@ -25,8 +25,10 @@ other: fix the lagging side, or, if the difference is intentional, add it to
 
 ## What is compared
 
-Models are matched by `<Module>.<Name>`: Python `skyportal_py_models.sources`
-pairs with TypeScript `Sources`, and model names are identical by convention.
+Models are matched by `<Module>.<Name>`, case-insensitively: Python
+`skyportal_py_models.sources` pairs with TypeScript `Sources`, and model names
+are identical by convention except for acronym casing (`MMADetector` /
+`MmaDetector`). Python `Literal[...]` aliases pair with valibot `picklist`s.
 Fields are matched by wire name (pydantic aliases are honoured). Field types are
 reduced to one of `string`, `number`, `integer`, `boolean`, `array<kind>`,
 `object`, `ref:<Name>`, `literal`, or `any`; `T | None = None` on the Python
@@ -38,5 +40,11 @@ nullable.
 - TypeScript `interface`s have no runtime schema (request bodies, and the
   mutually recursive `Group`/`GroupUser`), so they only exist on the Python
   side. They are listed as "python only" in the report but do not fail it.
-- Python `Literal[...]` aliases and TypeScript `picklist`s are compared by kind
-  only, not by their member values.
+- `Literal`/`picklist` aliases are compared by kind only, not by their member
+  values.
+- `Any`/`unknown` fields are always treated as nullable, whichever side spells
+  it out.
+
+`allowlist.json` maps one `compare.py` output line to the reason it is
+accepted; entries that stop matching are reported as stale so the list cannot
+rot.

@@ -6,9 +6,29 @@
 
 import * as v from "valibot";
 
+import {
+    SourceSavedGroup,
+    SourceColorMag,
+    PhotStat,
+    Source,
+    SourcesPage,
+    SourcesSaveSummaryPage,
+    SourcePostResponse,
+    SourceOffsets,
+    FinderChartFacility,
+    SourceFinderChart,
+    SourceNotificationPostResponse,
+    SourceExists,
+    PhotStatCounts,
+    PhotStatsBatch,
+    PhotStatAggregate,
+    type SourcePost,
+    type SourceGcnEventCrossmatchPost,
+    type SourceMpcQueryPost,
+    type SourceNotificationPost,
+} from "skyportal-js-models/Sources";
+
 import * as Http from "./Http.ts";
-import { SourceSavedGroup, SourceColorMag, PhotStat, Source, SourcesPage, SourcesSaveSummaryPage, SourcePostResponse, SourceOffsets, FinderChartFacility, SourceFinderChart, SourceNotificationPostResponse, SourceExists, PhotStatCounts, PhotStatsBatch, PhotStatAggregate } from "skyportal-js-models/Sources";
-import type { SourcePost, SourceGcnEventCrossmatchPost, SourceMpcQueryPost, SourceNotificationPost } from "skyportal-js-models/Sources";
 
 export * from "skyportal-js-models/Sources";
 
@@ -397,7 +417,10 @@ export interface FetchSourcesOptions extends SourcesFilterOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchSources = async (client: Http.Client, options: FetchSourcesOptions = {}): Promise<SourcesPage> =>
+export const fetchSources = async (
+    client: Http.Client,
+    options: FetchSourcesOptions = {}
+): Promise<SourcesPage> =>
     Http.decode(
         SourcesPage,
         await Http.get(client, "/api/sources", {
@@ -475,8 +498,14 @@ export const fetchSourcesSaveSummary = async (
  * @category Requests
  * @param payload - The source to save.
  */
-export const postSource = async (client: Http.Client, payload: SourcePost): Promise<SourcePostResponse> =>
-    Http.decode(SourcePostResponse, await Http.post(client, "/api/sources", Http.body(payload)));
+export const postSource = async (
+    client: Http.Client,
+    payload: SourcePost
+): Promise<SourcePostResponse> =>
+    Http.decode(
+        SourcePostResponse,
+        await Http.post(client, "/api/sources", Http.body(payload))
+    );
 
 /**
  * Options for updating a source.
@@ -528,7 +557,11 @@ export const updateSource = async (
  * @param objId - Object ID of the source to unsave.
  * @param groupId - Group to unsave the source from. Sent in the request body.
  */
-export const deleteSource = async (client: Http.Client, objId: string, groupId: number): Promise<void> => {
+export const deleteSource = async (
+    client: Http.Client,
+    objId: string,
+    groupId: number
+): Promise<void> => {
     await Http.del(client, `/api/sources/${objId}`, { group_id: groupId });
 };
 
@@ -541,7 +574,10 @@ export const deleteSource = async (client: Http.Client, objId: string, groupId: 
  * @category Requests
  * @param objId - Object ID of the source whose photometry is deleted.
  */
-export const deleteSourcePhotometry = async (client: Http.Client, objId: string): Promise<string> =>
+export const deleteSourcePhotometry = async (
+    client: Http.Client,
+    objId: string
+): Promise<string> =>
     Http.decode(v.string(), await Http.del(client, `/api/sources/${objId}/photometry`));
 
 /**
@@ -666,7 +702,12 @@ export const fetchSourceFinder = (
     client: Http.Client,
     objId: string,
     options: FetchSourceFinderOptions = {}
-): Promise<Uint8Array> => Http.getContent(client, `/api/sources/${objId}/finder`, sourceFinderParams(options));
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/sources/${objId}/finder`,
+        sourceFinderParams(options)
+    );
 
 /**
  * Generate a finding chart and return it as base64 JSON with its starlist.
@@ -697,8 +738,13 @@ export const fetchSourceFinderJson = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchFinderChartFacilities = async (client: Http.Client): Promise<Record<string, FinderChartFacility>> =>
-    Http.decode(v.record(v.string(), FinderChartFacility), await Http.get(client, "/api/finder_chart/facilities"));
+export const fetchFinderChartFacilities = async (
+    client: Http.Client
+): Promise<Record<string, FinderChartFacility>> =>
+    Http.decode(
+        v.record(v.string(), FinderChartFacility),
+        await Http.get(client, "/api/finder_chart/facilities")
+    );
 
 /**
  * Set a source's host galaxy.
@@ -708,7 +754,11 @@ export const fetchFinderChartFacilities = async (client: Http.Client): Promise<R
  * @param objId - Object ID of the source.
  * @param galaxyName - Name of an existing galaxy to associate with the object.
  */
-export const postSourceHost = async (client: Http.Client, objId: string, galaxyName: string): Promise<void> => {
+export const postSourceHost = async (
+    client: Http.Client,
+    objId: string,
+    galaxyName: string
+): Promise<void> => {
     await Http.post(client, `/api/sources/${objId}/host`, { galaxyName });
 };
 
@@ -719,7 +769,10 @@ export const postSourceHost = async (client: Http.Client, objId: string, galaxyN
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const deleteSourceHost = async (client: Http.Client, objId: string): Promise<void> => {
+export const deleteSourceHost = async (
+    client: Http.Client,
+    objId: string
+): Promise<void> => {
     await Http.del(client, `/api/sources/${objId}/host`);
 };
 
@@ -730,8 +783,14 @@ export const deleteSourceHost = async (client: Http.Client, objId: string): Prom
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const fetchSourceSavedGroups = async (client: Http.Client, objId: string): Promise<Array<SourceSavedGroup>> =>
-    Http.decode(v.array(SourceSavedGroup), await Http.get(client, `/api/sources/${objId}/groups`));
+export const fetchSourceSavedGroups = async (
+    client: Http.Client,
+    objId: string
+): Promise<Array<SourceSavedGroup>> =>
+    Http.decode(
+        v.array(SourceSavedGroup),
+        await Http.get(client, `/api/sources/${objId}/groups`)
+    );
 
 /**
  * Record that the calling user has labelled a source for some groups.
@@ -904,7 +963,9 @@ export const fetchSourceTns = async (
     objId: string,
     options: FetchSourceTnsOptions = {}
 ): Promise<void> => {
-    await Http.get(client, `/api/sources/${objId}/tns`, { radius: options.radius ?? 2 });
+    await Http.get(client, `/api/sources/${objId}/tns`, {
+        radius: options.radius ?? 2,
+    });
 };
 
 /**
@@ -973,7 +1034,10 @@ export const postSourcePhotometryCopy = async (
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const fetchSourcePhotStat = async (client: Http.Client, objId: string): Promise<PhotStat> =>
+export const fetchSourcePhotStat = async (
+    client: Http.Client,
+    objId: string
+): Promise<PhotStat> =>
     Http.decode(PhotStat, await Http.get(client, `/api/sources/${objId}/phot_stat`));
 
 /**
@@ -986,7 +1050,10 @@ export const fetchSourcePhotStat = async (client: Http.Client, objId: string): P
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const postSourcePhotStat = async (client: Http.Client, objId: string): Promise<void> => {
+export const postSourcePhotStat = async (
+    client: Http.Client,
+    objId: string
+): Promise<void> => {
     await Http.post(client, `/api/sources/${objId}/phot_stat`);
 };
 
@@ -999,7 +1066,10 @@ export const postSourcePhotStat = async (client: Http.Client, objId: string): Pr
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const updateSourcePhotStat = async (client: Http.Client, objId: string): Promise<void> => {
+export const updateSourcePhotStat = async (
+    client: Http.Client,
+    objId: string
+): Promise<void> => {
     await Http.put(client, `/api/sources/${objId}/phot_stat`);
 };
 
@@ -1012,7 +1082,10 @@ export const updateSourcePhotStat = async (client: Http.Client, objId: string): 
  * @category Requests
  * @param objId - Object ID of the source.
  */
-export const deleteSourcePhotStat = async (client: Http.Client, objId: string): Promise<void> => {
+export const deleteSourcePhotStat = async (
+    client: Http.Client,
+    objId: string
+): Promise<void> => {
     await Http.del(client, `/api/sources/${objId}/phot_stat`);
 };
 
@@ -1060,7 +1133,10 @@ export const fetchPhotStatsCounts = async (
     client: Http.Client,
     options: PhotStatsTimeOptions = {}
 ): Promise<PhotStatCounts> =>
-    Http.decode(PhotStatCounts, await Http.get(client, "/api/phot_stats", photStatsTimeParams(options)));
+    Http.decode(
+        PhotStatCounts,
+        await Http.get(client, "/api/phot_stats", photStatsTimeParams(options))
+    );
 
 /**
  * Options for a photometry-statistics creation batch.
@@ -1088,7 +1164,10 @@ export interface PostPhotStatsOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const postPhotStats = async (client: Http.Client, options: PostPhotStatsOptions = {}): Promise<PhotStatsBatch> =>
+export const postPhotStats = async (
+    client: Http.Client,
+    options: PostPhotStatsOptions = {}
+): Promise<PhotStatsBatch> =>
     Http.decode(
         PhotStatsBatch,
         await Http.post(client, "/api/phot_stats", undefined, {
@@ -1221,7 +1300,9 @@ export const fetchSourceExists = async (
         SourceExists,
         await Http.get(
             client,
-            options.objId === undefined ? "/api/source_exists" : `/api/source_exists/${options.objId}`,
+            options.objId === undefined
+                ? "/api/source_exists"
+                : `/api/source_exists/${options.objId}`,
             { ra: options.ra, dec: options.dec, radius: options.radius }
         )
     );

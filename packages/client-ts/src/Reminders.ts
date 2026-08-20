@@ -4,9 +4,16 @@
  * @since 1.0.0
  */
 
+import {
+    Reminder,
+    RemindersResponse,
+    ReminderPostResponse,
+    type ReminderResourceType,
+    type ReminderPost,
+    type ReminderUpdate,
+} from "skyportal-js-models/Reminders";
+
 import * as Http from "./Http.ts";
-import { Reminder, RemindersResponse, ReminderPostResponse } from "skyportal-js-models/Reminders";
-import type { ReminderResourceType, ReminderPost, ReminderUpdate } from "skyportal-js-models/Reminders";
 
 export * from "skyportal-js-models/Reminders";
 
@@ -37,7 +44,10 @@ export const fetchReminders = async (
 ): Promise<RemindersResponse> =>
     Http.decode(
         RemindersResponse,
-        await Http.get(client, `/api/${options.resourceType ?? "source"}/${resourceId}/reminders`)
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "source"}/${resourceId}/reminders`
+        )
     );
 
 /**
@@ -59,7 +69,10 @@ export const fetchReminder = async (
 ): Promise<Reminder> =>
     Http.decode(
         Reminder,
-        await Http.get(client, `/api/${options.resourceType ?? "source"}/${resourceId}/reminders/${reminderId}`)
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "source"}/${resourceId}/reminders/${reminderId}`
+        )
     );
 
 /**
@@ -78,7 +91,11 @@ export const postReminder = async (
 ): Promise<ReminderPostResponse> =>
     Http.decode(
         ReminderPostResponse,
-        await Http.post(client, `/api/${options.resourceType ?? "source"}/${resourceId}/reminders`, Http.body(payload))
+        await Http.post(
+            client,
+            `/api/${options.resourceType ?? "source"}/${resourceId}/reminders`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -122,5 +139,8 @@ export const deleteReminder = async (
     reminderId: number,
     options: ReminderResourceOptions = {}
 ): Promise<void> => {
-    await Http.del(client, `/api/${options.resourceType ?? "source"}/${resourceId}/reminders/${reminderId}`);
+    await Http.del(
+        client,
+        `/api/${options.resourceType ?? "source"}/${resourceId}/reminders/${reminderId}`
+    );
 };

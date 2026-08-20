@@ -6,8 +6,12 @@
 
 import * as v from "valibot";
 
+import {
+    SpatialCatalog,
+    SpatialCatalogPostResponse,
+} from "skyportal-js-models/SpatialCatalogs";
+
 import * as Http from "./Http.ts";
-import { SpatialCatalog, SpatialCatalogPostResponse } from "skyportal-js-models/SpatialCatalogs";
 
 export * from "skyportal-js-models/SpatialCatalogs";
 
@@ -18,8 +22,14 @@ export * from "skyportal-js-models/SpatialCatalogs";
  * @category Requests
  * @param catalogId - ID of the spatial catalog.
  */
-export const fetchSpatialCatalog = async (client: Http.Client, catalogId: number): Promise<SpatialCatalog> =>
-    Http.decode(SpatialCatalog, await Http.get(client, `/api/spatial_catalog/${catalogId}`));
+export const fetchSpatialCatalog = async (
+    client: Http.Client,
+    catalogId: number
+): Promise<SpatialCatalog> =>
+    Http.decode(
+        SpatialCatalog,
+        await Http.get(client, `/api/spatial_catalog/${catalogId}`)
+    );
 
 /**
  * Retrieve all spatial catalogs, each with its entry count.
@@ -30,8 +40,13 @@ export const fetchSpatialCatalog = async (client: Http.Client, catalogId: number
  * @since 1.0.0
  * @category Requests
  */
-export const fetchSpatialCatalogs = async (client: Http.Client): Promise<Array<SpatialCatalog>> =>
-    Http.decode(v.array(SpatialCatalog), await Http.get(client, "/api/spatial_catalog"));
+export const fetchSpatialCatalogs = async (
+    client: Http.Client
+): Promise<Array<SpatialCatalog>> =>
+    Http.decode(
+        v.array(SpatialCatalog),
+        await Http.get(client, "/api/spatial_catalog")
+    );
 
 /**
  * Ingest a spatial catalog.
@@ -70,7 +85,10 @@ export const postSpatialCatalog = async (
  * @category Requests
  * @param catalogId - ID of the spatial catalog to delete.
  */
-export const deleteSpatialCatalog = async (client: Http.Client, catalogId: number): Promise<void> => {
+export const deleteSpatialCatalog = async (
+    client: Http.Client,
+    catalogId: number
+): Promise<void> => {
     await Http.del(client, `/api/spatial_catalog/${catalogId}`);
 };
 

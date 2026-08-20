@@ -84,7 +84,9 @@ export interface TaxonomyPut {
  * @since 1.0.0
  * @category Models
  */
-export const TaxonomyPostResponse = Schemas.model(v.strictObject({ taxonomy_id: Schemas.Integer }));
+export const TaxonomyPostResponse = Schemas.model(
+    v.strictObject({ taxonomy_id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

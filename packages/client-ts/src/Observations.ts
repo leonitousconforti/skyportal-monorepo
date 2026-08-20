@@ -4,9 +4,14 @@
  * @since 1.0.0
  */
 
+import {
+    ObservationsPage,
+    ObservationSimSurveyResponse,
+    ObservationQueues,
+    type ObservationPost,
+} from "skyportal-js-models/Observations";
+
 import * as Http from "./Http.ts";
-import { ObservationsPage, ObservationSimSurveyResponse, ObservationQueues } from "skyportal-js-models/Observations";
-import type { ObservationPost } from "skyportal-js-models/Observations";
 
 export * from "skyportal-js-models/Observations";
 
@@ -109,7 +114,10 @@ export const fetchObservations = async (
  * @category Requests
  * @param payload - The observations to ingest.
  */
-export const postObservation = async (client: Http.Client, payload: ObservationPost): Promise<void> => {
+export const postObservation = async (
+    client: Http.Client,
+    payload: ObservationPost
+): Promise<void> => {
     await Http.post(client, "/api/observation", Http.body(payload));
 };
 
@@ -121,7 +129,10 @@ export const postObservation = async (client: Http.Client, payload: ObservationP
  * @param observationId - Database ID of the executed observation (not the
  *   instrument-supplied `observation_id`).
  */
-export const deleteObservation = async (client: Http.Client, observationId: number): Promise<void> => {
+export const deleteObservation = async (
+    client: Http.Client,
+    observationId: number
+): Promise<void> => {
     await Http.del(client, `/api/observation/${observationId}`);
 };
 
@@ -266,7 +277,11 @@ export const deleteObservationSimSurvey = async (
 export const fetchObservationSimSurveyPlot = (
     client: Http.Client,
     surveyEfficiencyAnalysisId: number
-): Promise<Uint8Array> => Http.getContent(client, `/api/observation/simsurvey/${surveyEfficiencyAnalysisId}/plot`);
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/observation/simsurvey/${surveyEfficiencyAnalysisId}/plot`
+    );
 
 /**
  * Options for a treasuremap submission.

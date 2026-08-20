@@ -6,8 +6,13 @@
 
 import * as v from "valibot";
 
+import {
+    Stream,
+    StreamPostResponse,
+    StreamUserPostResponse,
+} from "skyportal-js-models/Streams";
+
 import * as Http from "./Http.ts";
-import { Stream, StreamPostResponse, StreamUserPostResponse } from "skyportal-js-models/Streams";
 
 export * from "skyportal-js-models/Streams";
 
@@ -27,7 +32,10 @@ export const fetchStreams = async (client: Http.Client): Promise<Array<Stream>> 
  * @category Requests
  * @param streamId - ID of the stream.
  */
-export const fetchStream = async (client: Http.Client, streamId: number): Promise<Stream> =>
+export const fetchStream = async (
+    client: Http.Client,
+    streamId: number
+): Promise<Stream> =>
     Http.decode(Stream, await Http.get(client, `/api/streams/${streamId}`));
 
 /**
@@ -63,7 +71,11 @@ export const postStream = async (
         await Http.post(
             client,
             "/api/streams",
-            Http.body({ name, auto_join: options.autoJoin ?? false, altdata: options.altdata })
+            Http.body({
+                name,
+                auto_join: options.autoJoin ?? false,
+                altdata: options.altdata,
+            })
         )
     );
 
@@ -110,7 +122,10 @@ export const updateStream = async (
  * @category Requests
  * @param streamId - ID of the stream to delete.
  */
-export const deleteStream = async (client: Http.Client, streamId: number): Promise<void> => {
+export const deleteStream = async (
+    client: Http.Client,
+    streamId: number
+): Promise<void> => {
     await Http.del(client, `/api/streams/${streamId}`);
 };
 
@@ -130,7 +145,10 @@ export const postStreamUser = async (
     streamId: number,
     userId: number
 ): Promise<StreamUserPostResponse> =>
-    Http.decode(StreamUserPostResponse, await Http.post(client, `/api/streams/${streamId}/users`, { user_id: userId }));
+    Http.decode(
+        StreamUserPostResponse,
+        await Http.post(client, `/api/streams/${streamId}/users`, { user_id: userId })
+    );
 
 /**
  * Revoke a user's access to an alert stream. Requires System admin.
@@ -140,6 +158,10 @@ export const postStreamUser = async (
  * @param streamId - ID of the stream.
  * @param userId - ID of the user whose stream access is revoked.
  */
-export const deleteStreamUser = async (client: Http.Client, streamId: number, userId: number): Promise<void> => {
+export const deleteStreamUser = async (
+    client: Http.Client,
+    streamId: number,
+    userId: number
+): Promise<void> => {
     await Http.del(client, `/api/streams/${streamId}/users/${userId}`);
 };

@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { NewsFeedItem } from "skyportal-js-models/NewsFeed";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/NewsFeed";
 

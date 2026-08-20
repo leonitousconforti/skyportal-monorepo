@@ -17,7 +17,11 @@ import * as Users from "./Users.ts";
  * @since 1.0.0
  * @category Models
  */
-export const AnalysisType = v.picklist(["lightcurve_fitting", "spectrum_fitting", "meta_analysis"]);
+export const AnalysisType = v.picklist([
+    "lightcurve_fitting",
+    "spectrum_fitting",
+    "meta_analysis",
+]);
 
 /**
  * @since 1.0.0
@@ -73,7 +77,14 @@ export type AuthenticationType = v.InferOutput<typeof AuthenticationType>;
  * @since 1.0.0
  * @category Models
  */
-export const WebhookStatus = v.picklist(["queued", "pending", "completed", "failure", "cancelled", "timed_out"]);
+export const WebhookStatus = v.picklist([
+    "queued",
+    "pending",
+    "completed",
+    "failure",
+    "cancelled",
+    "timed_out",
+]);
 
 /**
  * @since 1.0.0
@@ -103,7 +114,9 @@ export const AnalysisService = Schemas.model(
         contact_name: Schemas.NullishString,
         contact_email: Schemas.NullishString,
         url: Schemas.NullishString,
-        optional_analysis_parameters: Schemas.nullish(v.union([Schemas.JsonObject, v.string()])),
+        optional_analysis_parameters: Schemas.nullish(
+            v.union([Schemas.JsonObject, v.string()])
+        ),
         authentication_type: Schemas.nullish(AuthenticationType),
         enabled: Schemas.NullishBoolean,
         analysis_type: Schemas.nullish(AnalysisType),
@@ -187,13 +200,17 @@ export interface AnalysisServiceUpdate {
  * @since 1.0.0
  * @category Models
  */
-export const AnalysisServicePostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const AnalysisServicePostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type AnalysisServicePostResponse = v.InferOutput<typeof AnalysisServicePostResponse>;
+export type AnalysisServicePostResponse = v.InferOutput<
+    typeof AnalysisServicePostResponse
+>;
 
 /**
  * An analysis run on an object (upstream `ObjAnalysis`).
@@ -277,7 +294,9 @@ export interface AnalysisPost {
  * @since 1.0.0
  * @category Models
  */
-export const AnalysisPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const AnalysisPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -381,10 +400,14 @@ export interface DefaultAnalysisPost {
  * @since 1.0.0
  * @category Models
  */
-export const DefaultAnalysisPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const DefaultAnalysisPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type DefaultAnalysisPostResponse = v.InferOutput<typeof DefaultAnalysisPostResponse>;
+export type DefaultAnalysisPostResponse = v.InferOutput<
+    typeof DefaultAnalysisPostResponse
+>;

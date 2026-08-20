@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import UNSET, unwrap
 from skyportal_py_models.users import (
     User as User,
+)
+from skyportal_py_models.users import (
     UserPost as UserPost,
+)
+from skyportal_py_models.users import (
     UserPostResponse as UserPostResponse,
+)
+from skyportal_py_models.users import (
     UsersPage as UsersPage,
 )
 

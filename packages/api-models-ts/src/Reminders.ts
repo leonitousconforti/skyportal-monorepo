@@ -15,7 +15,12 @@ import * as Schemas from "./Schemas.ts";
  * @since 1.0.0
  * @category Models
  */
-export type ReminderResourceType = "source" | "spectra" | "gcn_event" | "shift" | "earthquake";
+export type ReminderResourceType =
+    | "source"
+    | "spectra"
+    | "gcn_event"
+    | "shift"
+    | "earthquake";
 
 /**
  * A reminder on any remindable resource (upstream `Reminder`).

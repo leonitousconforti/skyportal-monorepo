@@ -4,9 +4,12 @@
  * @since 1.0.0
  */
 
+import {
+    SummaryQueryResults,
+    type SummaryQueryPost,
+} from "skyportal-js-models/SummaryQuery";
+
 import * as Http from "./Http.ts";
-import { SummaryQueryResults } from "skyportal-js-models/SummaryQuery";
-import type { SummaryQueryPost } from "skyportal-js-models/SummaryQuery";
 
 export * from "skyportal-js-models/SummaryQuery";
 
@@ -21,5 +24,11 @@ export * from "skyportal-js-models/SummaryQuery";
  * @category Requests
  * @param payload - The query.
  */
-export const postSummaryQuery = async (client: Http.Client, payload: SummaryQueryPost): Promise<SummaryQueryResults> =>
-    Http.decode(SummaryQueryResults, await Http.post(client, "/api/summary_query", Http.body(payload)));
+export const postSummaryQuery = async (
+    client: Http.Client,
+    payload: SummaryQueryPost
+): Promise<SummaryQueryResults> =>
+    Http.decode(
+        SummaryQueryResults,
+        await Http.post(client, "/api/summary_query", Http.body(payload))
+    );

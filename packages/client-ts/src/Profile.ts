@@ -4,9 +4,9 @@
  * @since 1.0.0
  */
 
+import { UserProfile, type ProfilePatch } from "skyportal-js-models/Profile";
+
 import * as Http from "./Http.ts";
-import { UserProfile } from "skyportal-js-models/Profile";
-import type { ProfilePatch } from "skyportal-js-models/Profile";
 
 export * from "skyportal-js-models/Profile";
 
@@ -51,7 +51,9 @@ export const updateProfile = async (
 ): Promise<void> => {
     await Http.patch(
         client,
-        options.userId === undefined ? "/api/internal/profile" : `/api/internal/profile/${options.userId}`,
+        options.userId === undefined
+            ? "/api/internal/profile"
+            : `/api/internal/profile/${options.userId}`,
         Http.body(payload)
     );
 };

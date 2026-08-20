@@ -6,9 +6,15 @@
 
 import * as v from "valibot";
 
+import {
+    EarthquakeMeasurement,
+    Earthquake,
+    EarthquakesPage,
+    EarthquakePostResponse,
+    type EarthquakePost,
+} from "skyportal-js-models/Earthquakes";
+
 import * as Http from "./Http.ts";
-import { EarthquakeMeasurement, Earthquake, EarthquakesPage, EarthquakePostResponse } from "skyportal-js-models/Earthquakes";
-import type { EarthquakePost } from "skyportal-js-models/Earthquakes";
 
 export * from "skyportal-js-models/Earthquakes";
 
@@ -22,7 +28,10 @@ export * from "skyportal-js-models/Earthquakes";
  * @category Requests
  * @param eventId - Earthquake event ID, e.g. `"us7000abcd"`.
  */
-export const fetchEarthquake = async (client: Http.Client, eventId: string): Promise<Earthquake> =>
+export const fetchEarthquake = async (
+    client: Http.Client,
+    eventId: string
+): Promise<Earthquake> =>
     Http.decode(Earthquake, await Http.get(client, `/api/earthquake/${eventId}`));
 
 /**
@@ -77,7 +86,9 @@ export const fetchEarthquakes = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchEarthquakeStatuses = async (client: Http.Client): Promise<Array<string>> =>
+export const fetchEarthquakeStatuses = async (
+    client: Http.Client
+): Promise<Array<string>> =>
     Http.decode(v.array(v.string()), await Http.get(client, "/api/earthquake/status"));
 
 /**
@@ -90,8 +101,14 @@ export const fetchEarthquakeStatuses = async (client: Http.Client): Promise<Arra
  * @category Requests
  * @param payload - The earthquake to ingest.
  */
-export const postEarthquake = async (client: Http.Client, payload: EarthquakePost): Promise<EarthquakePostResponse> =>
-    Http.decode(EarthquakePostResponse, await Http.post(client, "/api/earthquake", Http.body(payload)));
+export const postEarthquake = async (
+    client: Http.Client,
+    payload: EarthquakePost
+): Promise<EarthquakePostResponse> =>
+    Http.decode(
+        EarthquakePostResponse,
+        await Http.post(client, "/api/earthquake", Http.body(payload))
+    );
 
 /**
  * Delete an earthquake event.
@@ -100,7 +117,10 @@ export const postEarthquake = async (client: Http.Client, payload: EarthquakePos
  * @category Requests
  * @param eventId - Earthquake event ID to delete.
  */
-export const deleteEarthquake = async (client: Http.Client, eventId: string): Promise<void> => {
+export const deleteEarthquake = async (
+    client: Http.Client,
+    eventId: string
+): Promise<void> => {
     await Http.del(client, `/api/earthquake/${eventId}`);
 };
 
@@ -120,7 +140,10 @@ export const postEarthquakePrediction = async (
     eventId: string,
     mmadetectorId: number
 ): Promise<void> => {
-    await Http.post(client, `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/predictions`);
+    await Http.post(
+        client,
+        `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/predictions`
+    );
 };
 
 /**
@@ -138,7 +161,10 @@ export const fetchEarthquakeMeasurement = async (
 ): Promise<EarthquakeMeasurement> =>
     Http.decode(
         EarthquakeMeasurement,
-        await Http.get(client, `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`)
+        await Http.get(
+            client,
+            `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`
+        )
     );
 
 /**
@@ -172,7 +198,11 @@ export const postEarthquakeMeasurement = async (
     mmadetectorId: number,
     options: EarthquakeMeasurementOptions = {}
 ): Promise<void> => {
-    await Http.post(client, `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`, Http.body(options));
+    await Http.post(
+        client,
+        `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`,
+        Http.body(options)
+    );
 };
 
 /**
@@ -212,5 +242,8 @@ export const deleteEarthquakeMeasurement = async (
     eventId: string,
     mmadetectorId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`);
+    await Http.del(
+        client,
+        `/api/earthquake/${eventId}/mmadetector/${mmadetectorId}/measurements`
+    );
 };

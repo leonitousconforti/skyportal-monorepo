@@ -43,7 +43,11 @@ export type AllocationUser = v.InferOutput<typeof AllocationUser>;
  * @since 1.0.0
  * @category Models
  */
-export const AllocationType = v.picklist(["triggered", "forced_photometry", "observation_plan"]);
+export const AllocationType = v.picklist([
+    "triggered",
+    "forced_photometry",
+    "observation_plan",
+]);
 
 /**
  * @since 1.0.0
@@ -81,7 +85,9 @@ export const Allocation = Schemas.model(
         group_id: Schemas.NullishInteger,
         instrument_id: Schemas.NullishInteger,
         instrument: Schemas.nullish(Instruments.Instrument),
-        allocation_users: Schemas.nullish(v.array(v.union([Users.User, AllocationUser]))),
+        allocation_users: Schemas.nullish(
+            v.array(v.union([Users.User, AllocationUser]))
+        ),
         group: Schemas.nullish(Schemas.JsonObject),
         requests: Schemas.nullish(v.array(Schemas.JsonObject)),
         default_requests: Schemas.nullish(v.array(Schemas.JsonObject)),
@@ -153,7 +159,9 @@ export interface AllocationUpdate {
  * @since 1.0.0
  * @category Models
  */
-export const AllocationPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const AllocationPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

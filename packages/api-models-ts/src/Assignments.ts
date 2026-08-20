@@ -93,7 +93,9 @@ export interface AssignmentPost {
  * @since 1.0.0
  * @category Models
  */
-export const AssignmentPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const AssignmentPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

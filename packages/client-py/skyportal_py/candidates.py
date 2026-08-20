@@ -7,19 +7,47 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.candidates import (
     BulkCandidateDeleteResponse as BulkCandidateDeleteResponse,
+)
+from skyportal_py_models.candidates import (
     Candidate as Candidate,
+)
+from skyportal_py_models.candidates import (
     CandidateAssociatedObj as CandidateAssociatedObj,
+)
+from skyportal_py_models.candidates import (
     CandidateFilterPage as CandidateFilterPage,
+)
+from skyportal_py_models.candidates import (
     CandidatePassingAlert as CandidatePassingAlert,
+)
+from skyportal_py_models.candidates import (
     CandidatePost as CandidatePost,
+)
+from skyportal_py_models.candidates import (
     CandidatePostResponse as CandidatePostResponse,
+)
+from skyportal_py_models.candidates import (
     CandidateRecord as CandidateRecord,
+)
+from skyportal_py_models.candidates import (
     CandidatesPage as CandidatesPage,
+)
+from skyportal_py_models.candidates import (
     ScanReport as ScanReport,
+)
+from skyportal_py_models.candidates import (
     ScanReportItem as ScanReportItem,
+)
+from skyportal_py_models.candidates import (
     ScanReportPassedFiltersRange as ScanReportPassedFiltersRange,
+)
+from skyportal_py_models.candidates import (
     ScanReportPost as ScanReportPost,
+)
+from skyportal_py_models.candidates import (
     ScanReportSavedCandidatesRange as ScanReportSavedCandidatesRange,
+)
+from skyportal_py_models.candidates import (
     ScanReportsPage as ScanReportsPage,
 )
 

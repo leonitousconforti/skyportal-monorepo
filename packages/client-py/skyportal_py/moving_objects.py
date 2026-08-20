@@ -7,6 +7,8 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.moving_objects import (
     MovingObjectFollowupPost as MovingObjectFollowupPost,
+)
+from skyportal_py_models.moving_objects import (
     MovingObjectObservation as MovingObjectObservation,
 )
 

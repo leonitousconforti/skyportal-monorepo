@@ -9,7 +9,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.streams import (
     Stream as Stream,
+)
+from skyportal_py_models.streams import (
     StreamPostResponse as StreamPostResponse,
+)
+from skyportal_py_models.streams import (
     StreamUserPostResponse as StreamUserPostResponse,
 )
 

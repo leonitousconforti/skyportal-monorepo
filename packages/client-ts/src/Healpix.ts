@@ -4,8 +4,9 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import { HealpixCounts, HealpixUpdate } from "skyportal-js-models/Healpix";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Healpix";
 

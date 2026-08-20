@@ -9,8 +9,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.survey_efficiency import (
     DefaultSurveyEfficiencyPostResponse as DefaultSurveyEfficiencyPostResponse,
+)
+from skyportal_py_models.survey_efficiency import (
     DefaultSurveyEfficiencyRequest as DefaultSurveyEfficiencyRequest,
+)
+from skyportal_py_models.survey_efficiency import (
     SurveyEfficiencyForObservationPlan as SurveyEfficiencyForObservationPlan,
+)
+from skyportal_py_models.survey_efficiency import (
     SurveyEfficiencyForObservations as SurveyEfficiencyForObservations,
 )
 

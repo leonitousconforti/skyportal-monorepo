@@ -7,13 +7,27 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.groups import (
     Group as Group,
+)
+from skyportal_py_models.groups import (
     GroupMember as GroupMember,
+)
+from skyportal_py_models.groups import (
     GroupPost as GroupPost,
+)
+from skyportal_py_models.groups import (
     GroupPostResponse as GroupPostResponse,
-    GroupStreamPostResponse as GroupStreamPostResponse,
-    GroupUser as GroupUser,
-    GroupUserPostResponse as GroupUserPostResponse,
+)
+from skyportal_py_models.groups import (
     GroupsResponse as GroupsResponse,
+)
+from skyportal_py_models.groups import (
+    GroupStreamPostResponse as GroupStreamPostResponse,
+)
+from skyportal_py_models.groups import (
+    GroupUser as GroupUser,
+)
+from skyportal_py_models.groups import (
+    GroupUserPostResponse as GroupUserPostResponse,
 )
 
 

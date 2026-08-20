@@ -9,7 +9,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.spatial_catalogs import (
     SpatialCatalog as SpatialCatalog,
+)
+from skyportal_py_models.spatial_catalogs import (
     SpatialCatalogEntry as SpatialCatalogEntry,
+)
+from skyportal_py_models.spatial_catalogs import (
     SpatialCatalogPostResponse as SpatialCatalogPostResponse,
 )
 

@@ -63,7 +63,9 @@ export const UserProfile = Schemas.model(
         tokens: Schemas.list(ProfileToken),
         preferences: v.optional(Schemas.JsonObject, () => ({})),
         gravatar_url: Schemas.NullishString,
-        groupAdmissionRequests: Schemas.list(GroupAdmissionRequests.GroupAdmissionRequest),
+        groupAdmissionRequests: Schemas.list(
+            GroupAdmissionRequests.GroupAdmissionRequest
+        ),
         streams: Schemas.list(Streams.Stream),
         is_anonymous: Schemas.NullishBoolean,
     })

@@ -146,7 +146,9 @@ export interface BrokerPost {
  * @since 1.0.0
  * @category Models
  */
-export const BrokerPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const BrokerPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -308,7 +310,9 @@ export const BrokerFilterAttachResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type BrokerFilterAttachResponse = v.InferOutput<typeof BrokerFilterAttachResponse>;
+export type BrokerFilterAttachResponse = v.InferOutput<
+    typeof BrokerFilterAttachResponse
+>;
 
 /**
  * Verdict of a broker filter version validation.
@@ -336,7 +340,9 @@ export type BrokerFilterValidation = v.InferOutput<typeof BrokerFilterValidation
  * @since 1.0.0
  * @category Models
  */
-export const BrokerAlertSaveResponse = Schemas.model(v.strictObject({ id: v.string() }));
+export const BrokerAlertSaveResponse = Schemas.model(
+    v.strictObject({ id: v.string() })
+);
 
 /**
  * @since 1.0.0

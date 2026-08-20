@@ -7,7 +7,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.profile import (
     ProfilePatch as ProfilePatch,
+)
+from skyportal_py_models.profile import (
     ProfileToken as ProfileToken,
+)
+from skyportal_py_models.profile import (
     UserProfile as UserProfile,
 )
 

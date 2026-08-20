@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { Role } from "skyportal-js-models/Roles";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Roles";
 
@@ -44,6 +45,10 @@ export const postUserRole = async (
  * @param userId - ID of the user to remove the role from.
  * @param roleId - ID of the role to remove; the user must currently have it.
  */
-export const deleteUserRole = async (client: Http.Client, userId: number, roleId: string): Promise<void> => {
+export const deleteUserRole = async (
+    client: Http.Client,
+    userId: number,
+    roleId: string
+): Promise<void> => {
     await Http.del(client, `/api/user/${userId}/roles/${roleId}`);
 };

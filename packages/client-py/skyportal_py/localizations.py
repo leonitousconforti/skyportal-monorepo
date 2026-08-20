@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.localizations import (
     Localization as Localization,
+)
+from skyportal_py_models.localizations import (
     LocalizationCenter as LocalizationCenter,
+)
+from skyportal_py_models.localizations import (
     LocalizationProperty as LocalizationProperty,
+)
+from skyportal_py_models.localizations import (
     LocalizationTag as LocalizationTag,
 )
 

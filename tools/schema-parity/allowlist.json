@@ -1,4 +1,13 @@
 {
-    "_comment": "Accepted differences between the Python and TypeScript models, one compare.py line each, with the reason in the adjacent comment list.",
-    "differences": []
+    "_comment": "Accepted differences between the Python and TypeScript models: one compare.py output line each, mapped to the reason it is accepted.",
+    "differences": {
+        "candidates.bulkcandidatedeleteresponse.dryRun: py={'kind': 'boolean', 'required': True, 'nullable': False} ts={'kind': 'boolean', 'required': False, 'nullable': False}": "Found by the first parity run; TypeScript defaults dryRun to false while Python requires it. Check what the handler actually sends, then align and remove this entry.",
+        "typescript-only model: allocations.allocationtype": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: gcnevents.gcneventobjstatus": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: groupadmissionrequests.groupadmissionrequeststatus": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: instruments.instrumenttype": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: mmadetectors.mmadetectortype": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: photometricseries.timestampalignment": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry.",
+        "typescript-only model: publicpages.publicsectionvisibility": "TypeScript restricts this to a picklist; Python types the field as a plain str. Decide which the server guarantees, then align and remove this entry."
+    }
 }

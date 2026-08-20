@@ -7,6 +7,8 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.healpix import (
     HealpixCounts as HealpixCounts,
+)
+from skyportal_py_models.healpix import (
     HealpixUpdate as HealpixUpdate,
 )
 

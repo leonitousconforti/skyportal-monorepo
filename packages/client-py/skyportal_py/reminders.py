@@ -7,11 +7,21 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.reminders import (
     Reminder as Reminder,
+)
+from skyportal_py_models.reminders import (
     ReminderPost as ReminderPost,
+)
+from skyportal_py_models.reminders import (
     ReminderPostResponse as ReminderPostResponse,
+)
+from skyportal_py_models.reminders import (
     ReminderResourceType as ReminderResourceType,
-    ReminderUpdate as ReminderUpdate,
+)
+from skyportal_py_models.reminders import (
     RemindersResponse as RemindersResponse,
+)
+from skyportal_py_models.reminders import (
+    ReminderUpdate as ReminderUpdate,
 )
 
 

@@ -9,15 +9,35 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.followup_requests import (
     DefaultFollowupRequest as DefaultFollowupRequest,
+)
+from skyportal_py_models.followup_requests import (
     DefaultFollowupRequestPost as DefaultFollowupRequestPost,
+)
+from skyportal_py_models.followup_requests import (
     DefaultFollowupRequestPostResponse as DefaultFollowupRequestPostResponse,
+)
+from skyportal_py_models.followup_requests import (
     FacilityTransaction as FacilityTransaction,
+)
+from skyportal_py_models.followup_requests import (
     FacilityTransactionRequest as FacilityTransactionRequest,
+)
+from skyportal_py_models.followup_requests import (
     FollowupRequest as FollowupRequest,
+)
+from skyportal_py_models.followup_requests import (
     FollowupRequestPost as FollowupRequestPost,
+)
+from skyportal_py_models.followup_requests import (
     FollowupRequestPostResponse as FollowupRequestPostResponse,
-    FollowupRequestWatcher as FollowupRequestWatcher,
+)
+from skyportal_py_models.followup_requests import (
     FollowupRequestsPage as FollowupRequestsPage,
+)
+from skyportal_py_models.followup_requests import (
+    FollowupRequestWatcher as FollowupRequestWatcher,
+)
+from skyportal_py_models.followup_requests import (
     PhotometryRequestStatus as PhotometryRequestStatus,
 )
 

@@ -49,7 +49,11 @@ export type InstrumentField = v.InferOutput<typeof InstrumentField>;
  * @since 1.0.0
  * @category Models
  */
-export const InstrumentType = v.picklist(["imager", "spectrograph", "imaging spectrograph"]);
+export const InstrumentType = v.picklist([
+    "imager",
+    "spectrograph",
+    "imaging spectrograph",
+]);
 
 /**
  * @since 1.0.0
@@ -213,7 +217,9 @@ export interface InstrumentPut {
  * @since 1.0.0
  * @category Models
  */
-export const InstrumentPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const InstrumentPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -227,7 +233,9 @@ export type InstrumentPostResponse = v.InferOutput<typeof InstrumentPostResponse
  * @since 1.0.0
  * @category Models
  */
-export const InstrumentLogPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const InstrumentLogPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

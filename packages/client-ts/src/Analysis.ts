@@ -7,9 +7,22 @@
 
 import * as v from "valibot";
 
+import {
+    AnalysisService,
+    AnalysisServicePostResponse,
+    ObjAnalysis,
+    AnalysisPostResponse,
+    AnalysisUploadResponse,
+    DefaultAnalysis,
+    DefaultAnalysisPostResponse,
+    type AnalysisServicePost,
+    type AnalysisServiceUpdate,
+    type AnalysisPost,
+    type AnalysisUploadPost,
+    type DefaultAnalysisPost,
+} from "skyportal-js-models/Analysis";
+
 import * as Http from "./Http.ts";
-import { AnalysisService, AnalysisServicePostResponse, ObjAnalysis, AnalysisPostResponse, AnalysisUploadResponse, DefaultAnalysis, DefaultAnalysisPostResponse } from "skyportal-js-models/Analysis";
-import type { AnalysisServicePost, AnalysisServiceUpdate, AnalysisPost, AnalysisUploadPost, DefaultAnalysisPost } from "skyportal-js-models/Analysis";
 
 export * from "skyportal-js-models/Analysis";
 
@@ -20,8 +33,14 @@ export * from "skyportal-js-models/Analysis";
  * @category Requests
  * @param analysisServiceId - ID of the analysis service.
  */
-export const fetchAnalysisService = async (client: Http.Client, analysisServiceId: number): Promise<AnalysisService> =>
-    Http.decode(AnalysisService, await Http.get(client, `/api/analysis_service/${analysisServiceId}`));
+export const fetchAnalysisService = async (
+    client: Http.Client,
+    analysisServiceId: number
+): Promise<AnalysisService> =>
+    Http.decode(
+        AnalysisService,
+        await Http.get(client, `/api/analysis_service/${analysisServiceId}`)
+    );
 
 /**
  * Retrieve all analysis services visible to the token.
@@ -29,8 +48,13 @@ export const fetchAnalysisService = async (client: Http.Client, analysisServiceI
  * @since 1.0.0
  * @category Requests
  */
-export const fetchAnalysisServices = async (client: Http.Client): Promise<Array<AnalysisService>> =>
-    Http.decode(v.array(AnalysisService), await Http.get(client, "/api/analysis_service"));
+export const fetchAnalysisServices = async (
+    client: Http.Client
+): Promise<Array<AnalysisService>> =>
+    Http.decode(
+        v.array(AnalysisService),
+        await Http.get(client, "/api/analysis_service")
+    );
 
 /**
  * Register a new analysis service.
@@ -45,7 +69,10 @@ export const postAnalysisService = async (
     client: Http.Client,
     payload: AnalysisServicePost
 ): Promise<AnalysisServicePostResponse> =>
-    Http.decode(AnalysisServicePostResponse, await Http.post(client, "/api/analysis_service", Http.body(payload)));
+    Http.decode(
+        AnalysisServicePostResponse,
+        await Http.post(client, "/api/analysis_service", Http.body(payload))
+    );
 
 /**
  * Update an analysis service.
@@ -63,7 +90,11 @@ export const updateAnalysisService = async (
     analysisServiceId: number,
     payload: AnalysisServiceUpdate
 ): Promise<void> => {
-    await Http.patch(client, `/api/analysis_service/${analysisServiceId}`, Http.body(payload));
+    await Http.patch(
+        client,
+        `/api/analysis_service/${analysisServiceId}`,
+        Http.body(payload)
+    );
 };
 
 /**
@@ -75,7 +106,10 @@ export const updateAnalysisService = async (
  * @category Requests
  * @param analysisServiceId - ID of the analysis service to delete.
  */
-export const deleteAnalysisService = async (client: Http.Client, analysisServiceId: number): Promise<void> => {
+export const deleteAnalysisService = async (
+    client: Http.Client,
+    analysisServiceId: number
+): Promise<void> => {
     await Http.del(client, `/api/analysis_service/${analysisServiceId}`);
 };
 
@@ -95,7 +129,10 @@ export const fetchDefaultAnalysis = async (
 ): Promise<DefaultAnalysis> =>
     Http.decode(
         DefaultAnalysis,
-        await Http.get(client, `/api/analysis_service/${analysisServiceId}/default_analysis/${defaultAnalysisId}`)
+        await Http.get(
+            client,
+            `/api/analysis_service/${analysisServiceId}/default_analysis/${defaultAnalysisId}`
+        )
     );
 
 /**
@@ -111,7 +148,10 @@ export const fetchDefaultAnalyses = async (
 ): Promise<Array<DefaultAnalysis>> =>
     Http.decode(
         v.array(DefaultAnalysis),
-        await Http.get(client, `/api/analysis_service/${analysisServiceId}/default_analysis`)
+        await Http.get(
+            client,
+            `/api/analysis_service/${analysisServiceId}/default_analysis`
+        )
     );
 
 /**
@@ -130,7 +170,11 @@ export const postDefaultAnalysis = async (
 ): Promise<DefaultAnalysisPostResponse> =>
     Http.decode(
         DefaultAnalysisPostResponse,
-        await Http.post(client, `/api/analysis_service/${analysisServiceId}/default_analysis`, Http.body(payload))
+        await Http.post(
+            client,
+            `/api/analysis_service/${analysisServiceId}/default_analysis`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -172,7 +216,10 @@ export const deleteDefaultAnalysis = async (
     analysisServiceId: number,
     defaultAnalysisId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/analysis_service/${analysisServiceId}/default_analysis/${defaultAnalysisId}`);
+    await Http.del(
+        client,
+        `/api/analysis_service/${analysisServiceId}/default_analysis/${defaultAnalysisId}`
+    );
 };
 
 /**
@@ -197,7 +244,11 @@ export const postAnalysis = async (
 ): Promise<AnalysisPostResponse> =>
     Http.decode(
         AnalysisPostResponse,
-        await Http.post(client, `/api/obj/${objId}/analysis/${analysisServiceId}`, Http.body(payload))
+        await Http.post(
+            client,
+            `/api/obj/${objId}/analysis/${analysisServiceId}`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -285,7 +336,10 @@ export const fetchAnalyses = async (
  * @category Requests
  * @param analysisId - ID of the analysis to delete.
  */
-export const deleteAnalysis = async (client: Http.Client, analysisId: number): Promise<void> => {
+export const deleteAnalysis = async (
+    client: Http.Client,
+    analysisId: number
+): Promise<void> => {
     await Http.del(client, `/api/obj/analysis/${analysisId}`);
 };
 
@@ -310,7 +364,11 @@ export const postAnalysisUpload = async (
 ): Promise<AnalysisUploadResponse> =>
     Http.decode(
         AnalysisUploadResponse,
-        await Http.post(client, `/api/obj/${objId}/analysis_upload/${analysisServiceId}`, Http.body(payload))
+        await Http.post(
+            client,
+            `/api/obj/${objId}/analysis_upload/${analysisServiceId}`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -320,8 +378,10 @@ export const postAnalysisUpload = async (
  * @category Requests
  * @param analysisId - ID of the analysis.
  */
-export const fetchAnalysisResults = (client: Http.Client, analysisId: number): Promise<unknown> =>
-    Http.get(client, `/api/obj/analysis/${analysisId}/results`);
+export const fetchAnalysisResults = (
+    client: Http.Client,
+    analysisId: number
+): Promise<unknown> => Http.get(client, `/api/obj/analysis/${analysisId}/results`);
 
 /**
  * Download the results data of a completed analysis as a JSON file.
@@ -333,7 +393,10 @@ export const fetchAnalysisResults = (client: Http.Client, analysisId: number): P
  * @category Requests
  * @param analysisId - ID of the analysis.
  */
-export const fetchAnalysisResultsFile = (client: Http.Client, analysisId: number): Promise<Uint8Array> =>
+export const fetchAnalysisResultsFile = (
+    client: Http.Client,
+    analysisId: number
+): Promise<Uint8Array> =>
     Http.getContent(client, `/api/obj/analysis/${analysisId}/results`, {
         download: "true",
     });
@@ -363,4 +426,8 @@ export const fetchAnalysisPlot = (
     client: Http.Client,
     analysisId: number,
     options: FetchAnalysisPlotOptions = {}
-): Promise<Uint8Array> => Http.getContent(client, `/api/obj/analysis/${analysisId}/plots/${options.plotNumber ?? 0}`);
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/obj/analysis/${analysisId}/plots/${options.plotNumber ?? 0}`
+    );

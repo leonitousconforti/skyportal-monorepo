@@ -9,7 +9,7 @@ definitions.
 ```python
 from skyportal_py_models.sources import Source, SourcePost
 
-source = Source.model_validate(payload)          # strict: unknown keys are an error
+source = Source.model_validate(payload)  # strict: unknown keys are an error
 body = SourcePost(id="ZTF20abcdef", ra=10.5, dec=-20.25).model_dump(exclude_none=True)
 ```
 

@@ -7,6 +7,8 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.tokens import (
     ApiToken as ApiToken,
+)
+from skyportal_py_models.tokens import (
     TokenPostResponse as TokenPostResponse,
 )
 

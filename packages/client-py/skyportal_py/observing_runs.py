@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.observing_runs import (
     ObservingRun as ObservingRun,
+)
+from skyportal_py_models.observing_runs import (
     ObservingRunPost as ObservingRunPost,
+)
+from skyportal_py_models.observing_runs import (
     ObservingRunPostResponse as ObservingRunPostResponse,
+)
+from skyportal_py_models.observing_runs import (
     ObservingRunUpdate as ObservingRunUpdate,
 )
 

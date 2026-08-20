@@ -10,8 +10,9 @@ import importlib
 import inspect
 import json
 import pathlib
+import typing
 
-from pydantic import BaseModel
+from pydantic import BaseModel, TypeAdapter
 
 import skyportal_py_models
 
@@ -37,6 +38,12 @@ def main() -> None:
             schemas[f"{ts_module_name(name)}.{cls_name}"] = cls.model_json_schema(
                 mode="validation", ref_template="#/$defs/{model}"
             )
+        # ``Status = Literal["a", "b"]`` aliases pair with valibot picklists.
+        for alias, obj in vars(module).items():
+            if typing.get_origin(obj) is typing.Literal and not alias.startswith("_"):
+                schemas[f"{ts_module_name(name)}.{alias}"] = TypeAdapter(
+                    obj
+                ).json_schema()
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(schemas, indent=2, sort_keys=True) + "\n")
     print(f"wrote {len(schemas)} schemas to {OUT}")

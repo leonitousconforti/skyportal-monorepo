@@ -6,10 +6,20 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import * as Schemas from "skyportal-js-models/Schemas";
-import { Spectrum, SpectrumDetail, SpectrumPostResponse, ParsedSpectrum, BulkSpectraResponse } from "skyportal-js-models/Spectra";
-import type { SpectrumPost, SpectrumUpdate, SpectrumAsciiParse, SpectrumAsciiPost } from "skyportal-js-models/Spectra";
+import {
+    Spectrum,
+    SpectrumDetail,
+    SpectrumPostResponse,
+    ParsedSpectrum,
+    BulkSpectraResponse,
+    type SpectrumPost,
+    type SpectrumUpdate,
+    type SpectrumAsciiParse,
+    type SpectrumAsciiPost,
+} from "skyportal-js-models/Spectra";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Spectra";
 
@@ -105,8 +115,14 @@ export const fetchSpectra = async (
  * @category Requests
  * @param payload - The spectrum to post.
  */
-export const postSpectrum = async (client: Http.Client, payload: SpectrumPost): Promise<SpectrumPostResponse> =>
-    Http.decode(SpectrumPostResponse, await Http.post(client, "/api/spectrum", Http.body(payload)));
+export const postSpectrum = async (
+    client: Http.Client,
+    payload: SpectrumPost
+): Promise<SpectrumPostResponse> =>
+    Http.decode(
+        SpectrumPostResponse,
+        await Http.post(client, "/api/spectrum", Http.body(payload))
+    );
 
 /**
  * Delete a spectrum.
@@ -115,7 +131,10 @@ export const postSpectrum = async (client: Http.Client, payload: SpectrumPost): 
  * @category Requests
  * @param spectrumId - ID of the spectrum to delete.
  */
-export const deleteSpectrum = async (client: Http.Client, spectrumId: number): Promise<void> => {
+export const deleteSpectrum = async (
+    client: Http.Client,
+    spectrumId: number
+): Promise<void> => {
     await Http.del(client, `/api/spectrum/${spectrumId}`);
 };
 
@@ -326,8 +345,14 @@ export const postSpectraBulk = async (
  * @category Requests
  * @param payload - The ASCII file contents plus the column layout.
  */
-export const parseSpectrumAscii = async (client: Http.Client, payload: SpectrumAsciiParse): Promise<ParsedSpectrum> =>
-    Http.decode(ParsedSpectrum, await Http.post(client, "/api/spectrum/parse/ascii", Http.body(payload)));
+export const parseSpectrumAscii = async (
+    client: Http.Client,
+    payload: SpectrumAsciiParse
+): Promise<ParsedSpectrum> =>
+    Http.decode(
+        ParsedSpectrum,
+        await Http.post(client, "/api/spectrum/parse/ascii", Http.body(payload))
+    );
 
 /**
  * Upload a spectrum from an ASCII file.
@@ -341,7 +366,10 @@ export const postSpectrumAscii = async (
     client: Http.Client,
     payload: SpectrumAsciiPost
 ): Promise<SpectrumPostResponse> =>
-    Http.decode(SpectrumPostResponse, await Http.post(client, "/api/spectrum/ascii", Http.body(payload)));
+    Http.decode(
+        SpectrumPostResponse,
+        await Http.post(client, "/api/spectrum/ascii", Http.body(payload))
+    );
 
 /**
  * Create synthetic photometry from a spectrum.

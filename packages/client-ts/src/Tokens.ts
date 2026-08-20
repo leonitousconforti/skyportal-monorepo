@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { ApiToken, TokenPostResponse } from "skyportal-js-models/Tokens";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Tokens";
 
@@ -28,8 +29,14 @@ export interface FetchTokensOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchTokens = async (client: Http.Client, options: FetchTokensOptions = {}): Promise<Array<ApiToken>> =>
-    Http.decode(v.array(ApiToken), await Http.get(client, "/api/internal/tokens", { userID: options.userId }));
+export const fetchTokens = async (
+    client: Http.Client,
+    options: FetchTokensOptions = {}
+): Promise<Array<ApiToken>> =>
+    Http.decode(
+        v.array(ApiToken),
+        await Http.get(client, "/api/internal/tokens", { userID: options.userId })
+    );
 
 /**
  * Retrieve a single API token by ID.
@@ -38,7 +45,10 @@ export const fetchTokens = async (client: Http.Client, options: FetchTokensOptio
  * @category Requests
  * @param tokenId - ID of the token.
  */
-export const fetchToken = async (client: Http.Client, tokenId: string): Promise<ApiToken> =>
+export const fetchToken = async (
+    client: Http.Client,
+    tokenId: string
+): Promise<ApiToken> =>
     Http.decode(ApiToken, await Http.get(client, `/api/internal/tokens/${tokenId}`));
 
 /**
@@ -71,7 +81,11 @@ export const postToken = async (
 ): Promise<TokenPostResponse> =>
     Http.decode(
         TokenPostResponse,
-        await Http.post(client, "/api/internal/tokens", Http.body({ name, acls, user_id: options.userId }))
+        await Http.post(
+            client,
+            "/api/internal/tokens",
+            Http.body({ name, acls, user_id: options.userId })
+        )
     );
 
 /**
@@ -120,6 +134,9 @@ export const updateToken = async (
  * @category Requests
  * @param tokenId - ID of the token to delete.
  */
-export const deleteToken = async (client: Http.Client, tokenId: string): Promise<void> => {
+export const deleteToken = async (
+    client: Http.Client,
+    tokenId: string
+): Promise<void> => {
     await Http.del(client, `/api/internal/tokens/${tokenId}`);
 };

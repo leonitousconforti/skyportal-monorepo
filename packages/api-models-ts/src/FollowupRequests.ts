@@ -74,7 +74,9 @@ export const FacilityTransactionRequest = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type FacilityTransactionRequest = v.InferOutput<typeof FacilityTransactionRequest>;
+export type FacilityTransactionRequest = v.InferOutput<
+    typeof FacilityTransactionRequest
+>;
 
 /**
  * A user watching a follow-up request (upstream `FollowupRequestUser`).
@@ -193,13 +195,17 @@ export interface FollowupRequestPost {
  * @since 1.0.0
  * @category Models
  */
-export const FollowupRequestPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const FollowupRequestPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type FollowupRequestPostResponse = v.InferOutput<typeof FollowupRequestPostResponse>;
+export type FollowupRequestPostResponse = v.InferOutput<
+    typeof FollowupRequestPostResponse
+>;
 
 /**
  * A default follow-up request (upstream `DefaultFollowupRequest`).
@@ -273,13 +279,17 @@ export interface DefaultFollowupRequestPost {
  * @since 1.0.0
  * @category Models
  */
-export const DefaultFollowupRequestPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const DefaultFollowupRequestPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type DefaultFollowupRequestPostResponse = v.InferOutput<typeof DefaultFollowupRequestPostResponse>;
+export type DefaultFollowupRequestPostResponse = v.InferOutput<
+    typeof DefaultFollowupRequestPostResponse
+>;
 
 /**
  * Status of a follow-up request after a photometry retrieval.

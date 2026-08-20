@@ -6,9 +6,18 @@
 
 import * as v from "valibot";
 
+import {
+    MmaDetector,
+    MmaDetectorSpectrum,
+    MmaDetectorTimeInterval,
+    MmaDetectorPostResponse,
+    MmaDetectorSpectrumPostResponse,
+    MmaDetectorTimeIntervalsPostResponse,
+    type MmaDetectorPost,
+    type MmaDetectorSpectrumPost,
+} from "skyportal-js-models/MmaDetectors";
+
 import * as Http from "./Http.ts";
-import { MmaDetector, MmaDetectorSpectrum, MmaDetectorTimeInterval, MmaDetectorPostResponse, MmaDetectorSpectrumPostResponse, MmaDetectorTimeIntervalsPostResponse } from "skyportal-js-models/MmaDetectors";
-import type { MmaDetectorPost, MmaDetectorSpectrumPost } from "skyportal-js-models/MmaDetectors";
 
 export * from "skyportal-js-models/MmaDetectors";
 
@@ -19,8 +28,14 @@ export * from "skyportal-js-models/MmaDetectors";
  * @category Requests
  * @param mmadetectorId - ID of the MMA detector.
  */
-export const fetchMmaDetector = async (client: Http.Client, mmadetectorId: number): Promise<MmaDetector> =>
-    Http.decode(MmaDetector, await Http.get(client, `/api/mmadetector/${mmadetectorId}`));
+export const fetchMmaDetector = async (
+    client: Http.Client,
+    mmadetectorId: number
+): Promise<MmaDetector> =>
+    Http.decode(
+        MmaDetector,
+        await Http.get(client, `/api/mmadetector/${mmadetectorId}`)
+    );
 
 /**
  * Options for listing MMA detectors.
@@ -43,7 +58,10 @@ export const fetchMmaDetectors = async (
     client: Http.Client,
     options: FetchMmaDetectorsOptions = {}
 ): Promise<Array<MmaDetector>> =>
-    Http.decode(v.array(MmaDetector), await Http.get(client, "/api/mmadetector", { name: options.name }));
+    Http.decode(
+        v.array(MmaDetector),
+        await Http.get(client, "/api/mmadetector", { name: options.name })
+    );
 
 /**
  * Create an MMA detector.
@@ -56,7 +74,10 @@ export const postMmaDetector = async (
     client: Http.Client,
     payload: MmaDetectorPost
 ): Promise<MmaDetectorPostResponse> =>
-    Http.decode(MmaDetectorPostResponse, await Http.post(client, "/api/mmadetector", Http.body(payload)));
+    Http.decode(
+        MmaDetectorPostResponse,
+        await Http.post(client, "/api/mmadetector", Http.body(payload))
+    );
 
 /**
  * Options for updating an MMA detector.
@@ -113,7 +134,10 @@ export const updateMmaDetector = async (
  * @category Requests
  * @param mmadetectorId - ID of the MMA detector to delete.
  */
-export const deleteMmaDetector = async (client: Http.Client, mmadetectorId: number): Promise<void> => {
+export const deleteMmaDetector = async (
+    client: Http.Client,
+    mmadetectorId: number
+): Promise<void> => {
     await Http.del(client, `/api/mmadetector/${mmadetectorId}`);
 };
 
@@ -124,8 +148,14 @@ export const deleteMmaDetector = async (client: Http.Client, mmadetectorId: numb
  * @category Requests
  * @param spectrumId - ID of the MMA detector spectrum.
  */
-export const fetchMmaDetectorSpectrum = async (client: Http.Client, spectrumId: number): Promise<MmaDetectorSpectrum> =>
-    Http.decode(MmaDetectorSpectrum, await Http.get(client, `/api/mmadetector/spectra/${spectrumId}`));
+export const fetchMmaDetectorSpectrum = async (
+    client: Http.Client,
+    spectrumId: number
+): Promise<MmaDetectorSpectrum> =>
+    Http.decode(
+        MmaDetectorSpectrum,
+        await Http.get(client, `/api/mmadetector/spectra/${spectrumId}`)
+    );
 
 /**
  * Options for querying MMA detector spectra or time intervals.
@@ -147,7 +177,9 @@ export interface FetchMmaDetectorDataOptions {
 }
 
 /** @internal */
-const detectorDataParams = (options: FetchMmaDetectorDataOptions): Http.QueryParams => ({
+const detectorDataParams = (
+    options: FetchMmaDetectorDataOptions
+): Http.QueryParams => ({
     observedBefore: options.observedBefore,
     observedAfter: options.observedAfter,
     detectorIDs: Http.commaSeparated(options.detectorIds),
@@ -199,7 +231,11 @@ export const updateMmaDetectorSpectrum = async (
     spectrumId: number,
     payload: MmaDetectorSpectrumPost
 ): Promise<void> => {
-    await Http.patch(client, `/api/mmadetector/spectra/${spectrumId}`, Http.body(payload));
+    await Http.patch(
+        client,
+        `/api/mmadetector/spectra/${spectrumId}`,
+        Http.body(payload)
+    );
 };
 
 /**
@@ -209,7 +245,10 @@ export const updateMmaDetectorSpectrum = async (
  * @category Requests
  * @param spectrumId - ID of the MMA detector spectrum to delete.
  */
-export const deleteMmaDetectorSpectrum = async (client: Http.Client, spectrumId: number): Promise<void> => {
+export const deleteMmaDetectorSpectrum = async (
+    client: Http.Client,
+    spectrumId: number
+): Promise<void> => {
     await Http.del(client, `/api/mmadetector/spectra/${spectrumId}`);
 };
 
@@ -224,7 +263,10 @@ export const fetchMmaDetectorTimeInterval = async (
     client: Http.Client,
     timeIntervalId: number
 ): Promise<MmaDetectorTimeInterval> =>
-    Http.decode(MmaDetectorTimeInterval, await Http.get(client, `/api/mmadetector/time_intervals/${timeIntervalId}`));
+    Http.decode(
+        MmaDetectorTimeInterval,
+        await Http.get(client, `/api/mmadetector/time_intervals/${timeIntervalId}`)
+    );
 
 /**
  * Query MMA detector time intervals.
@@ -238,7 +280,11 @@ export const fetchMmaDetectorTimeIntervals = async (
 ): Promise<Array<MmaDetectorTimeInterval>> =>
     Http.decode(
         v.array(MmaDetectorTimeInterval),
-        await Http.get(client, "/api/mmadetector/time_intervals", detectorDataParams(options))
+        await Http.get(
+            client,
+            "/api/mmadetector/time_intervals",
+            detectorDataParams(options)
+        )
     );
 
 /**
@@ -326,6 +372,9 @@ export const updateMmaDetectorTimeInterval = async (
  * @category Requests
  * @param timeIntervalId - ID of the MMA detector time interval to delete.
  */
-export const deleteMmaDetectorTimeInterval = async (client: Http.Client, timeIntervalId: number): Promise<void> => {
+export const deleteMmaDetectorTimeInterval = async (
+    client: Http.Client,
+    timeIntervalId: number
+): Promise<void> => {
     await Http.del(client, `/api/mmadetector/time_intervals/${timeIntervalId}`);
 };

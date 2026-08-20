@@ -4,8 +4,9 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import { Weather } from "skyportal-js-models/Weather";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Weather";
 
@@ -34,5 +35,11 @@ export interface FetchWeatherOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchWeather = async (client: Http.Client, options: FetchWeatherOptions = {}): Promise<Weather> =>
-    Http.decode(Weather, await Http.get(client, "/api/weather", { telescope_id: options.telescopeId }));
+export const fetchWeather = async (
+    client: Http.Client,
+    options: FetchWeatherOptions = {}
+): Promise<Weather> =>
+    Http.decode(
+        Weather,
+        await Http.get(client, "/api/weather", { telescope_id: options.telescopeId })
+    );

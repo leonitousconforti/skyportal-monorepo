@@ -7,7 +7,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.recurring_apis import (
     RecurringAPI as RecurringAPI,
+)
+from skyportal_py_models.recurring_apis import (
     RecurringAPIPost as RecurringAPIPost,
+)
+from skyportal_py_models.recurring_apis import (
     RecurringAPIPostResponse as RecurringAPIPostResponse,
 )
 

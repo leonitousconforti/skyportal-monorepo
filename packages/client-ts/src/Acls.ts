@@ -41,6 +41,10 @@ export const postUserAcl = async (
  * @param userId - ID of the user to remove the ACL from.
  * @param aclId - ID of the ACL to remove.
  */
-export const deleteUserAcl = async (client: Http.Client, userId: number, aclId: string): Promise<void> => {
+export const deleteUserAcl = async (
+    client: Http.Client,
+    userId: number,
+    aclId: string
+): Promise<void> => {
     await Http.del(client, `/api/user/${userId}/acls/${aclId}`);
 };

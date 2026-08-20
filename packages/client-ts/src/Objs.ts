@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { ObjPosition, SuperObj, SuperObjPostResponse } from "skyportal-js-models/Objs";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Objs";
 
@@ -122,7 +123,10 @@ export const postSuperObj = async (
  * @category Requests
  * @param superObjId - ID of the super-object.
  */
-export const fetchSuperObj = async (client: Http.Client, superObjId: number): Promise<SuperObj> =>
+export const fetchSuperObj = async (
+    client: Http.Client,
+    superObjId: number
+): Promise<SuperObj> =>
     Http.decode(SuperObj, await Http.get(client, `/api/super_objs/${superObjId}`));
 
 /**
@@ -216,7 +220,10 @@ export const updateSuperObj = async (
  * @category Requests
  * @param superObjId - ID of the super-object to delete.
  */
-export const deleteSuperObj = async (client: Http.Client, superObjId: number): Promise<void> => {
+export const deleteSuperObj = async (
+    client: Http.Client,
+    superObjId: number
+): Promise<void> => {
     await Http.del(client, `/api/super_objs/${superObjId}`);
 };
 

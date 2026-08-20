@@ -3,12 +3,12 @@
 Home for the SkyPortal API client libraries and the request/response models
 they share. Four packages, two languages, one repository:
 
-| directory                 | package               | what it is                                        |
-| ------------------------- | --------------------- | ------------------------------------------------- |
-| `packages/api-models-py`  | `skyportal-py-models` | pydantic models for every API body and response   |
-| `packages/client-py`      | `skyportal-py`        | httpx client: one typed function per endpoint     |
-| `packages/api-models-ts`  | `skyportal-js-models` | valibot schemas and types for the same models     |
-| `packages/client-ts`      | `skyportal-js`        | fetch client: one typed function per endpoint     |
+| directory                | package               | what it is                                      |
+| ------------------------ | --------------------- | ----------------------------------------------- |
+| `packages/api-models-py` | `skyportal-py-models` | pydantic models for every API body and response |
+| `packages/client-py`     | `skyportal-py`        | httpx client: one typed function per endpoint   |
+| `packages/api-models-ts` | `skyportal-js-models` | valibot schemas and types for the same models   |
+| `packages/client-ts`     | `skyportal-js`        | fetch client: one typed function per endpoint   |
 
 Both clients have the same module layout (`sources`, `groups`, ...), the same
 function names (`fetch_source` / `fetchSource`), and the same model names

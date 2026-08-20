@@ -4,9 +4,10 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import * as Schemas from "skyportal-js-models/Schemas";
 import { SysInfo, DbInfo } from "skyportal-js-models/System";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/System";
 
@@ -67,7 +68,9 @@ export const fetchAnnotationsInfo = (client: Http.Client): Promise<unknown> =>
  * @since 1.0.0
  * @category Requests
  */
-export const fetchConfig = async (client: Http.Client): Promise<Record<string, unknown>> =>
+export const fetchConfig = async (
+    client: Http.Client
+): Promise<Record<string, unknown>> =>
     Http.decode(Schemas.JsonObject, await Http.get(client, "/api/config"));
 
 /**
@@ -81,7 +84,9 @@ export const fetchConfig = async (client: Http.Client): Promise<Record<string, u
  * @since 1.0.0
  * @category Requests
  */
-export const fetchDbStats = async (client: Http.Client): Promise<Record<string, unknown>> =>
+export const fetchDbStats = async (
+    client: Http.Client
+): Promise<Record<string, unknown>> =>
     Http.decode(Schemas.JsonObject, await Http.get(client, "/api/db_stats"));
 
 /**
@@ -97,5 +102,7 @@ export const fetchDbStats = async (client: Http.Client): Promise<Record<string, 
  * @since 1.0.0
  * @category Requests
  */
-export const fetchEnumTypes = async (client: Http.Client): Promise<Record<string, unknown>> =>
+export const fetchEnumTypes = async (
+    client: Http.Client
+): Promise<Record<string, unknown>> =>
     Http.decode(Schemas.JsonObject, await Http.get(client, "/api/enum_types"));

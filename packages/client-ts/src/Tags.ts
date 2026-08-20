@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { ObjTagOption, ObjTag, ObjTagPostResponse } from "skyportal-js-models/Tags";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Tags";
 
@@ -17,7 +18,9 @@ export * from "skyportal-js-models/Tags";
  * @since 1.0.0
  * @category Requests
  */
-export const fetchObjTagOptions = async (client: Http.Client): Promise<Array<ObjTagOption>> =>
+export const fetchObjTagOptions = async (
+    client: Http.Client
+): Promise<Array<ObjTagOption>> =>
     Http.decode(v.array(ObjTagOption), await Http.get(client, "/api/objtagoption"));
 
 /**
@@ -46,7 +49,14 @@ export const postObjTagOption = async (
     name: string,
     options: PostObjTagOptionOptions = {}
 ): Promise<ObjTagOption> =>
-    Http.decode(ObjTagOption, await Http.post(client, "/api/objtagoption", Http.body({ name, color: options.color })));
+    Http.decode(
+        ObjTagOption,
+        await Http.post(
+            client,
+            "/api/objtagoption",
+            Http.body({ name, color: options.color })
+        )
+    );
 
 /**
  * Options for updating a tag option.
@@ -76,7 +86,11 @@ export const updateObjTagOption = async (
     name: string,
     options: UpdateObjTagOptionOptions = {}
 ): Promise<void> => {
-    await Http.patch(client, `/api/objtagoption/${tagId}`, Http.body({ name, color: options.color }));
+    await Http.patch(
+        client,
+        `/api/objtagoption/${tagId}`,
+        Http.body({ name, color: options.color })
+    );
 };
 
 /**
@@ -88,7 +102,10 @@ export const updateObjTagOption = async (
  * @category Requests
  * @param tagId - ID of the tag option to delete.
  */
-export const deleteObjTagOption = async (client: Http.Client, tagId: number): Promise<void> => {
+export const deleteObjTagOption = async (
+    client: Http.Client,
+    tagId: number
+): Promise<void> => {
     await Http.del(client, `/api/objtagoption/${tagId}`);
 };
 
@@ -117,7 +134,10 @@ export interface FetchObjTagsOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchObjTags = async (client: Http.Client, options: FetchObjTagsOptions = {}): Promise<Array<ObjTag>> =>
+export const fetchObjTags = async (
+    client: Http.Client,
+    options: FetchObjTagsOptions = {}
+): Promise<Array<ObjTag>> =>
     Http.decode(
         v.array(ObjTag),
         await Http.get(client, "/api/objtag", {
@@ -199,5 +219,9 @@ export const deleteObjTag = async (
     associationId: number,
     options: DeleteObjTagOptions = {}
 ): Promise<void> => {
-    await Http.del(client, `/api/objtag/${associationId}`, Http.body({ group_ids: options.groupIds }));
+    await Http.del(
+        client,
+        `/api/objtag/${associationId}`,
+        Http.body({ group_ids: options.groupIds })
+    );
 };

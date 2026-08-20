@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.objs import (
     ObjPosition as ObjPosition,
+)
+from skyportal_py_models.objs import (
     SuperObj as SuperObj,
+)
+from skyportal_py_models.objs import (
     SuperObjMember as SuperObjMember,
+)
+from skyportal_py_models.objs import (
     SuperObjPostResponse as SuperObjPostResponse,
 )
 

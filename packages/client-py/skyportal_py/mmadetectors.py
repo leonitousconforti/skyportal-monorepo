@@ -7,12 +7,26 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.mmadetectors import (
     MMADetector as MMADetector,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorPost as MMADetectorPost,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorPostResponse as MMADetectorPostResponse,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorSpectrum as MMADetectorSpectrum,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorSpectrumPost as MMADetectorSpectrumPost,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorSpectrumPostResponse as MMADetectorSpectrumPostResponse,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorTimeInterval as MMADetectorTimeInterval,
+)
+from skyportal_py_models.mmadetectors import (
     MMADetectorTimeIntervalsPostResponse as MMADetectorTimeIntervalsPostResponse,
 )
 

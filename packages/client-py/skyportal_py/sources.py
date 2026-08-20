@@ -9,34 +9,92 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.sources import (
     FinderChartFacility as FinderChartFacility,
+)
+from skyportal_py_models.sources import (
     GcnNoteStatus as GcnNoteStatus,
+)
+from skyportal_py_models.sources import (
     PhotStat as PhotStat,
+)
+from skyportal_py_models.sources import (
     PhotStatAggregate as PhotStatAggregate,
+)
+from skyportal_py_models.sources import (
     PhotStatAggregateField as PhotStatAggregateField,
+)
+from skyportal_py_models.sources import (
     PhotStatAggregatePoint as PhotStatAggregatePoint,
+)
+from skyportal_py_models.sources import (
     PhotStatCounts as PhotStatCounts,
+)
+from skyportal_py_models.sources import (
     PhotStatsBatch as PhotStatsBatch,
+)
+from skyportal_py_models.sources import (
     SavedSource as SavedSource,
+)
+from skyportal_py_models.sources import (
     Source as Source,
+)
+from skyportal_py_models.sources import (
     SourceAnnotation as SourceAnnotation,
+)
+from skyportal_py_models.sources import (
     SourceAssociatedObj as SourceAssociatedObj,
+)
+from skyportal_py_models.sources import (
     SourceCandidate as SourceCandidate,
+)
+from skyportal_py_models.sources import (
     SourceColorMag as SourceColorMag,
+)
+from skyportal_py_models.sources import (
     SourceDuplicate as SourceDuplicate,
+)
+from skyportal_py_models.sources import (
     SourceExists as SourceExists,
+)
+from skyportal_py_models.sources import (
     SourceFinderChart as SourceFinderChart,
+)
+from skyportal_py_models.sources import (
     SourceFollowupRequest as SourceFollowupRequest,
+)
+from skyportal_py_models.sources import (
     SourceGcnEventCrossmatchPost as SourceGcnEventCrossmatchPost,
+)
+from skyportal_py_models.sources import (
     SourceGcnNote as SourceGcnNote,
+)
+from skyportal_py_models.sources import (
     SourceMpcQueryPost as SourceMpcQueryPost,
+)
+from skyportal_py_models.sources import (
     SourceNotificationPost as SourceNotificationPost,
+)
+from skyportal_py_models.sources import (
     SourceNotificationPostResponse as SourceNotificationPostResponse,
-    SourceOffsetStar as SourceOffsetStar,
+)
+from skyportal_py_models.sources import (
     SourceOffsets as SourceOffsets,
+)
+from skyportal_py_models.sources import (
+    SourceOffsetStar as SourceOffsetStar,
+)
+from skyportal_py_models.sources import (
     SourcePost as SourcePost,
+)
+from skyportal_py_models.sources import (
     SourcePostResponse as SourcePostResponse,
+)
+from skyportal_py_models.sources import (
     SourceSavedGroup as SourceSavedGroup,
+)
+from skyportal_py_models.sources import (
     SourcesPage as SourcesPage,
+)
+from skyportal_py_models.sources import (
     SourcesSaveSummaryPage as SourcesSaveSummaryPage,
 )
 

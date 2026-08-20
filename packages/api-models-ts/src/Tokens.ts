@@ -39,7 +39,9 @@ export type ApiToken = v.InferOutput<typeof ApiToken>;
  * @since 1.0.0
  * @category Models
  */
-export const TokenPostResponse = Schemas.model(v.strictObject({ token_id: v.string() }));
+export const TokenPostResponse = Schemas.model(
+    v.strictObject({ token_id: v.string() })
+);
 
 /**
  * @since 1.0.0

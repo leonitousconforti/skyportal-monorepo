@@ -7,9 +7,17 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.galaxies import (
     GalaxiesPage as GalaxiesPage,
+)
+from skyportal_py_models.galaxies import (
     Galaxy as Galaxy,
+)
+from skyportal_py_models.galaxies import (
     GalaxyCatalogASCIIPost as GalaxyCatalogASCIIPost,
+)
+from skyportal_py_models.galaxies import (
     GalaxyCatalogCount as GalaxyCatalogCount,
+)
+from skyportal_py_models.galaxies import (
     GalaxyCatalogPost as GalaxyCatalogPost,
 )
 

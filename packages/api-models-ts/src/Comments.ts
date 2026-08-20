@@ -15,7 +15,12 @@ import * as Schemas from "./Schemas.ts";
  * @since 1.0.0
  * @category Models
  */
-export type CommentResourceType = "sources" | "spectra" | "gcn_event" | "shift" | "earthquake";
+export type CommentResourceType =
+    | "sources"
+    | "spectra"
+    | "gcn_event"
+    | "shift"
+    | "earthquake";
 
 /**
  * The fields of a {@link Comment}.

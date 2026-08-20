@@ -7,9 +7,17 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.thumbnails import (
     Thumbnail as Thumbnail,
+)
+from skyportal_py_models.thumbnails import (
     ThumbnailPathReport as ThumbnailPathReport,
+)
+from skyportal_py_models.thumbnails import (
     ThumbnailPost as ThumbnailPost,
+)
+from skyportal_py_models.thumbnails import (
     ThumbnailPostResponse as ThumbnailPostResponse,
+)
+from skyportal_py_models.thumbnails import (
     ThumbnailType as ThumbnailType,
 )
 

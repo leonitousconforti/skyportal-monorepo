@@ -115,7 +115,13 @@ export type SourceAssociatedObj = v.InferOutput<typeof SourceAssociatedObj>;
  * @since 1.0.0
  * @category Models
  */
-export const GcnNoteStatus = v.picklist(["highlighted", "rejected", "ambiguous", "pending", "not vetted"]);
+export const GcnNoteStatus = v.picklist([
+    "highlighted",
+    "rejected",
+    "ambiguous",
+    "pending",
+    "not vetted",
+]);
 
 /**
  * @since 1.0.0
@@ -664,13 +670,17 @@ export interface SourceNotificationPost {
  * @since 1.0.0
  * @category Models
  */
-export const SourceNotificationPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SourceNotificationPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type SourceNotificationPostResponse = v.InferOutput<typeof SourceNotificationPostResponse>;
+export type SourceNotificationPostResponse = v.InferOutput<
+    typeof SourceNotificationPostResponse
+>;
 
 /**
  * Whether a source already exists by name or by position.

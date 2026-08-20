@@ -10,20 +10,50 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.observation_plans import (
     AllocationObservationPlansPage as AllocationObservationPlansPage,
+)
+from skyportal_py_models.observation_plans import (
     DefaultObservationPlanPost as DefaultObservationPlanPost,
+)
+from skyportal_py_models.observation_plans import (
     DefaultObservationPlanPostResponse as DefaultObservationPlanPostResponse,
+)
+from skyportal_py_models.observation_plans import (
     DefaultObservationPlanRequest as DefaultObservationPlanRequest,
+)
+from skyportal_py_models.observation_plans import (
     DefaultSurveyEfficiencyRequest as DefaultSurveyEfficiencyRequest,
+)
+from skyportal_py_models.observation_plans import (
     EventObservationPlan as EventObservationPlan,
+)
+from skyportal_py_models.observation_plans import (
     EventObservationPlanStatistics as EventObservationPlanStatistics,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanGeoJSON as ObservationPlanGeoJSON,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanIdsResponse as ObservationPlanIdsResponse,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanManualPost as ObservationPlanManualPost,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanManualPostResponse as ObservationPlanManualPostResponse,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanPost as ObservationPlanPost,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanRequest as ObservationPlanRequest,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanRequestsPage as ObservationPlanRequestsPage,
+)
+from skyportal_py_models.observation_plans import (
     ObservationPlanSimSurveyResponse as ObservationPlanSimSurveyResponse,
+)
+from skyportal_py_models.observation_plans import (
     PlannedObservation as PlannedObservation,
 )
 from skyportal_py_models.survey_efficiency import SurveyEfficiencyForObservationPlan

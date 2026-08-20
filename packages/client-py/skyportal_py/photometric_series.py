@@ -9,8 +9,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.photometric_series import (
     PhotometricSeries as PhotometricSeries,
+)
+from skyportal_py_models.photometric_series import (
     PhotometricSeriesPage as PhotometricSeriesPage,
+)
+from skyportal_py_models.photometric_series import (
     PhotometricSeriesPost as PhotometricSeriesPost,
+)
+from skyportal_py_models.photometric_series import (
     PhotometricSeriesPostResponse as PhotometricSeriesPostResponse,
 )
 

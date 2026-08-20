@@ -97,13 +97,17 @@ export interface ObservationPost {
  * @since 1.0.0
  * @category Models
  */
-export const ObservationSimSurveyResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const ObservationSimSurveyResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type ObservationSimSurveyResponse = v.InferOutput<typeof ObservationSimSurveyResponse>;
+export type ObservationSimSurveyResponse = v.InferOutput<
+    typeof ObservationSimSurveyResponse
+>;
 
 /**
  * Queue names retrieved from an instrument's external API.

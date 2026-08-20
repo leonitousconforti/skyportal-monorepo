@@ -79,7 +79,6 @@ class Spectrum(_SpectrumBase):
 class SpectrumDetail(_SpectrumBase):
     """A spectrum with the full payload the server can attach to it."""
 
-
     # Returned by ``GET /api/spectra`` and ``GET /api/spectra/range``. The
     # range endpoint serializes the spectrum row on its own, so only the
     # columns are present there, and ``minimalPayload`` on ``GET /api/spectra``

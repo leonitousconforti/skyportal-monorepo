@@ -9,7 +9,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from skyportal_py_models.groups import Group
 
-
 ReminderResourceType = Literal[
     "source",
     "spectra",

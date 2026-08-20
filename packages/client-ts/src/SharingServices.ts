@@ -6,9 +6,19 @@
 
 import * as v from "valibot";
 
+import {
+    SharingService,
+    SharingServiceSubmission,
+    SharingServiceSubmissionsPage,
+    SharingServicePutResponse,
+    SharingServiceCoauthorPostResponse,
+    SharingServiceGroupPutResponse,
+    SharingServiceAutoPublishersPostResponse,
+    type SharingServicePost,
+    type SharingServiceSubmissionPost,
+} from "skyportal-js-models/SharingServices";
+
 import * as Http from "./Http.ts";
-import { SharingService, SharingServiceSubmission, SharingServiceSubmissionsPage, SharingServicePutResponse, SharingServiceCoauthorPostResponse, SharingServiceGroupPutResponse, SharingServiceAutoPublishersPostResponse } from "skyportal-js-models/SharingServices";
-import type { SharingServicePost, SharingServiceSubmissionPost } from "skyportal-js-models/SharingServices";
 
 export * from "skyportal-js-models/SharingServices";
 
@@ -22,8 +32,13 @@ export * from "skyportal-js-models/SharingServices";
  * @since 1.0.0
  * @category Requests
  */
-export const fetchSharingServices = async (client: Http.Client): Promise<Array<SharingService>> =>
-    Http.decode(v.array(SharingService), await Http.get(client, "/api/sharing_service"));
+export const fetchSharingServices = async (
+    client: Http.Client
+): Promise<Array<SharingService>> =>
+    Http.decode(
+        v.array(SharingService),
+        await Http.get(client, "/api/sharing_service")
+    );
 
 /**
  * Retrieve a single sharing service by ID.
@@ -32,8 +47,14 @@ export const fetchSharingServices = async (client: Http.Client): Promise<Array<S
  * @category Requests
  * @param sharingServiceId - ID of the sharing service.
  */
-export const fetchSharingService = async (client: Http.Client, sharingServiceId: number): Promise<SharingService> =>
-    Http.decode(SharingService, await Http.get(client, `/api/sharing_service/${sharingServiceId}`));
+export const fetchSharingService = async (
+    client: Http.Client,
+    sharingServiceId: number
+): Promise<SharingService> =>
+    Http.decode(
+        SharingService,
+        await Http.get(client, `/api/sharing_service/${sharingServiceId}`)
+    );
 
 /**
  * Create a sharing service.
@@ -54,7 +75,10 @@ export const postSharingService = async (
     client: Http.Client,
     payload: SharingServicePost
 ): Promise<SharingServicePutResponse> =>
-    Http.decode(SharingServicePutResponse, await Http.put(client, "/api/sharing_service", Http.body(payload)));
+    Http.decode(
+        SharingServicePutResponse,
+        await Http.put(client, "/api/sharing_service", Http.body(payload))
+    );
 
 /**
  * Update an existing sharing service.
@@ -78,7 +102,11 @@ export const updateSharingService = async (
 ): Promise<SharingServicePutResponse> =>
     Http.decode(
         SharingServicePutResponse,
-        await Http.put(client, `/api/sharing_service/${sharingServiceId}`, Http.body(payload))
+        await Http.put(
+            client,
+            `/api/sharing_service/${sharingServiceId}`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -89,7 +117,10 @@ export const updateSharingService = async (
  * @param sharingServiceId - ID of the sharing service to delete. Only a member
  *   of one of its owner groups may delete it.
  */
-export const deleteSharingService = async (client: Http.Client, sharingServiceId: number): Promise<void> => {
+export const deleteSharingService = async (
+    client: Http.Client,
+    sharingServiceId: number
+): Promise<void> => {
     await Http.del(client, `/api/sharing_service/${sharingServiceId}`);
 };
 
@@ -127,9 +158,13 @@ export const fetchSharingServiceSubmission = async (
 ): Promise<SharingServiceSubmission> =>
     Http.decode(
         SharingServiceSubmission,
-        await Http.get(client, `/api/sharing_service/submission/${sharingServiceSubmissionId}`, {
-            sharing_service_id: sharingServiceId,
-        })
+        await Http.get(
+            client,
+            `/api/sharing_service/submission/${sharingServiceSubmissionId}`,
+            {
+                sharing_service_id: sharingServiceId,
+            }
+        )
     );
 
 /**
@@ -194,7 +229,10 @@ export const postSharingServiceCoauthor = async (
 ): Promise<SharingServiceCoauthorPostResponse> =>
     Http.decode(
         SharingServiceCoauthorPostResponse,
-        await Http.post(client, `/api/sharing_service/${sharingServiceId}/coauthor/${userId}`)
+        await Http.post(
+            client,
+            `/api/sharing_service/${sharingServiceId}/coauthor/${userId}`
+        )
     );
 
 /**
@@ -210,7 +248,10 @@ export const deleteSharingServiceCoauthor = async (
     sharingServiceId: number,
     userId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/sharing_service/${sharingServiceId}/coauthor/${userId}`);
+    await Http.del(
+        client,
+        `/api/sharing_service/${sharingServiceId}/coauthor/${userId}`
+    );
 };
 
 /**
@@ -306,9 +347,13 @@ export const postSharingServiceAutoPublishers = async (
 ): Promise<SharingServiceAutoPublishersPostResponse> =>
     Http.decode(
         SharingServiceAutoPublishersPostResponse,
-        await Http.post(client, `/api/sharing_service/${sharingServiceId}/group/${groupId}/auto_publisher`, {
-            user_ids: userIds,
-        })
+        await Http.post(
+            client,
+            `/api/sharing_service/${sharingServiceId}/group/${groupId}/auto_publisher`,
+            {
+                user_ids: userIds,
+            }
+        )
     );
 
 /**
@@ -327,7 +372,11 @@ export const deleteSharingServiceAutoPublishers = async (
     groupId: number,
     userIds: ReadonlyArray<number>
 ): Promise<void> => {
-    await Http.del(client, `/api/sharing_service/${sharingServiceId}/group/${groupId}/auto_publisher`, {
-        user_ids: userIds,
-    });
+    await Http.del(
+        client,
+        `/api/sharing_service/${sharingServiceId}/group/${groupId}/auto_publisher`,
+        {
+            user_ids: userIds,
+        }
+    );
 };

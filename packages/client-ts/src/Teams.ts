@@ -6,10 +6,16 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import * as Schemas from "skyportal-js-models/Schemas";
-import { Team, TeamPostResponse, TeamPutResponse } from "skyportal-js-models/Teams";
-import type { TeamPost, TeamPut } from "skyportal-js-models/Teams";
+import {
+    Team,
+    TeamPostResponse,
+    TeamPutResponse,
+    type TeamPost,
+    type TeamPut,
+} from "skyportal-js-models/Teams";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Teams";
 
@@ -46,8 +52,14 @@ export const fetchTeam = async (client: Http.Client, teamId: number): Promise<Te
  * @category Requests
  * @param payload - The team to create.
  */
-export const postTeam = async (client: Http.Client, payload: TeamPost): Promise<TeamPostResponse> =>
-    Http.decode(TeamPostResponse, await Http.post(client, "/api/teams", Http.body(payload)));
+export const postTeam = async (
+    client: Http.Client,
+    payload: TeamPost
+): Promise<TeamPostResponse> =>
+    Http.decode(
+        TeamPostResponse,
+        await Http.post(client, "/api/teams", Http.body(payload))
+    );
 
 /**
  * Update a team's fields and/or its set of groups.
@@ -59,8 +71,15 @@ export const postTeam = async (client: Http.Client, payload: TeamPost): Promise<
  * @param teamId - ID of the team to update.
  * @param payload - The fields to change.
  */
-export const updateTeam = async (client: Http.Client, teamId: number, payload: TeamPut): Promise<TeamPutResponse> =>
-    Http.decode(TeamPutResponse, await Http.put(client, `/api/teams/${teamId}`, Http.body(payload)));
+export const updateTeam = async (
+    client: Http.Client,
+    teamId: number,
+    payload: TeamPut
+): Promise<TeamPutResponse> =>
+    Http.decode(
+        TeamPutResponse,
+        await Http.put(client, `/api/teams/${teamId}`, Http.body(payload))
+    );
 
 /**
  * Delete a team, leaving its groups and their data untouched.
@@ -70,6 +89,9 @@ export const updateTeam = async (client: Http.Client, teamId: number, payload: T
  * @param teamId - ID of the team to delete. The user must be an admin of one of
  *   the team's groups.
  */
-export const deleteTeam = async (client: Http.Client, teamId: number): Promise<void> => {
+export const deleteTeam = async (
+    client: Http.Client,
+    teamId: number
+): Promise<void> => {
     await Http.del(client, `/api/teams/${teamId}`);
 };

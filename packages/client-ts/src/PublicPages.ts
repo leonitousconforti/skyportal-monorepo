@@ -6,9 +6,16 @@
 
 import * as v from "valibot";
 
+import {
+    PublicSourcePage,
+    PublicSourcePagePostResponse,
+    PublicRelease,
+    PublicReleasePostResponse,
+    type PublicReleasePost,
+    type PublicReleaseUpdate,
+} from "skyportal-js-models/PublicPages";
+
 import * as Http from "./Http.ts";
-import { PublicSourcePage, PublicSourcePagePostResponse, PublicRelease, PublicReleasePostResponse } from "skyportal-js-models/PublicPages";
-import type { PublicReleasePost, PublicReleaseUpdate } from "skyportal-js-models/PublicPages";
 
 export * from "skyportal-js-models/PublicPages";
 
@@ -19,8 +26,14 @@ export * from "skyportal-js-models/PublicPages";
  * @category Requests
  * @param sourceId - Object ID of the source, e.g. `"ZTF20abcdef"`.
  */
-export const fetchPublicSourcePages = async (client: Http.Client, sourceId: string): Promise<Array<PublicSourcePage>> =>
-    Http.decode(v.array(PublicSourcePage), await Http.get(client, `/api/public_pages/source/${sourceId}`));
+export const fetchPublicSourcePages = async (
+    client: Http.Client,
+    sourceId: string
+): Promise<Array<PublicSourcePage>> =>
+    Http.decode(
+        v.array(PublicSourcePage),
+        await Http.get(client, `/api/public_pages/source/${sourceId}`)
+    );
 
 /**
  * Options for publishing a public source page.
@@ -73,7 +86,10 @@ export const postPublicSourcePage = async (
  * @category Requests
  * @param pageId - ID of the public source page to delete.
  */
-export const deletePublicSourcePage = async (client: Http.Client, pageId: number): Promise<void> => {
+export const deletePublicSourcePage = async (
+    client: Http.Client,
+    pageId: number
+): Promise<void> => {
     await Http.del(client, `/api/public_pages/source/${pageId}`);
 };
 
@@ -86,8 +102,13 @@ export const deletePublicSourcePage = async (client: Http.Client, pageId: number
  * @since 1.0.0
  * @category Requests
  */
-export const fetchPublicReleases = async (client: Http.Client): Promise<Array<PublicRelease>> =>
-    Http.decode(v.array(PublicRelease), await Http.get(client, "/api/public_pages/release"));
+export const fetchPublicReleases = async (
+    client: Http.Client
+): Promise<Array<PublicRelease>> =>
+    Http.decode(
+        v.array(PublicRelease),
+        await Http.get(client, "/api/public_pages/release")
+    );
 
 /**
  * Create a public release.
@@ -100,7 +121,10 @@ export const postPublicRelease = async (
     client: Http.Client,
     payload: PublicReleasePost
 ): Promise<PublicReleasePostResponse> =>
-    Http.decode(PublicReleasePostResponse, await Http.post(client, "/api/public_pages/release", Http.body(payload)));
+    Http.decode(
+        PublicReleasePostResponse,
+        await Http.post(client, "/api/public_pages/release", Http.body(payload))
+    );
 
 /**
  * Update a public release.
@@ -120,7 +144,11 @@ export const updatePublicRelease = async (
     releaseId: number,
     payload: PublicReleaseUpdate
 ): Promise<void> => {
-    await Http.patch(client, `/api/public_pages/release/${releaseId}`, Http.body(payload));
+    await Http.patch(
+        client,
+        `/api/public_pages/release/${releaseId}`,
+        Http.body(payload)
+    );
 };
 
 /**
@@ -132,6 +160,9 @@ export const updatePublicRelease = async (
  * @category Requests
  * @param releaseId - ID of the release to delete.
  */
-export const deletePublicRelease = async (client: Http.Client, releaseId: number): Promise<void> => {
+export const deletePublicRelease = async (
+    client: Http.Client,
+    releaseId: number
+): Promise<void> => {
     await Http.del(client, `/api/public_pages/release/${releaseId}`);
 };

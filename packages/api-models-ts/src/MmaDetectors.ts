@@ -14,7 +14,11 @@ import * as Schemas from "./Schemas.ts";
  * @since 1.0.0
  * @category Models
  */
-export const MmaDetectorType = v.picklist(["gravitational-wave", "neutrino", "gamma-ray-burst"]);
+export const MmaDetectorType = v.picklist([
+    "gravitational-wave",
+    "neutrino",
+    "gamma-ray-burst",
+]);
 
 /**
  * @since 1.0.0
@@ -116,10 +120,20 @@ export const MmaDetector = Schemas.model(
         fixed_location: Schemas.NullishBoolean,
         events: Schemas.nullish(v.array(Schemas.JsonObject)),
         spectra: Schemas.nullish(
-            v.array(v.lazy((): v.GenericSchema<unknown, MmaDetectorSpectrum> => MmaDetectorSpectrum))
+            v.array(
+                v.lazy(
+                    (): v.GenericSchema<unknown, MmaDetectorSpectrum> =>
+                        MmaDetectorSpectrum
+                )
+            )
         ),
         time_intervals: Schemas.nullish(
-            v.array(v.lazy((): v.GenericSchema<unknown, MmaDetectorTimeInterval> => MmaDetectorTimeInterval))
+            v.array(
+                v.lazy(
+                    (): v.GenericSchema<unknown, MmaDetectorTimeInterval> =>
+                        MmaDetectorTimeInterval
+                )
+            )
         ),
     })
 );
@@ -134,7 +148,9 @@ export const MmaDetectorSpectrum = Schemas.model(
         created_at: Schemas.NullishTimestamp,
         modified: Schemas.NullishTimestamp,
         detector_id: Schemas.NullishInteger,
-        detector: Schemas.nullish(v.lazy((): v.GenericSchema<unknown, MmaDetector> => MmaDetector)),
+        detector: Schemas.nullish(
+            v.lazy((): v.GenericSchema<unknown, MmaDetector> => MmaDetector)
+        ),
         frequencies: Schemas.list(v.number()),
         amplitudes: Schemas.list(v.number()),
         start_time: Schemas.NullishTimestamp,
@@ -157,7 +173,9 @@ export const MmaDetectorTimeInterval = Schemas.model(
         time_interval: Schemas.list(Schemas.Timestamp),
         owner: Schemas.nullish(Schemas.JsonObject),
         groups: Schemas.nullish(v.array(Schemas.JsonObject)),
-        detector: Schemas.nullish(v.lazy((): v.GenericSchema<unknown, MmaDetector> => MmaDetector)),
+        detector: Schemas.nullish(
+            v.lazy((): v.GenericSchema<unknown, MmaDetector> => MmaDetector)
+        ),
     })
 );
 
@@ -186,7 +204,9 @@ export interface MmaDetectorPost {
  * @since 1.0.0
  * @category Models
  */
-export const MmaDetectorPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const MmaDetectorPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -218,13 +238,17 @@ export interface MmaDetectorSpectrumPost {
  * @since 1.0.0
  * @category Models
  */
-export const MmaDetectorSpectrumPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const MmaDetectorSpectrumPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type MmaDetectorSpectrumPostResponse = v.InferOutput<typeof MmaDetectorSpectrumPostResponse>;
+export type MmaDetectorSpectrumPostResponse = v.InferOutput<
+    typeof MmaDetectorSpectrumPostResponse
+>;
 
 /**
  * Result of uploading MMA detector time intervals.
@@ -242,4 +266,6 @@ export const MmaDetectorTimeIntervalsPostResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type MmaDetectorTimeIntervalsPostResponse = v.InferOutput<typeof MmaDetectorTimeIntervalsPostResponse>;
+export type MmaDetectorTimeIntervalsPostResponse = v.InferOutput<
+    typeof MmaDetectorTimeIntervalsPostResponse
+>;

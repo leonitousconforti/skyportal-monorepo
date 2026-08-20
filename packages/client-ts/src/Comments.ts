@@ -6,9 +6,17 @@
 
 import * as v from "valibot";
 
+import {
+    Comment,
+    CommentDetail,
+    CommentPostResponse,
+    CommentAttachment,
+    CommentAttachmentCounts,
+    CommentAttachmentBatch,
+    type CommentResourceType,
+} from "skyportal-js-models/Comments";
+
 import * as Http from "./Http.ts";
-import { Comment, CommentDetail, CommentPostResponse, CommentAttachment, CommentAttachmentCounts, CommentAttachmentBatch } from "skyportal-js-models/Comments";
-import type { CommentResourceType } from "skyportal-js-models/Comments";
 
 export * from "skyportal-js-models/Comments";
 
@@ -55,12 +63,16 @@ export const fetchComments = async (
 ): Promise<Array<Comment>> =>
     Http.decode(
         v.array(Comment),
-        await Http.get(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/comments`, {
-            pageNumber: options.pageNumber ?? 1,
-            numPerPage: options.numPerPage ?? 25,
-            text: options.text,
-            channel: options.channel,
-        })
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "sources"}/${resourceId}/comments`,
+            {
+                pageNumber: options.pageNumber ?? 1,
+                numPerPage: options.numPerPage ?? 25,
+                text: options.text,
+                channel: options.channel,
+            }
+        )
     );
 
 /**
@@ -148,7 +160,10 @@ export const updateComment = async (
     const attachment =
         options.attachmentName === undefined && options.attachmentBody === undefined
             ? undefined
-            : { name: options.attachmentName ?? null, body: options.attachmentBody ?? null };
+            : {
+                  name: options.attachmentName ?? null,
+                  body: options.attachmentBody ?? null,
+              };
     await Http.put(
         client,
         `/api/${options.resourceType ?? "sources"}/${resourceId}/comments/${commentId}`,
@@ -181,7 +196,10 @@ export const deleteComment = async (
     commentId: number,
     options: CommentResourceOptions = {}
 ): Promise<void> => {
-    await Http.del(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/comments/${commentId}`);
+    await Http.del(
+        client,
+        `/api/${options.resourceType ?? "sources"}/${resourceId}/comments/${commentId}`
+    );
 };
 
 /**
@@ -201,7 +219,10 @@ export const fetchComment = async (
 ): Promise<CommentDetail> =>
     Http.decode(
         CommentDetail,
-        await Http.get(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/comments/${commentId}`)
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "sources"}/${resourceId}/comments/${commentId}`
+        )
     );
 
 /**
@@ -337,8 +358,13 @@ export const fetchCommentAttachmentText = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchCommentAttachmentCounts = async (client: Http.Client): Promise<CommentAttachmentCounts> =>
-    Http.decode(CommentAttachmentCounts, await Http.get(client, "/api/comment_attachment"));
+export const fetchCommentAttachmentCounts = async (
+    client: Http.Client
+): Promise<CommentAttachmentCounts> =>
+    Http.decode(
+        CommentAttachmentCounts,
+        await Http.get(client, "/api/comment_attachment")
+    );
 
 /**
  * Options for the comment-attachment migration batch.

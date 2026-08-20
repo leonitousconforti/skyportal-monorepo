@@ -141,7 +141,9 @@ export type PhotometryPoint = v.InferOutput<typeof PhotometryPoint>;
  * @since 1.0.0
  * @category Models
  */
-export const PhotometryRangePoint = Schemas.model(v.strictObject(SerializedPhotometryEntries));
+export const PhotometryRangePoint = Schemas.model(
+    v.strictObject(SerializedPhotometryEntries)
+);
 
 /**
  * @since 1.0.0
@@ -261,10 +263,14 @@ export interface PhotometryUpdate {
  * @since 1.0.0
  * @category Models
  */
-export const PhotometryValidationResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const PhotometryValidationResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type PhotometryValidationResponse = v.InferOutput<typeof PhotometryValidationResponse>;
+export type PhotometryValidationResponse = v.InferOutput<
+    typeof PhotometryValidationResponse
+>;

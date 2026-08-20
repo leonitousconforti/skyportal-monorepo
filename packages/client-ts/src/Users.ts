@@ -4,9 +4,14 @@
  * @since 1.0.0
  */
 
+import {
+    User,
+    UsersPage,
+    UserPostResponse,
+    type UserPost,
+} from "skyportal-js-models/Users";
+
 import * as Http from "./Http.ts";
-import { User, UsersPage, UserPostResponse } from "skyportal-js-models/Users";
-import type { UserPost } from "skyportal-js-models/Users";
 
 export * from "skyportal-js-models/Users";
 
@@ -50,7 +55,10 @@ export interface FetchUsersOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchUsers = async (client: Http.Client, options: FetchUsersOptions = {}): Promise<UsersPage> =>
+export const fetchUsers = async (
+    client: Http.Client,
+    options: FetchUsersOptions = {}
+): Promise<UsersPage> =>
     Http.decode(
         UsersPage,
         await Http.get(client, "/api/user", {
@@ -87,8 +95,14 @@ export const fetchUser = async (client: Http.Client, userId: number): Promise<Us
  * @category Requests
  * @param payload - The user to add.
  */
-export const postUser = async (client: Http.Client, payload: UserPost): Promise<UserPostResponse> =>
-    Http.decode(UserPostResponse, await Http.post(client, "/api/user", Http.body(payload)));
+export const postUser = async (
+    client: Http.Client,
+    payload: UserPost
+): Promise<UserPostResponse> =>
+    Http.decode(
+        UserPostResponse,
+        await Http.post(client, "/api/user", Http.body(payload))
+    );
 
 /**
  * Options for updating a user record.
@@ -128,6 +142,9 @@ export const updateUser = async (
  * @category Requests
  * @param userId - ID of the user to delete.
  */
-export const deleteUser = async (client: Http.Client, userId: number): Promise<void> => {
+export const deleteUser = async (
+    client: Http.Client,
+    userId: number
+): Promise<void> => {
     await Http.del(client, `/api/user/${userId}`);
 };

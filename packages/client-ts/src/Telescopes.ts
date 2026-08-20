@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    Telescope,
+    TelescopePostResponse,
+    type TelescopePost,
+    type TelescopePut,
+} from "skyportal-js-models/Telescopes";
+
 import * as Http from "./Http.ts";
-import { Telescope, TelescopePostResponse } from "skyportal-js-models/Telescopes";
-import type { TelescopePost, TelescopePut } from "skyportal-js-models/Telescopes";
 
 export * from "skyportal-js-models/Telescopes";
 
@@ -57,7 +62,10 @@ export const fetchTelescopes = async (
  * @category Requests
  * @param telescopeId - ID of the telescope.
  */
-export const fetchTelescope = async (client: Http.Client, telescopeId: number): Promise<Telescope> =>
+export const fetchTelescope = async (
+    client: Http.Client,
+    telescopeId: number
+): Promise<Telescope> =>
     Http.decode(Telescope, await Http.get(client, `/api/telescope/${telescopeId}`));
 
 /**
@@ -67,10 +75,17 @@ export const fetchTelescope = async (client: Http.Client, telescopeId: number): 
  * @category Requests
  * @param payload - The telescope to create.
  */
-export const postTelescope = async (client: Http.Client, payload: TelescopePost): Promise<TelescopePostResponse> =>
+export const postTelescope = async (
+    client: Http.Client,
+    payload: TelescopePost
+): Promise<TelescopePostResponse> =>
     Http.decode(
         TelescopePostResponse,
-        await Http.post(client, "/api/telescope", Http.body({ robotic: false, ...payload }))
+        await Http.post(
+            client,
+            "/api/telescope",
+            Http.body({ robotic: false, ...payload })
+        )
     );
 
 /**
@@ -101,6 +116,9 @@ export const updateTelescope = async (
  * @category Requests
  * @param telescopeId - ID of the telescope to delete.
  */
-export const deleteTelescope = async (client: Http.Client, telescopeId: number): Promise<void> => {
+export const deleteTelescope = async (
+    client: Http.Client,
+    telescopeId: number
+): Promise<void> => {
     await Http.del(client, `/api/telescope/${telescopeId}`);
 };

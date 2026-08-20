@@ -4,9 +4,14 @@
  * @since 1.0.0
  */
 
+import {
+    PhotometricSeries,
+    PhotometricSeriesPage,
+    PhotometricSeriesPostResponse,
+    type PhotometricSeriesPost,
+} from "skyportal-js-models/PhotometricSeries";
+
 import * as Http from "./Http.ts";
-import { PhotometricSeries, PhotometricSeriesPage, PhotometricSeriesPostResponse } from "skyportal-js-models/PhotometricSeries";
-import type { PhotometricSeriesPost } from "skyportal-js-models/PhotometricSeries";
 
 export * from "skyportal-js-models/PhotometricSeries";
 
@@ -263,7 +268,10 @@ export const postPhotometricSeries = async (
     client: Http.Client,
     payload: PhotometricSeriesPost
 ): Promise<PhotometricSeriesPostResponse> =>
-    Http.decode(PhotometricSeriesPostResponse, await Http.post(client, "/api/photometric_series", Http.body(payload)));
+    Http.decode(
+        PhotometricSeriesPostResponse,
+        await Http.post(client, "/api/photometric_series", Http.body(payload))
+    );
 
 /**
  * Update a photometric series.
@@ -285,7 +293,11 @@ export const updatePhotometricSeries = async (
 ): Promise<PhotometricSeriesPostResponse> =>
     Http.decode(
         PhotometricSeriesPostResponse,
-        await Http.patch(client, `/api/photometric_series/${photometricSeriesId}`, Http.body(payload))
+        await Http.patch(
+            client,
+            `/api/photometric_series/${photometricSeriesId}`,
+            Http.body(payload)
+        )
     );
 
 /**
@@ -297,6 +309,9 @@ export const updatePhotometricSeries = async (
  *   series was stored with `autodelete` enabled, its data file is removed from
  *   disk too.
  */
-export const deletePhotometricSeries = async (client: Http.Client, photometricSeriesId: number): Promise<void> => {
+export const deletePhotometricSeries = async (
+    client: Http.Client,
+    photometricSeriesId: number
+): Promise<void> => {
     await Http.del(client, `/api/photometric_series/${photometricSeriesId}`);
 };

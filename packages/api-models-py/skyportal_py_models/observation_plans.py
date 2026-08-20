@@ -8,7 +8,10 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 
 from skyportal_py_models.allocations import Allocation
-from skyportal_py_models.followup_requests import FacilityTransaction, FacilityTransactionRequest
+from skyportal_py_models.followup_requests import (
+    FacilityTransaction,
+    FacilityTransactionRequest,
+)
 from skyportal_py_models.groups import Group
 from skyportal_py_models.instruments import Instrument, InstrumentField
 from skyportal_py_models.localizations import Localization

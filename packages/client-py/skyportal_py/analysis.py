@@ -9,20 +9,50 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.analysis import (
     AnalysisInputType as AnalysisInputType,
+)
+from skyportal_py_models.analysis import (
     AnalysisPost as AnalysisPost,
+)
+from skyportal_py_models.analysis import (
     AnalysisPostResponse as AnalysisPostResponse,
+)
+from skyportal_py_models.analysis import (
     AnalysisService as AnalysisService,
+)
+from skyportal_py_models.analysis import (
     AnalysisServicePost as AnalysisServicePost,
+)
+from skyportal_py_models.analysis import (
     AnalysisServicePostResponse as AnalysisServicePostResponse,
+)
+from skyportal_py_models.analysis import (
     AnalysisServiceUpdate as AnalysisServiceUpdate,
+)
+from skyportal_py_models.analysis import (
     AnalysisType as AnalysisType,
+)
+from skyportal_py_models.analysis import (
     AnalysisUploadPost as AnalysisUploadPost,
+)
+from skyportal_py_models.analysis import (
     AnalysisUploadResponse as AnalysisUploadResponse,
+)
+from skyportal_py_models.analysis import (
     AuthenticationType as AuthenticationType,
+)
+from skyportal_py_models.analysis import (
     DefaultAnalysis as DefaultAnalysis,
+)
+from skyportal_py_models.analysis import (
     DefaultAnalysisPost as DefaultAnalysisPost,
+)
+from skyportal_py_models.analysis import (
     DefaultAnalysisPostResponse as DefaultAnalysisPostResponse,
+)
+from skyportal_py_models.analysis import (
     ObjAnalysis as ObjAnalysis,
+)
+from skyportal_py_models.analysis import (
     WebhookStatus as WebhookStatus,
 )
 

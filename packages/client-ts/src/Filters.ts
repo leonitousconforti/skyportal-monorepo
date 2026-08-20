@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    Filter,
+    FilterPostResponse,
+    type FilterPost,
+    type FilterPatch,
+} from "skyportal-js-models/Filters";
+
 import * as Http from "./Http.ts";
-import { Filter, FilterPostResponse } from "skyportal-js-models/Filters";
-import type { FilterPost, FilterPatch } from "skyportal-js-models/Filters";
 
 export * from "skyportal-js-models/Filters";
 
@@ -28,7 +33,10 @@ export const fetchFilters = async (client: Http.Client): Promise<Array<Filter>> 
  * @category Requests
  * @param filterId - ID of the filter.
  */
-export const fetchFilter = async (client: Http.Client, filterId: number): Promise<Filter> =>
+export const fetchFilter = async (
+    client: Http.Client,
+    filterId: number
+): Promise<Filter> =>
     Http.decode(Filter, await Http.get(client, `/api/filters/${filterId}`));
 
 /**
@@ -40,8 +48,14 @@ export const fetchFilter = async (client: Http.Client, filterId: number): Promis
  * @category Requests
  * @param payload - The filter to create.
  */
-export const postFilter = async (client: Http.Client, payload: FilterPost): Promise<FilterPostResponse> =>
-    Http.decode(FilterPostResponse, await Http.post(client, "/api/filters", Http.body(payload)));
+export const postFilter = async (
+    client: Http.Client,
+    payload: FilterPost
+): Promise<FilterPostResponse> =>
+    Http.decode(
+        FilterPostResponse,
+        await Http.post(client, "/api/filters", Http.body(payload))
+    );
 
 /**
  * Update a filter.
@@ -59,7 +73,11 @@ export const postFilter = async (client: Http.Client, payload: FilterPost): Prom
  * @param filterId - ID of the filter to update.
  * @param payload - The fields to change.
  */
-export const updateFilter = async (client: Http.Client, filterId: number, payload: FilterPatch): Promise<void> => {
+export const updateFilter = async (
+    client: Http.Client,
+    filterId: number,
+    payload: FilterPatch
+): Promise<void> => {
     await Http.patch(client, `/api/filters/${filterId}`, Http.body(payload));
 };
 
@@ -72,6 +90,9 @@ export const updateFilter = async (client: Http.Client, filterId: number, payloa
  * @category Requests
  * @param filterId - ID of the filter to delete.
  */
-export const deleteFilter = async (client: Http.Client, filterId: number): Promise<void> => {
+export const deleteFilter = async (
+    client: Http.Client,
+    filterId: number
+): Promise<void> => {
     await Http.del(client, `/api/filters/${filterId}`);
 };

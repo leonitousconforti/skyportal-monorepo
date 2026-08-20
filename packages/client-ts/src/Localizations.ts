@@ -6,8 +6,9 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
 import { Localization } from "skyportal-js-models/Localizations";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Localizations";
 
@@ -43,9 +44,13 @@ export const fetchLocalization = async (
 ): Promise<Localization> =>
     Http.decode(
         Localization,
-        await Http.get(client, `/api/localization/${dateobs}/name/${localizationName}`, {
-            include2DMap: options.include2DMap ?? false,
-        })
+        await Http.get(
+            client,
+            `/api/localization/${dateobs}/name/${localizationName}`,
+            {
+                include2DMap: options.include2DMap ?? false,
+            }
+        )
     );
 
 /**
@@ -97,7 +102,11 @@ export const fetchLocalizationSkymap = (
     client: Http.Client,
     dateobs: string,
     localizationName: string
-): Promise<Uint8Array> => Http.getContent(client, `/api/localization/${dateobs}/name/${localizationName}/download`);
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/localization/${dateobs}/name/${localizationName}/download`
+    );
 
 /**
  * Retrieve all distinct localization tags.
@@ -105,7 +114,9 @@ export const fetchLocalizationSkymap = (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchLocalizationTags = async (client: Http.Client): Promise<Array<string>> =>
+export const fetchLocalizationTags = async (
+    client: Http.Client
+): Promise<Array<string>> =>
     Http.decode(v.array(v.string()), await Http.get(client, "/api/localization/tags"));
 
 /**
@@ -114,8 +125,13 @@ export const fetchLocalizationTags = async (client: Http.Client): Promise<Array<
  * @since 1.0.0
  * @category Requests
  */
-export const fetchLocalizationProperties = async (client: Http.Client): Promise<Array<string>> =>
-    Http.decode(v.array(v.string()), await Http.get(client, "/api/localization/properties"));
+export const fetchLocalizationProperties = async (
+    client: Http.Client
+): Promise<Array<string>> =>
+    Http.decode(
+        v.array(v.string()),
+        await Http.get(client, "/api/localization/properties")
+    );
 
 /**
  * Crossmatch two localizations, returning the intersection as FITS.
@@ -128,7 +144,11 @@ export const fetchLocalizationProperties = async (client: Http.Client): Promise<
  * @param id1 - ID of the first localization to crossmatch.
  * @param id2 - ID of the second localization to crossmatch.
  */
-export const fetchLocalizationCrossmatch = (client: Http.Client, id1: number, id2: number): Promise<Uint8Array> =>
+export const fetchLocalizationCrossmatch = (
+    client: Http.Client,
+    id1: number,
+    id2: number
+): Promise<Uint8Array> =>
     Http.getContent(client, "/api/localizationcrossmatch", { id1, id2 });
 
 /**
@@ -179,7 +199,11 @@ export const fetchLocalizationAirmassChart = (
     client: Http.Client,
     localizationId: number,
     telescopeId: number
-): Promise<Uint8Array> => Http.getContent(client, `/api/localization/${localizationId}/airmass/${telescopeId}`);
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/localization/${localizationId}/airmass/${telescopeId}`
+    );
 
 /**
  * Download a world map plot (PDF) of telescope observability.

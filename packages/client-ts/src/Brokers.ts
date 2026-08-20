@@ -6,11 +6,23 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
+import {
+    Broker,
+    BrokerPostResponse,
+    BrokerFilter,
+    BrokerFilterDetail,
+    BrokerFiltersPage,
+    BrokerFilterPostResponse,
+    BrokerFilterAttachResponse,
+    BrokerFilterValidation,
+    BrokerAlertSaveResponse,
+    type BrokerPost,
+    type BrokerFilterQuery,
+} from "skyportal-js-models/Brokers";
 import * as Photometry from "skyportal-js-models/Photometry";
 import * as Schemas from "skyportal-js-models/Schemas";
-import { Broker, BrokerPostResponse, BrokerFilter, BrokerFilterDetail, BrokerFiltersPage, BrokerFilterPostResponse, BrokerFilterAttachResponse, BrokerFilterValidation, BrokerAlertSaveResponse } from "skyportal-js-models/Brokers";
-import type { BrokerPost, BrokerFilterQuery } from "skyportal-js-models/Brokers";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/Brokers";
 
@@ -33,7 +45,10 @@ export const fetchBrokers = async (client: Http.Client): Promise<Array<Broker>> 
  * @category Requests
  * @param brokerId - ID of the broker.
  */
-export const fetchBroker = async (client: Http.Client, brokerId: number): Promise<Broker> =>
+export const fetchBroker = async (
+    client: Http.Client,
+    brokerId: number
+): Promise<Broker> =>
     Http.decode(Broker, await Http.get(client, `/api/brokers/${brokerId}`));
 
 /**
@@ -47,8 +62,14 @@ export const fetchBroker = async (client: Http.Client, brokerId: number): Promis
  * @category Requests
  * @param payload - The broker to register.
  */
-export const postBroker = async (client: Http.Client, payload: BrokerPost): Promise<BrokerPostResponse> =>
-    Http.decode(BrokerPostResponse, await Http.post(client, "/api/brokers", Http.body(payload)));
+export const postBroker = async (
+    client: Http.Client,
+    payload: BrokerPost
+): Promise<BrokerPostResponse> =>
+    Http.decode(
+        BrokerPostResponse,
+        await Http.post(client, "/api/brokers", Http.body(payload))
+    );
 
 /**
  * Options for updating a broker.
@@ -115,7 +136,10 @@ export const updateBroker = async (
  * @category Requests
  * @param brokerId - ID of the broker to delete.
  */
-export const deleteBroker = async (client: Http.Client, brokerId: number): Promise<void> => {
+export const deleteBroker = async (
+    client: Http.Client,
+    brokerId: number
+): Promise<void> => {
     await Http.del(client, `/api/brokers/${brokerId}`);
 };
 
@@ -274,12 +298,16 @@ export const fetchBrokerPhotometry = async (
 ): Promise<Array<Photometry.PhotometryPoint>> =>
     Http.decode(
         v.array(Photometry.PhotometryPoint),
-        await Http.get(client, `/api/brokers/${brokerId}/alerts/${alertId}/photometry`, {
-            format: options.format ?? "mag",
-            magsys: options.magsys ?? "ab",
-            refresh: options.refresh ?? false,
-            survey: options.survey,
-        })
+        await Http.get(
+            client,
+            `/api/brokers/${brokerId}/alerts/${alertId}/photometry`,
+            {
+                format: options.format ?? "mag",
+                magsys: options.magsys ?? "ab",
+                refresh: options.refresh ?? false,
+                survey: options.survey,
+            }
+        )
     );
 
 /**
@@ -403,8 +431,14 @@ export const fetchBrokerConeSearch = async (
  * @category Requests
  * @param brokerId - ID of the broker.
  */
-export const fetchBrokerFilters = async (client: Http.Client, brokerId: number): Promise<Array<BrokerFilter>> =>
-    Http.decode(v.array(BrokerFilter), await Http.get(client, `/api/brokers/${brokerId}/filters`));
+export const fetchBrokerFilters = async (
+    client: Http.Client,
+    brokerId: number
+): Promise<Array<BrokerFilter>> =>
+    Http.decode(
+        v.array(BrokerFilter),
+        await Http.get(client, `/api/brokers/${brokerId}/filters`)
+    );
 
 /**
  * Retrieve one broker filter with its broker-side versions and state.
@@ -423,7 +457,10 @@ export const fetchBrokerFilter = async (
     brokerId: number,
     filterId: number
 ): Promise<BrokerFilterDetail> =>
-    Http.decode(BrokerFilterDetail, await Http.get(client, `/api/brokers/${brokerId}/filters/${filterId}`));
+    Http.decode(
+        BrokerFilterDetail,
+        await Http.get(client, `/api/brokers/${brokerId}/filters/${filterId}`)
+    );
 
 /**
  * Options for creating a broker filter version.
@@ -474,7 +511,8 @@ export const postBrokerFilter = async (
             Http.body({
                 altdata: options.altdata,
                 filters: options.filters,
-                query: options.query === undefined ? undefined : Http.body(options.query),
+                query:
+                    options.query === undefined ? undefined : Http.body(options.query),
                 autosave: options.autosave,
             })
         )
@@ -544,7 +582,11 @@ export const updateBrokerFilter = async (
  * @param brokerId - ID of the broker the filter is attached to.
  * @param filterId - ID of the SkyPortal filter to delete.
  */
-export const deleteBrokerFilter = async (client: Http.Client, brokerId: number, filterId: number): Promise<void> => {
+export const deleteBrokerFilter = async (
+    client: Http.Client,
+    brokerId: number,
+    filterId: number
+): Promise<void> => {
     await Http.del(client, `/api/brokers/${brokerId}/filters/${filterId}`);
 };
 
@@ -634,7 +676,8 @@ export const postBrokerFilterTest = (
     client: Http.Client,
     brokerId: number,
     params: Record<string, unknown> = {}
-): Promise<unknown> => Http.post(client, `/api/brokers/${brokerId}/filter/test`, params);
+): Promise<unknown> =>
+    Http.post(client, `/api/brokers/${brokerId}/filter/test`, params);
 
 /**
  * Options for validating a broker filter version.

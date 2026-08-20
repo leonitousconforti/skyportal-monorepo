@@ -10,9 +10,17 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.observations import (
     Observation as Observation,
+)
+from skyportal_py_models.observations import (
     ObservationPost as ObservationPost,
+)
+from skyportal_py_models.observations import (
     ObservationQueues as ObservationQueues,
+)
+from skyportal_py_models.observations import (
     ObservationSimSurveyResponse as ObservationSimSurveyResponse,
+)
+from skyportal_py_models.observations import (
     ObservationsPage as ObservationsPage,
 )
 

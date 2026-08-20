@@ -9,7 +9,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from skyportal_py_models.users import User
 
-
 FollowupPriority = Literal["1", "2", "3", "4", "5"]
 """Allowed follow-up priorities, lowest (``"1"``) to highest (``"5"``)."""
 

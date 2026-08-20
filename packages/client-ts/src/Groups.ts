@@ -6,9 +6,16 @@
 
 import * as v from "valibot";
 
+import {
+    Group,
+    GroupsResponse,
+    GroupPostResponse,
+    GroupStreamPostResponse,
+    GroupUserPostResponse,
+    type GroupPost,
+} from "skyportal-js-models/Groups";
+
 import * as Http from "./Http.ts";
-import { Group, GroupsResponse, GroupPostResponse, GroupStreamPostResponse, GroupUserPostResponse } from "skyportal-js-models/Groups";
-import type { GroupPost } from "skyportal-js-models/Groups";
 
 export * from "skyportal-js-models/Groups";
 
@@ -29,7 +36,10 @@ export interface FetchGroupsOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchGroups = async (client: Http.Client, options: FetchGroupsOptions = {}): Promise<GroupsResponse> =>
+export const fetchGroups = async (
+    client: Http.Client,
+    options: FetchGroupsOptions = {}
+): Promise<GroupsResponse> =>
     Http.decode(
         GroupsResponse,
         await Http.get(client, "/api/groups", {
@@ -80,7 +90,10 @@ export const fetchGroup = async (
  * @category Requests
  * @param name - Exact group name to match.
  */
-export const fetchGroupsByName = async (client: Http.Client, name: string): Promise<Array<Group>> =>
+export const fetchGroupsByName = async (
+    client: Http.Client,
+    name: string
+): Promise<Array<Group>> =>
     Http.decode(v.array(Group), await Http.get(client, "/api/groups", { name }));
 
 /**
@@ -90,8 +103,14 @@ export const fetchGroupsByName = async (client: Http.Client, name: string): Prom
  * @category Requests
  * @param payload - The group to create.
  */
-export const postGroup = async (client: Http.Client, payload: GroupPost): Promise<GroupPostResponse> =>
-    Http.decode(GroupPostResponse, await Http.post(client, "/api/groups", Http.body(payload)));
+export const postGroup = async (
+    client: Http.Client,
+    payload: GroupPost
+): Promise<GroupPostResponse> =>
+    Http.decode(
+        GroupPostResponse,
+        await Http.post(client, "/api/groups", Http.body(payload))
+    );
 
 /**
  * Options for updating a group.
@@ -144,7 +163,10 @@ export const updateGroup = async (
  * @category Requests
  * @param groupId - ID of the group to delete.
  */
-export const deleteGroup = async (client: Http.Client, groupId: number): Promise<void> => {
+export const deleteGroup = async (
+    client: Http.Client,
+    groupId: number
+): Promise<void> => {
     await Http.del(client, `/api/groups/${groupId}`);
 };
 
@@ -174,7 +196,9 @@ export const postGroupStream = async (
 ): Promise<GroupStreamPostResponse> =>
     Http.decode(
         GroupStreamPostResponse,
-        await Http.post(client, `/api/groups/${groupId}/streams`, { stream_id: streamId })
+        await Http.post(client, `/api/groups/${groupId}/streams`, {
+            stream_id: streamId,
+        })
     );
 
 /**
@@ -187,7 +211,11 @@ export const postGroupStream = async (
  * @param groupId - ID of the group.
  * @param streamId - ID of the stream to remove from the group.
  */
-export const deleteGroupStream = async (client: Http.Client, groupId: number, streamId: number): Promise<void> => {
+export const deleteGroupStream = async (
+    client: Http.Client,
+    groupId: number,
+    streamId: number
+): Promise<void> => {
     await Http.del(client, `/api/groups/${groupId}/streams/${streamId}`);
 };
 
@@ -284,7 +312,11 @@ export const updateGroupUser = async (
  * @param groupId - ID of the group.
  * @param userId - ID of the group member to remove.
  */
-export const deleteGroupUser = async (client: Http.Client, groupId: number, userId: number): Promise<void> => {
+export const deleteGroupUser = async (
+    client: Http.Client,
+    groupId: number,
+    userId: number
+): Promise<void> => {
     await Http.del(client, `/api/groups/${groupId}/users/${userId}`);
 };
 

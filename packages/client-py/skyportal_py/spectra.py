@@ -9,17 +9,41 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.spectra import (
     BulkSpectraResponse as BulkSpectraResponse,
+)
+from skyportal_py_models.spectra import (
     BulkSpectraSource as BulkSpectraSource,
+)
+from skyportal_py_models.spectra import (
     BulkSpectrum as BulkSpectrum,
+)
+from skyportal_py_models.spectra import (
     ParsedSpectrum as ParsedSpectrum,
+)
+from skyportal_py_models.spectra import (
     Spectrum as Spectrum,
+)
+from skyportal_py_models.spectra import (
     SpectrumAsciiParse as SpectrumAsciiParse,
+)
+from skyportal_py_models.spectra import (
     SpectrumAsciiPost as SpectrumAsciiPost,
+)
+from skyportal_py_models.spectra import (
     SpectrumDetail as SpectrumDetail,
+)
+from skyportal_py_models.spectra import (
     SpectrumPost as SpectrumPost,
+)
+from skyportal_py_models.spectra import (
     SpectrumPostResponse as SpectrumPostResponse,
+)
+from skyportal_py_models.spectra import (
     SpectrumUpdate as SpectrumUpdate,
+)
+from skyportal_py_models.spectra import (
     _SourceSpectra as _SourceSpectra,
+)
+from skyportal_py_models.spectra import (
     _SpectrumBase as _SpectrumBase,
 )
 

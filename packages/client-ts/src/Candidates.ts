@@ -6,9 +6,19 @@
 
 import * as v from "valibot";
 
+import {
+    Candidate,
+    CandidatesPage,
+    CandidatePostResponse,
+    CandidateFilterPage,
+    BulkCandidateDeleteResponse,
+    ScanReportsPage,
+    ScanReportItem,
+    type CandidatePost,
+    type ScanReportPost,
+} from "skyportal-js-models/Candidates";
+
 import * as Http from "./Http.ts";
-import { Candidate, CandidatesPage, CandidatePostResponse, CandidateFilterPage, BulkCandidateDeleteResponse, ScanReportsPage, ScanReportItem } from "skyportal-js-models/Candidates";
-import type { CandidatePost, ScanReportPost } from "skyportal-js-models/Candidates";
 
 export * from "skyportal-js-models/Candidates";
 
@@ -230,10 +240,13 @@ export const fetchCandidates = async (
             listNameReject: options.listNameReject,
             queryID: options.queryId,
             photometryAnnotationsFilter: options.photometryAnnotationsFilter,
-            photometryAnnotationsFilterOrigin: options.photometryAnnotationsFilterOrigin,
-            photometryAnnotationsFilterBefore: options.photometryAnnotationsFilterBefore,
+            photometryAnnotationsFilterOrigin:
+                options.photometryAnnotationsFilterOrigin,
+            photometryAnnotationsFilterBefore:
+                options.photometryAnnotationsFilterBefore,
             photometryAnnotationsFilterAfter: options.photometryAnnotationsFilterAfter,
-            photometryAnnotationsFilterMinCount: options.photometryAnnotationsFilterMinCount,
+            photometryAnnotationsFilterMinCount:
+                options.photometryAnnotationsFilterMinCount,
             firstDetectionAfter: options.firstDetectionAfter,
             lastDetectionBefore: options.lastDetectionBefore,
             numberDetections: options.numberDetections,
@@ -252,8 +265,14 @@ export const fetchCandidates = async (
  * @param payload - The candidate to post, including the filters it passed
  *   (`filter_ids`) and when it passed them (`passed_at`).
  */
-export const postCandidate = async (client: Http.Client, payload: CandidatePost): Promise<CandidatePostResponse> =>
-    Http.decode(CandidatePostResponse, await Http.post(client, "/api/candidates", Http.body(payload)));
+export const postCandidate = async (
+    client: Http.Client,
+    payload: CandidatePost
+): Promise<CandidatePostResponse> =>
+    Http.decode(
+        CandidatePostResponse,
+        await Http.post(client, "/api/candidates", Http.body(payload))
+    );
 
 /**
  * Delete the candidate entries for an object on a given filter.
@@ -264,7 +283,11 @@ export const postCandidate = async (client: Http.Client, payload: CandidatePost)
  * @param filterId - ID of the filter the candidate passed. The server errors if
  *   no candidate matches this `(objId, filterId)` pairing.
  */
-export const deleteCandidate = async (client: Http.Client, objId: string, filterId: number): Promise<void> => {
+export const deleteCandidate = async (
+    client: Http.Client,
+    objId: string,
+    filterId: number
+): Promise<void> => {
     await Http.del(client, `/api/candidates/${objId}/${filterId}`);
 };
 
@@ -387,7 +410,10 @@ export const fetchCandidatesFilter = async (
  * @category Requests
  * @param payload - Groups owning the report plus the two time ranges it covers.
  */
-export const postScanReport = async (client: Http.Client, payload: ScanReportPost): Promise<void> => {
+export const postScanReport = async (
+    client: Http.Client,
+    payload: ScanReportPost
+): Promise<void> => {
     await Http.post(client, "/api/candidates/scan_reports", Http.body(payload));
 };
 
@@ -428,8 +454,14 @@ export const fetchScanReports = async (
  * @category Requests
  * @param reportId - ID of the scanning report.
  */
-export const fetchScanReportItems = async (client: Http.Client, reportId: number): Promise<Array<ScanReportItem>> =>
-    Http.decode(v.array(ScanReportItem), await Http.get(client, `/api/candidates/scan_reports/${reportId}/items`));
+export const fetchScanReportItems = async (
+    client: Http.Client,
+    reportId: number
+): Promise<Array<ScanReportItem>> =>
+    Http.decode(
+        v.array(ScanReportItem),
+        await Http.get(client, `/api/candidates/scan_reports/${reportId}/items`)
+    );
 
 /**
  * Set the comment on one item of a candidate scanning report.
@@ -447,7 +479,11 @@ export const updateScanReportItem = async (
     itemId: number,
     comment: string | null
 ): Promise<void> => {
-    await Http.patch(client, `/api/candidates/scan_reports/${reportId}/items/${itemId}`, {
-        comment,
-    });
+    await Http.patch(
+        client,
+        `/api/candidates/scan_reports/${reportId}/items/${itemId}`,
+        {
+            comment,
+        }
+    );
 };

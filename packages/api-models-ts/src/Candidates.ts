@@ -293,7 +293,9 @@ export const BulkCandidateDeleteResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type BulkCandidateDeleteResponse = v.InferOutput<typeof BulkCandidateDeleteResponse>;
+export type BulkCandidateDeleteResponse = v.InferOutput<
+    typeof BulkCandidateDeleteResponse
+>;
 
 /**
  * Time range over which candidates must have passed a filter.

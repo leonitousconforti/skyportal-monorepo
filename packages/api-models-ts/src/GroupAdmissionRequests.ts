@@ -16,13 +16,19 @@ import * as Users from "./Users.ts";
  * @since 1.0.0
  * @category Models
  */
-export const GroupAdmissionRequestStatus = v.picklist(["pending", "accepted", "declined"]);
+export const GroupAdmissionRequestStatus = v.picklist([
+    "pending",
+    "accepted",
+    "declined",
+]);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type GroupAdmissionRequestStatus = v.InferOutput<typeof GroupAdmissionRequestStatus>;
+export type GroupAdmissionRequestStatus = v.InferOutput<
+    typeof GroupAdmissionRequestStatus
+>;
 
 /**
  * A request to join a group (upstream `GroupAdmissionRequest`).
@@ -55,10 +61,14 @@ export type GroupAdmissionRequest = v.InferOutput<typeof GroupAdmissionRequest>;
  * @since 1.0.0
  * @category Models
  */
-export const GroupAdmissionRequestPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const GroupAdmissionRequestPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type GroupAdmissionRequestPostResponse = v.InferOutput<typeof GroupAdmissionRequestPostResponse>;
+export type GroupAdmissionRequestPostResponse = v.InferOutput<
+    typeof GroupAdmissionRequestPostResponse
+>;

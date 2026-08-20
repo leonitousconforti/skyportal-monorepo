@@ -7,9 +7,17 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.allocations import (
     Allocation as Allocation,
+)
+from skyportal_py_models.allocations import (
     AllocationPost as AllocationPost,
+)
+from skyportal_py_models.allocations import (
     AllocationPostResponse as AllocationPostResponse,
+)
+from skyportal_py_models.allocations import (
     AllocationUpdate as AllocationUpdate,
+)
+from skyportal_py_models.allocations import (
     AllocationUser as AllocationUser,
 )
 

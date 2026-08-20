@@ -3,12 +3,12 @@
 Two release trains, one per language. Within each, the packages release **in
 lockstep**: one version, one tag, one changelog.
 
-| directory                 | distribution          | registry | notes            |
-| ------------------------- | --------------------- | -------- | ---------------- |
-| `packages/api-models-py`  | `skyportal-py-models` | PyPI     | towncrier, `pypi-v*` tags |
-| `packages/client-py`      | `skyportal-py`        | PyPI     | pins the models exactly |
-| `packages/api-models-ts`  | `skyportal-js-models` | npm      | changesets       |
-| `packages/client-ts`      | `skyportal-js`        | npm      | `workspace:^` on the models |
+| directory                | distribution          | registry | notes                       |
+| ------------------------ | --------------------- | -------- | --------------------------- |
+| `packages/api-models-py` | `skyportal-py-models` | PyPI     | towncrier, `pypi-v*` tags   |
+| `packages/client-py`     | `skyportal-py`        | PyPI     | pins the models exactly     |
+| `packages/api-models-ts` | `skyportal-js-models` | npm      | changesets                  |
+| `packages/client-ts`     | `skyportal-js`        | npm      | `workspace:^` on the models |
 
 All commands run inside the nix dev shell (`nix develop`), which provides uv,
 node and pnpm.

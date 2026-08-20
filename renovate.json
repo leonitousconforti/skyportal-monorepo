@@ -65,7 +65,15 @@
         },
         {
             "description": "Group the TypeScript build tools into one PR",
-            "matchPackageNames": ["oxfmt", "oxlint", "oxlint-tsgolint", "@effect/build-utils", "@effect/tsgo", "typescript", "tsx"],
+            "matchPackageNames": [
+                "oxfmt",
+                "oxlint",
+                "oxlint-tsgolint",
+                "@effect/build-utils",
+                "@effect/tsgo",
+                "typescript",
+                "tsx"
+            ],
             "groupName": "typescript build tools packages",
             "addLabels": ["pnpm"]
         },

@@ -147,7 +147,9 @@ export interface SpectrumPost {
  * @since 1.0.0
  * @category Models
  */
-export const SpectrumPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SpectrumPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

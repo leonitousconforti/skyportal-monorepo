@@ -29,7 +29,7 @@ def test_models_are_strict() -> None:
 
 
 def test_wire_aliases_are_accepted() -> None:
-    """camelCase wire names validate into snake_case attributes."""
+    """CamelCase wire names validate into snake_case attributes."""
     page = SourcesPage.model_validate(
         {"sources": [], "totalMatches": 3, "pageNumber": 2, "numPerPage": 1}
     )

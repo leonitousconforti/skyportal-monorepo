@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.taxonomies import (
     Taxonomy as Taxonomy,
+)
+from skyportal_py_models.taxonomies import (
     TaxonomyPost as TaxonomyPost,
+)
+from skyportal_py_models.taxonomies import (
     TaxonomyPostResponse as TaxonomyPostResponse,
+)
+from skyportal_py_models.taxonomies import (
     TaxonomyPut as TaxonomyPut,
 )
 

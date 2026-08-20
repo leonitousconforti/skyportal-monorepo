@@ -6,9 +6,13 @@
 
 import * as v from "valibot";
 
+import {
+    RecurringApi,
+    RecurringApiPostResponse,
+    type RecurringApiPost,
+} from "skyportal-js-models/RecurringApis";
+
 import * as Http from "./Http.ts";
-import { RecurringApi, RecurringApiPostResponse } from "skyportal-js-models/RecurringApis";
-import type { RecurringApiPost } from "skyportal-js-models/RecurringApis";
 
 export * from "skyportal-js-models/RecurringApis";
 
@@ -21,7 +25,9 @@ export * from "skyportal-js-models/RecurringApis";
  * @since 1.0.0
  * @category Requests
  */
-export const fetchRecurringApis = async (client: Http.Client): Promise<Array<RecurringApi>> =>
+export const fetchRecurringApis = async (
+    client: Http.Client
+): Promise<Array<RecurringApi>> =>
     Http.decode(v.array(RecurringApi), await Http.get(client, "/api/recurring_api"));
 
 /**
@@ -34,8 +40,14 @@ export const fetchRecurringApis = async (client: Http.Client): Promise<Array<Rec
  * @category Requests
  * @param recurringApiId - ID of the recurring API call to retrieve.
  */
-export const fetchRecurringApi = async (client: Http.Client, recurringApiId: number): Promise<RecurringApi> =>
-    Http.decode(RecurringApi, await Http.get(client, `/api/recurring_api/${recurringApiId}`));
+export const fetchRecurringApi = async (
+    client: Http.Client,
+    recurringApiId: number
+): Promise<RecurringApi> =>
+    Http.decode(
+        RecurringApi,
+        await Http.get(client, `/api/recurring_api/${recurringApiId}`)
+    );
 
 /**
  * Schedule a recurring API call (requires "Manage Recurring APIs").
@@ -48,7 +60,10 @@ export const postRecurringApi = async (
     client: Http.Client,
     payload: RecurringApiPost
 ): Promise<RecurringApiPostResponse> =>
-    Http.decode(RecurringApiPostResponse, await Http.post(client, "/api/recurring_api", Http.body(payload)));
+    Http.decode(
+        RecurringApiPostResponse,
+        await Http.post(client, "/api/recurring_api", Http.body(payload))
+    );
 
 /**
  * Delete a recurring API call (requires "Manage Recurring APIs").
@@ -58,6 +73,9 @@ export const postRecurringApi = async (
  * @param recurringApiId - ID of the recurring API call to delete; only its
  *   owner may delete it.
  */
-export const deleteRecurringApi = async (client: Http.Client, recurringApiId: number): Promise<void> => {
+export const deleteRecurringApi = async (
+    client: Http.Client,
+    recurringApiId: number
+): Promise<void> => {
     await Http.del(client, `/api/recurring_api/${recurringApiId}`);
 };

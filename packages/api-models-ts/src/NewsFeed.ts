@@ -44,7 +44,13 @@ export type NewsFeedAuthorInfo = v.InferOutput<typeof NewsFeedAuthorInfo>;
  */
 export const NewsFeedItem = Schemas.model(
     v.strictObject({
-        type: v.picklist(["source", "comment", "classification", "spectrum", "photometry"]),
+        type: v.picklist([
+            "source",
+            "comment",
+            "classification",
+            "spectrum",
+            "photometry",
+        ]),
         time: Schemas.NullishTimestamp,
         message: Schemas.NullishString,
         source_id: Schemas.NullishString,

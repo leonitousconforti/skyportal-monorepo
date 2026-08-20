@@ -37,7 +37,9 @@ export const EventObservationPlanStatistics = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type EventObservationPlanStatistics = v.InferOutput<typeof EventObservationPlanStatistics>;
+export type EventObservationPlanStatistics = v.InferOutput<
+    typeof EventObservationPlanStatistics
+>;
 
 /**
  * A planned exposure (upstream `PlannedObservation`).
@@ -100,7 +102,9 @@ export const EventObservationPlan = Schemas.model(
         status: Schemas.NullishString,
         statistics: Schemas.list(EventObservationPlanStatistics),
         planned_observations: Schemas.list(PlannedObservation),
-        survey_efficiency_analyses: Schemas.list(SurveyEfficiency.SurveyEfficiencyForObservationPlan),
+        survey_efficiency_analyses: Schemas.list(
+            SurveyEfficiency.SurveyEfficiencyForObservationPlan
+        ),
         instrument: Schemas.nullish(Instruments.Instrument),
         observation_plan_request: Schemas.nullish(Schemas.JsonObject),
     })
@@ -170,7 +174,9 @@ export const ObservationPlanRequestsPage = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type ObservationPlanRequestsPage = v.InferOutput<typeof ObservationPlanRequestsPage>;
+export type ObservationPlanRequestsPage = v.InferOutput<
+    typeof ObservationPlanRequestsPage
+>;
 
 /**
  * One page of observation plan requests under an allocation.
@@ -191,7 +197,9 @@ export const AllocationObservationPlansPage = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type AllocationObservationPlansPage = v.InferOutput<typeof AllocationObservationPlansPage>;
+export type AllocationObservationPlansPage = v.InferOutput<
+    typeof AllocationObservationPlansPage
+>;
 
 /**
  * Payload for submitting an observation plan request.
@@ -230,7 +238,9 @@ export const ObservationPlanIdsResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type ObservationPlanIdsResponse = v.InferOutput<typeof ObservationPlanIdsResponse>;
+export type ObservationPlanIdsResponse = v.InferOutput<
+    typeof ObservationPlanIdsResponse
+>;
 
 /**
  * Payload for submitting a manually-built observation plan.
@@ -264,13 +274,17 @@ export interface ObservationPlanManualPost {
  * @since 1.0.0
  * @category Models
  */
-export const ObservationPlanManualPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const ObservationPlanManualPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type ObservationPlanManualPostResponse = v.InferOutput<typeof ObservationPlanManualPostResponse>;
+export type ObservationPlanManualPostResponse = v.InferOutput<
+    typeof ObservationPlanManualPostResponse
+>;
 
 /**
  * GeoJSON summary of an observation plan's fields.
@@ -296,13 +310,17 @@ export type ObservationPlanGeoJson = v.InferOutput<typeof ObservationPlanGeoJson
  * @since 1.0.0
  * @category Models
  */
-export const ObservationPlanSimSurveyResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const ObservationPlanSimSurveyResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type ObservationPlanSimSurveyResponse = v.InferOutput<typeof ObservationPlanSimSurveyResponse>;
+export type ObservationPlanSimSurveyResponse = v.InferOutput<
+    typeof ObservationPlanSimSurveyResponse
+>;
 
 /**
  * Payload for creating a default observation plan request.
@@ -331,13 +349,17 @@ export interface DefaultObservationPlanPost {
  * @since 1.0.0
  * @category Models
  */
-export const DefaultObservationPlanPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const DefaultObservationPlanPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type DefaultObservationPlanPostResponse = v.InferOutput<typeof DefaultObservationPlanPostResponse>;
+export type DefaultObservationPlanPostResponse = v.InferOutput<
+    typeof DefaultObservationPlanPostResponse
+>;
 
 /**
  * A default efficiency request as nested in a default observation plan
@@ -361,7 +383,9 @@ export const DefaultSurveyEfficiencyRequest = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type DefaultSurveyEfficiencyRequest = v.InferOutput<typeof DefaultSurveyEfficiencyRequest>;
+export type DefaultSurveyEfficiencyRequest = v.InferOutput<
+    typeof DefaultSurveyEfficiencyRequest
+>;
 
 /**
  * A default observation plan (upstream `DefaultObservationPlanRequest`).
@@ -391,4 +415,6 @@ export const DefaultObservationPlanRequest = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type DefaultObservationPlanRequest = v.InferOutput<typeof DefaultObservationPlanRequest>;
+export type DefaultObservationPlanRequest = v.InferOutput<
+    typeof DefaultObservationPlanRequest
+>;

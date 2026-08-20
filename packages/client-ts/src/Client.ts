@@ -97,7 +97,10 @@ export interface CreateClientOptions {
  * @category Models
  */
 export type Bound<TEndpoints> = {
-    readonly [K in keyof TEndpoints]: TEndpoints[K] extends (client: Http.Client, ...args: infer TArgs) => infer TResult
+    readonly [K in keyof TEndpoints]: TEndpoints[K] extends (
+        client: Http.Client,
+        ...args: infer TArgs
+    ) => infer TResult
         ? (...args: TArgs) => TResult
         : never;
 };
@@ -231,7 +234,8 @@ const endpoints = {
     postFollowupRequestWatcher: FollowupRequests.postFollowupRequestWatcher,
     deleteFollowupRequestWatcher: FollowupRequests.deleteFollowupRequestWatcher,
     fetchFollowupRequestSchedule: FollowupRequests.fetchFollowupRequestSchedule,
-    updateFollowupRequestPrioritization: FollowupRequests.updateFollowupRequestPrioritization,
+    updateFollowupRequestPrioritization:
+        FollowupRequests.updateFollowupRequestPrioritization,
     fetchDefaultFollowupRequest: FollowupRequests.fetchDefaultFollowupRequest,
     fetchDefaultFollowupRequests: FollowupRequests.fetchDefaultFollowupRequests,
     postDefaultFollowupRequest: FollowupRequests.postDefaultFollowupRequest,
@@ -256,7 +260,8 @@ const endpoints = {
     deleteGcnEventTag: GcnEvents.deleteGcnEventTag,
     fetchGcnEventProperties: GcnEvents.fetchGcnEventProperties,
     fetchGcnEventSurveyEfficiency: GcnEvents.fetchGcnEventSurveyEfficiency,
-    fetchGcnEventObservationPlanRequests: GcnEvents.fetchGcnEventObservationPlanRequests,
+    fetchGcnEventObservationPlanRequests:
+        GcnEvents.fetchGcnEventObservationPlanRequests,
     fetchGcnEventCatalogQueries: GcnEvents.fetchGcnEventCatalogQueries,
     postGcnEventUser: GcnEvents.postGcnEventUser,
     deleteGcnEventUser: GcnEvents.deleteGcnEventUser,
@@ -336,7 +341,8 @@ const endpoints = {
     fetchLocalizationTags: Localizations.fetchLocalizationTags,
     fetchLocalizationProperties: Localizations.fetchLocalizationProperties,
     fetchLocalizationCrossmatch: Localizations.fetchLocalizationCrossmatch,
-    fetchLocalizationObservabilityPlot: Localizations.fetchLocalizationObservabilityPlot,
+    fetchLocalizationObservabilityPlot:
+        Localizations.fetchLocalizationObservabilityPlot,
     fetchLocalizationAirmassChart: Localizations.fetchLocalizationAirmassChart,
     fetchLocalizationWorldmapPlot: Localizations.fetchLocalizationWorldmapPlot,
     fetchMmaDetector: MmaDetectors.fetchMmaDetector,
@@ -381,9 +387,11 @@ const endpoints = {
     fetchObservationPlanMovie: ObservationPlans.fetchObservationPlanMovie,
     fetchObservationPlanSimSurvey: ObservationPlans.fetchObservationPlanSimSurvey,
     deleteObservationPlanSimSurvey: ObservationPlans.deleteObservationPlanSimSurvey,
-    fetchObservationPlanSimSurveyPlot: ObservationPlans.fetchObservationPlanSimSurveyPlot,
+    fetchObservationPlanSimSurveyPlot:
+        ObservationPlans.fetchObservationPlanSimSurveyPlot,
     fetchObservationPlanGeoJson: ObservationPlans.fetchObservationPlanGeoJson,
-    fetchObservationPlanSurveyEfficiency: ObservationPlans.fetchObservationPlanSurveyEfficiency,
+    fetchObservationPlanSurveyEfficiency:
+        ObservationPlans.fetchObservationPlanSurveyEfficiency,
     postObservationPlanObservingRun: ObservationPlans.postObservationPlanObservingRun,
     deleteObservationPlanFields: ObservationPlans.deleteObservationPlanFields,
     postDefaultObservationPlan: ObservationPlans.postDefaultObservationPlan,
@@ -461,7 +469,8 @@ const endpoints = {
     updateSharingServiceGroup: SharingServices.updateSharingServiceGroup,
     deleteSharingServiceGroup: SharingServices.deleteSharingServiceGroup,
     postSharingServiceAutoPublishers: SharingServices.postSharingServiceAutoPublishers,
-    deleteSharingServiceAutoPublishers: SharingServices.deleteSharingServiceAutoPublishers,
+    deleteSharingServiceAutoPublishers:
+        SharingServices.deleteSharingServiceAutoPublishers,
     fetchShift: Shifts.fetchShift,
     fetchShifts: Shifts.fetchShifts,
     postShift: Shifts.postShift,
@@ -533,10 +542,14 @@ const endpoints = {
     postStreamUser: Streams.postStreamUser,
     deleteStreamUser: Streams.deleteStreamUser,
     postSummaryQuery: SummaryQuery.postSummaryQuery,
-    fetchSurveyEfficiencyForObservations: SurveyEfficiency.fetchSurveyEfficiencyForObservations,
-    fetchSurveyEfficienciesForObservations: SurveyEfficiency.fetchSurveyEfficienciesForObservations,
-    fetchSurveyEfficiencyForObservationPlan: SurveyEfficiency.fetchSurveyEfficiencyForObservationPlan,
-    fetchSurveyEfficienciesForObservationPlan: SurveyEfficiency.fetchSurveyEfficienciesForObservationPlan,
+    fetchSurveyEfficiencyForObservations:
+        SurveyEfficiency.fetchSurveyEfficiencyForObservations,
+    fetchSurveyEfficienciesForObservations:
+        SurveyEfficiency.fetchSurveyEfficienciesForObservations,
+    fetchSurveyEfficiencyForObservationPlan:
+        SurveyEfficiency.fetchSurveyEfficiencyForObservationPlan,
+    fetchSurveyEfficienciesForObservationPlan:
+        SurveyEfficiency.fetchSurveyEfficienciesForObservationPlan,
     postDefaultSurveyEfficiency: SurveyEfficiency.postDefaultSurveyEfficiency,
     fetchDefaultSurveyEfficiency: SurveyEfficiency.fetchDefaultSurveyEfficiency,
     fetchDefaultSurveyEfficiencies: SurveyEfficiency.fetchDefaultSurveyEfficiencies,
@@ -603,8 +616,15 @@ const endpoints = {
 export type SkyPortal = Http.Client & Bound<typeof endpoints>;
 
 /** @internal */
-const buildUrl = (baseUrl: string, path: string, query: Http.QueryParams | undefined): string => {
-    const url = new URL(path.replace(/^\//, ""), baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+const buildUrl = (
+    baseUrl: string,
+    path: string,
+    query: Http.QueryParams | undefined
+): string => {
+    const url = new URL(
+        path.replace(/^\//, ""),
+        baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`
+    );
     for (const [key, value] of Object.entries(query ?? {})) {
         if (value === null || value === undefined) {
             continue;
@@ -639,7 +659,10 @@ const buildUrl = (baseUrl: string, path: string, query: Http.QueryParams | undef
  * const page = await client.fetchSources({ numPerPage: 10 })
  * ```
  */
-export const createClient = (baseUrl: string, options: CreateClientOptions = {}): SkyPortal => {
+export const createClient = (
+    baseUrl: string,
+    options: CreateClientOptions = {}
+): SkyPortal => {
     const doFetch = options.fetch ?? globalThis.fetch;
     const timeout = options.timeout === undefined ? 30_000 : options.timeout;
 
@@ -660,7 +683,9 @@ export const createClient = (baseUrl: string, options: CreateClientOptions = {})
                 body = JSON.stringify(request.body);
             }
 
-            const signal = request.signal ?? (timeout === null ? undefined : AbortSignal.timeout(timeout));
+            const signal =
+                request.signal ??
+                (timeout === null ? undefined : AbortSignal.timeout(timeout));
 
             return doFetch(buildUrl(baseUrl, request.path, request.query), {
                 method: request.method,
@@ -674,7 +699,10 @@ export const createClient = (baseUrl: string, options: CreateClientOptions = {})
     const bound: Record<string, unknown> = { ...transport };
     for (const [name, endpoint] of Object.entries(endpoints)) {
         bound[name] = (...args: Array<never>) =>
-            (endpoint as (client: Http.Client, ...rest: Array<never>) => unknown)(transport, ...args);
+            (endpoint as (client: Http.Client, ...rest: Array<never>) => unknown)(
+                transport,
+                ...args
+            );
     }
     // The endpoint table is bound name-by-name at runtime, which the checker
     // cannot follow; `Bound<typeof endpoints>` states the shape it produces.

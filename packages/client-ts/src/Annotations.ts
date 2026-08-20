@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    Annotation,
+    AnnotationDetail,
+    AnnotationPostResponse,
+    type AnnotationResourceType,
+} from "skyportal-js-models/Annotations";
+
 import * as Http from "./Http.ts";
-import { Annotation, AnnotationDetail, AnnotationPostResponse } from "skyportal-js-models/Annotations";
-import type { AnnotationResourceType } from "skyportal-js-models/Annotations";
 
 export * from "skyportal-js-models/Annotations";
 
@@ -38,7 +43,10 @@ export const fetchAnnotations = async (
 ): Promise<Array<Annotation>> =>
     Http.decode(
         v.array(Annotation),
-        await Http.get(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations`)
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations`
+        )
     );
 
 /**
@@ -139,7 +147,10 @@ export const deleteAnnotation = async (
     annotationId: number,
     options: AnnotationResourceOptions = {}
 ): Promise<void> => {
-    await Http.del(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations/${annotationId}`);
+    await Http.del(
+        client,
+        `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations/${annotationId}`
+    );
 };
 
 /**
@@ -159,7 +170,10 @@ export const fetchAnnotation = async (
 ): Promise<AnnotationDetail> =>
     Http.decode(
         AnnotationDetail,
-        await Http.get(client, `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations/${annotationId}`)
+        await Http.get(
+            client,
+            `/api/${options.resourceType ?? "sources"}/${resourceId}/annotations/${annotationId}`
+        )
     );
 
 /**

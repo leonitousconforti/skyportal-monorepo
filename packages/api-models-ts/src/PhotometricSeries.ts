@@ -103,7 +103,9 @@ export const PhotometricSeries = Schemas.model(
         stream_ids: Schemas.list(Schemas.Integer),
         groups: Schemas.list(Groups.Group),
         streams: Schemas.list(Streams.Stream),
-        data: Schemas.nullish(v.union([v.record(v.string(), v.array(Schemas.Json)), v.string()])),
+        data: Schemas.nullish(
+            v.union([v.record(v.string(), v.array(Schemas.Json)), v.string()])
+        ),
     })
 );
 
@@ -180,10 +182,14 @@ export interface PhotometricSeriesPost {
  * @since 1.0.0
  * @category Models
  */
-export const PhotometricSeriesPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const PhotometricSeriesPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type PhotometricSeriesPostResponse = v.InferOutput<typeof PhotometricSeriesPostResponse>;
+export type PhotometricSeriesPostResponse = v.InferOutput<
+    typeof PhotometricSeriesPostResponse
+>;

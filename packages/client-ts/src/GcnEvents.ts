@@ -11,12 +11,36 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
+import {
+    GcnSummary,
+    GcnReport,
+    GcnTrigger,
+    GcnEventCrossmatchState,
+    GcnCatalogQuery,
+    GcnEvent,
+    GcnEventsPage,
+    GcnEventPostResponse,
+    GcnEventIdResponse,
+    GcnEventTagPostResponse,
+    GcnEventTachInfo,
+    GcnEventCrossmatchRequeue,
+    GcnEventInstrumentFields,
+    DefaultGcnTag,
+    type GcnEventObjStatus,
+    GcnEventObj,
+    GcnEventObjIdResponse,
+    type GcnEventPost,
+    type GcnSummaryPost,
+    type GcnReportPost,
+    type DefaultGcnTagPost,
+    type GcnEventObjPost,
+    type GcnEventObjCrossmatchPost,
+} from "skyportal-js-models/GcnEvents";
 import * as ObservationPlans from "skyportal-js-models/ObservationPlans";
 import * as Schemas from "skyportal-js-models/Schemas";
 import * as SurveyEfficiency from "skyportal-js-models/SurveyEfficiency";
-import { GcnSummary, GcnReport, GcnTrigger, GcnEventCrossmatchState, GcnCatalogQuery, GcnEvent, GcnEventsPage, GcnEventPostResponse, GcnEventIdResponse, GcnEventTagPostResponse, GcnEventTachInfo, GcnEventCrossmatchRequeue, GcnEventInstrumentFields, DefaultGcnTag, GcnEventObjStatus, GcnEventObj, GcnEventObjIdResponse } from "skyportal-js-models/GcnEvents";
-import type { GcnEventPost, GcnSummaryPost, GcnReportPost, DefaultGcnTagPost, GcnEventObjPost, GcnEventObjCrossmatchPost } from "skyportal-js-models/GcnEvents";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/GcnEvents";
 
@@ -27,8 +51,14 @@ export * from "skyportal-js-models/GcnEvents";
  * @category Requests
  * @param payload - The event to ingest.
  */
-export const postGcnEvent = async (client: Http.Client, payload: GcnEventPost): Promise<GcnEventPostResponse> =>
-    Http.decode(GcnEventPostResponse, await Http.post(client, "/api/gcn_event", Http.body(payload)));
+export const postGcnEvent = async (
+    client: Http.Client,
+    payload: GcnEventPost
+): Promise<GcnEventPostResponse> =>
+    Http.decode(
+        GcnEventPostResponse,
+        await Http.post(client, "/api/gcn_event", Http.body(payload))
+    );
 
 /**
  * Options for retrieving a single GCN event.
@@ -129,7 +159,9 @@ export const fetchGcnEvents = async (
             localizationTagKeep: Http.commaSeparated(options.localizationTagKeep),
             localizationTagRemove: Http.commaSeparated(options.localizationTagRemove),
             gcnPropertiesFilter: Http.commaSeparated(options.gcnPropertiesFilter),
-            localizationPropertiesFilter: Http.commaSeparated(options.localizationPropertiesFilter),
+            localizationPropertiesFilter: Http.commaSeparated(
+                options.localizationPropertiesFilter
+            ),
             groupIds: Http.commaSeparated(options.groupIds),
             sortBy: options.sortBy,
         })
@@ -144,7 +176,10 @@ export const fetchGcnEvents = async (
  * @category Requests
  * @param dateobs - UTC event timestamp of the event to delete.
  */
-export const deleteGcnEvent = async (client: Http.Client, dateobs: string): Promise<void> => {
+export const deleteGcnEvent = async (
+    client: Http.Client,
+    dateobs: string
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/${dateobs}`);
 };
 
@@ -157,7 +192,11 @@ export const deleteGcnEvent = async (client: Http.Client, dateobs: string): Prom
  * @param alias - Alias to add. The server rejects an alias the event already
  *   has.
  */
-export const postGcnEventAlias = async (client: Http.Client, dateobs: string, alias: string): Promise<void> => {
+export const postGcnEventAlias = async (
+    client: Http.Client,
+    dateobs: string,
+    alias: string
+): Promise<void> => {
     await Http.post(client, `/api/gcn_event/${dateobs}/alias`, { alias });
 };
 
@@ -171,7 +210,11 @@ export const postGcnEventAlias = async (client: Http.Client, dateobs: string, al
  * @param dateobs - UTC event timestamp of the event.
  * @param alias - Alias to remove.
  */
-export const deleteGcnEventAlias = async (client: Http.Client, dateobs: string, alias: string): Promise<void> => {
+export const deleteGcnEventAlias = async (
+    client: Http.Client,
+    dateobs: string,
+    alias: string
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/${dateobs}/alias`, { alias });
 };
 
@@ -197,7 +240,10 @@ export const postGcnEventTag = async (
     dateobs: string,
     text: string
 ): Promise<GcnEventTagPostResponse> =>
-    Http.decode(GcnEventTagPostResponse, await Http.post(client, "/api/gcn_event/tags", { dateobs, text }));
+    Http.decode(
+        GcnEventTagPostResponse,
+        await Http.post(client, "/api/gcn_event/tags", { dateobs, text })
+    );
 
 /**
  * Remove a tag from a GCN event.
@@ -207,7 +253,11 @@ export const postGcnEventTag = async (
  * @param dateobs - UTC event timestamp of the tagged event.
  * @param tag - Text of the tag to remove.
  */
-export const deleteGcnEventTag = async (client: Http.Client, dateobs: string, tag: string): Promise<void> => {
+export const deleteGcnEventTag = async (
+    client: Http.Client,
+    dateobs: string,
+    tag: string
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/tags/${dateobs}`, { tag });
 };
 
@@ -217,8 +267,13 @@ export const deleteGcnEventTag = async (client: Http.Client, dateobs: string, ta
  * @since 1.0.0
  * @category Requests
  */
-export const fetchGcnEventProperties = async (client: Http.Client): Promise<Array<string>> =>
-    Http.decode(v.array(v.string()), await Http.get(client, "/api/gcn_event/properties"));
+export const fetchGcnEventProperties = async (
+    client: Http.Client
+): Promise<Array<string>> =>
+    Http.decode(
+        v.array(v.string()),
+        await Http.get(client, "/api/gcn_event/properties")
+    );
 
 /**
  * Retrieve the survey efficiency analyses of a GCN event.
@@ -263,7 +318,10 @@ export const fetchGcnEventCatalogQueries = async (
     client: Http.Client,
     gcneventId: number
 ): Promise<Array<GcnCatalogQuery>> =>
-    Http.decode(v.array(GcnCatalogQuery), await Http.get(client, `/api/gcn_event/${gcneventId}/catalog_query`));
+    Http.decode(
+        v.array(GcnCatalogQuery),
+        await Http.get(client, `/api/gcn_event/${gcneventId}/catalog_query`)
+    );
 
 /**
  * Add a user as an advocate for a GCN event.
@@ -275,7 +333,11 @@ export const fetchGcnEventCatalogQueries = async (
  * @param dateobs - UTC event timestamp of the event.
  * @param userId - ID of the user to add.
  */
-export const postGcnEventUser = async (client: Http.Client, dateobs: string, userId: number): Promise<void> => {
+export const postGcnEventUser = async (
+    client: Http.Client,
+    dateobs: string,
+    userId: number
+): Promise<void> => {
     await Http.post(client, `/api/gcn_event/${dateobs}/users`, { userID: userId });
 };
 
@@ -289,7 +351,11 @@ export const postGcnEventUser = async (client: Http.Client, dateobs: string, use
  * @param dateobs - UTC event timestamp of the event.
  * @param userId - ID of the user to remove.
  */
-export const deleteGcnEventUser = async (client: Http.Client, dateobs: string, userId: number): Promise<void> => {
+export const deleteGcnEventUser = async (
+    client: Http.Client,
+    dateobs: string,
+    userId: number
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/${dateobs}/users/${userId}`);
 };
 
@@ -308,7 +374,8 @@ export const fetchGcnEventNoticeDownload = (
     client: Http.Client,
     dateobs: string,
     noticeId: number
-): Promise<Uint8Array> => Http.getContent(client, `/api/gcn_event/${dateobs}/notice/${noticeId}/download`);
+): Promise<Uint8Array> =>
+    Http.getContent(client, `/api/gcn_event/${dateobs}/notice/${noticeId}/download`);
 
 /**
  * Scrape GraceDB for a gravitational-wave event's logs and labels.
@@ -320,8 +387,14 @@ export const fetchGcnEventNoticeDownload = (
  * @category Requests
  * @param dateobs - UTC event timestamp of the event.
  */
-export const postGcnEventGracedb = async (client: Http.Client, dateobs: string): Promise<GcnEventIdResponse> =>
-    Http.decode(GcnEventIdResponse, await Http.post(client, `/api/gcn_event/${dateobs}/gracedb`));
+export const postGcnEventGracedb = async (
+    client: Http.Client,
+    dateobs: string
+): Promise<GcnEventIdResponse> =>
+    Http.decode(
+        GcnEventIdResponse,
+        await Http.post(client, `/api/gcn_event/${dateobs}/gracedb`)
+    );
 
 /**
  * Scrape TACH for a GCN event's aliases and circulars.
@@ -332,8 +405,14 @@ export const postGcnEventGracedb = async (client: Http.Client, dateobs: string):
  * @category Requests
  * @param dateobs - UTC event timestamp of the event.
  */
-export const postGcnEventTach = async (client: Http.Client, dateobs: string): Promise<GcnEventIdResponse> =>
-    Http.decode(GcnEventIdResponse, await Http.post(client, `/api/gcn_event/${dateobs}/tach`));
+export const postGcnEventTach = async (
+    client: Http.Client,
+    dateobs: string
+): Promise<GcnEventIdResponse> =>
+    Http.decode(
+        GcnEventIdResponse,
+        await Http.post(client, `/api/gcn_event/${dateobs}/tach`)
+    );
 
 /**
  * Retrieve the TACH ID, aliases and circulars of a GCN event.
@@ -342,8 +421,14 @@ export const postGcnEventTach = async (client: Http.Client, dateobs: string): Pr
  * @category Requests
  * @param dateobs - UTC event timestamp of the event.
  */
-export const fetchGcnEventTach = async (client: Http.Client, dateobs: string): Promise<GcnEventTachInfo> =>
-    Http.decode(GcnEventTachInfo, await Http.get(client, `/api/gcn_event/${dateobs}/tach`));
+export const fetchGcnEventTach = async (
+    client: Http.Client,
+    dateobs: string
+): Promise<GcnEventTachInfo> =>
+    Http.decode(
+        GcnEventTachInfo,
+        await Http.get(client, `/api/gcn_event/${dateobs}/tach`)
+    );
 
 /**
  * Retrieve the per-filter alert crossmatch progress of a GCN event.
@@ -356,7 +441,10 @@ export const fetchGcnEventCrossmatch = async (
     client: Http.Client,
     dateobs: string
 ): Promise<Array<GcnEventCrossmatchState>> =>
-    Http.decode(v.array(GcnEventCrossmatchState), await Http.get(client, `/api/gcn_event/${dateobs}/crossmatch`));
+    Http.decode(
+        v.array(GcnEventCrossmatchState),
+        await Http.get(client, `/api/gcn_event/${dateobs}/crossmatch`)
+    );
 
 /**
  * Requeue the alert crossmatch of a GCN event.
@@ -373,7 +461,10 @@ export const postGcnEventCrossmatch = async (
     client: Http.Client,
     dateobs: string
 ): Promise<GcnEventCrossmatchRequeue> =>
-    Http.decode(GcnEventCrossmatchRequeue, await Http.post(client, `/api/gcn_event/${dateobs}/crossmatch`));
+    Http.decode(
+        GcnEventCrossmatchRequeue,
+        await Http.post(client, `/api/gcn_event/${dateobs}/crossmatch`)
+    );
 
 /**
  * Options for computing instrument field probabilities.
@@ -489,7 +580,10 @@ export const deleteGcnEventTrigger = async (
     dateobs: string,
     allocationId: number
 ): Promise<GcnTrigger> =>
-    Http.decode(GcnTrigger, await Http.del(client, `/api/gcn_event/${dateobs}/triggered/${allocationId}`));
+    Http.decode(
+        GcnTrigger,
+        await Http.del(client, `/api/gcn_event/${dateobs}/triggered/${allocationId}`)
+    );
 
 /**
  * Generate a summary of a GCN event.
@@ -509,7 +603,10 @@ export const postGcnSummary = async (
     dateobs: string,
     payload: GcnSummaryPost
 ): Promise<GcnEventIdResponse> =>
-    Http.decode(GcnEventIdResponse, await Http.post(client, `/api/gcn_event/${dateobs}/summary`, Http.body(payload)));
+    Http.decode(
+        GcnEventIdResponse,
+        await Http.post(client, `/api/gcn_event/${dateobs}/summary`, Http.body(payload))
+    );
 
 /**
  * Retrieve a GCN event summary, including its text.
@@ -519,8 +616,15 @@ export const postGcnSummary = async (
  * @param dateobs - UTC event timestamp of the summarized event.
  * @param summaryId - ID of the summary.
  */
-export const fetchGcnSummary = async (client: Http.Client, dateobs: string, summaryId: number): Promise<GcnSummary> =>
-    Http.decode(GcnSummary, await Http.get(client, `/api/gcn_event/${dateobs}/summary/${summaryId}`));
+export const fetchGcnSummary = async (
+    client: Http.Client,
+    dateobs: string,
+    summaryId: number
+): Promise<GcnSummary> =>
+    Http.decode(
+        GcnSummary,
+        await Http.get(client, `/api/gcn_event/${dateobs}/summary/${summaryId}`)
+    );
 
 /**
  * Replace the text of a GCN event summary.
@@ -537,7 +641,12 @@ export const updateGcnSummary = async (
     summaryId: number,
     body: string
 ): Promise<GcnSummary> =>
-    Http.decode(GcnSummary, await Http.patch(client, `/api/gcn_event/${dateobs}/summary/${summaryId}`, { body }));
+    Http.decode(
+        GcnSummary,
+        await Http.patch(client, `/api/gcn_event/${dateobs}/summary/${summaryId}`, {
+            body,
+        })
+    );
 
 /**
  * Delete a GCN event summary.
@@ -550,7 +659,11 @@ export const updateGcnSummary = async (
  * @param dateobs - UTC event timestamp of the summarized event.
  * @param summaryId - ID of the summary to delete.
  */
-export const deleteGcnSummary = async (client: Http.Client, dateobs: string, summaryId: number): Promise<void> => {
+export const deleteGcnSummary = async (
+    client: Http.Client,
+    dateobs: string,
+    summaryId: number
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/${dateobs}/summary/${summaryId}`);
 };
 
@@ -571,7 +684,10 @@ export const postGcnReport = async (
     dateobs: string,
     payload: GcnReportPost
 ): Promise<GcnEventIdResponse> =>
-    Http.decode(GcnEventIdResponse, await Http.post(client, `/api/gcn_event/${dateobs}/report`, Http.body(payload)));
+    Http.decode(
+        GcnEventIdResponse,
+        await Http.post(client, `/api/gcn_event/${dateobs}/report`, Http.body(payload))
+    );
 
 /**
  * Retrieve the reports of a GCN event, newest first.
@@ -582,8 +698,14 @@ export const postGcnReport = async (
  * @category Requests
  * @param dateobs - UTC event timestamp of the event.
  */
-export const fetchGcnReports = async (client: Http.Client, dateobs: string): Promise<Array<GcnReport>> =>
-    Http.decode(v.array(GcnReport), await Http.get(client, `/api/gcn_event/${dateobs}/report`));
+export const fetchGcnReports = async (
+    client: Http.Client,
+    dateobs: string
+): Promise<Array<GcnReport>> =>
+    Http.decode(
+        v.array(GcnReport),
+        await Http.get(client, `/api/gcn_event/${dateobs}/report`)
+    );
 
 /**
  * Retrieve a single GCN event report, including its data.
@@ -593,8 +715,15 @@ export const fetchGcnReports = async (client: Http.Client, dateobs: string): Pro
  * @param dateobs - UTC event timestamp of the event.
  * @param reportId - ID of the report.
  */
-export const fetchGcnReport = async (client: Http.Client, dateobs: string, reportId: number): Promise<GcnReport> =>
-    Http.decode(GcnReport, await Http.get(client, `/api/gcn_event/${dateobs}/report/${reportId}`));
+export const fetchGcnReport = async (
+    client: Http.Client,
+    dateobs: string,
+    reportId: number
+): Promise<GcnReport> =>
+    Http.decode(
+        GcnReport,
+        await Http.get(client, `/api/gcn_event/${dateobs}/report/${reportId}`)
+    );
 
 /**
  * Options for updating a GCN event report.
@@ -629,7 +758,11 @@ export const updateGcnReport = async (
 ): Promise<GcnReport> =>
     Http.decode(
         GcnReport,
-        await Http.patch(client, `/api/gcn_event/${dateobs}/report/${reportId}`, Http.body(options))
+        await Http.patch(
+            client,
+            `/api/gcn_event/${dateobs}/report/${reportId}`,
+            Http.body(options)
+        )
     );
 
 /**
@@ -643,7 +776,11 @@ export const updateGcnReport = async (
  * @param dateobs - UTC event timestamp of the event.
  * @param reportId - ID of the report to delete.
  */
-export const deleteGcnReport = async (client: Http.Client, dateobs: string, reportId: number): Promise<void> => {
+export const deleteGcnReport = async (
+    client: Http.Client,
+    dateobs: string,
+    reportId: number
+): Promise<void> => {
     await Http.del(client, `/api/gcn_event/${dateobs}/report/${reportId}`);
 };
 
@@ -656,8 +793,14 @@ export const deleteGcnReport = async (client: Http.Client, dateobs: string, repo
  * @category Requests
  * @param payload - The rule to create.
  */
-export const postDefaultGcnTag = async (client: Http.Client, payload: DefaultGcnTagPost): Promise<GcnEventIdResponse> =>
-    Http.decode(GcnEventIdResponse, await Http.post(client, "/api/default_gcn_tag", Http.body(payload)));
+export const postDefaultGcnTag = async (
+    client: Http.Client,
+    payload: DefaultGcnTagPost
+): Promise<GcnEventIdResponse> =>
+    Http.decode(
+        GcnEventIdResponse,
+        await Http.post(client, "/api/default_gcn_tag", Http.body(payload))
+    );
 
 /**
  * Retrieve a single default GCN tag.
@@ -666,8 +809,14 @@ export const postDefaultGcnTag = async (client: Http.Client, payload: DefaultGcn
  * @category Requests
  * @param defaultGcnTagId - ID of the default GCN tag.
  */
-export const fetchDefaultGcnTag = async (client: Http.Client, defaultGcnTagId: number): Promise<DefaultGcnTag> =>
-    Http.decode(DefaultGcnTag, await Http.get(client, `/api/default_gcn_tag/${defaultGcnTagId}`));
+export const fetchDefaultGcnTag = async (
+    client: Http.Client,
+    defaultGcnTagId: number
+): Promise<DefaultGcnTag> =>
+    Http.decode(
+        DefaultGcnTag,
+        await Http.get(client, `/api/default_gcn_tag/${defaultGcnTagId}`)
+    );
 
 /**
  * Retrieve all default GCN tags.
@@ -675,7 +824,9 @@ export const fetchDefaultGcnTag = async (client: Http.Client, defaultGcnTagId: n
  * @since 1.0.0
  * @category Requests
  */
-export const fetchDefaultGcnTags = async (client: Http.Client): Promise<Array<DefaultGcnTag>> =>
+export const fetchDefaultGcnTags = async (
+    client: Http.Client
+): Promise<Array<DefaultGcnTag>> =>
     Http.decode(v.array(DefaultGcnTag), await Http.get(client, "/api/default_gcn_tag"));
 
 /**
@@ -687,7 +838,10 @@ export const fetchDefaultGcnTags = async (client: Http.Client): Promise<Array<De
  * @category Requests
  * @param defaultGcnTagId - ID of the default GCN tag to delete.
  */
-export const deleteDefaultGcnTag = async (client: Http.Client, defaultGcnTagId: number): Promise<void> => {
+export const deleteDefaultGcnTag = async (
+    client: Http.Client,
+    defaultGcnTagId: number
+): Promise<void> => {
     await Http.del(client, `/api/default_gcn_tag/${defaultGcnTagId}`);
 };
 
@@ -737,7 +891,10 @@ export const fetchGcnEventSource = async (
     dateobs: string,
     objId: string
 ): Promise<Array<GcnEventObj>> =>
-    Http.decode(v.array(GcnEventObj), await Http.get(client, `/api/sources_in_gcn/${dateobs}/${objId}`));
+    Http.decode(
+        v.array(GcnEventObj),
+        await Http.get(client, `/api/sources_in_gcn/${dateobs}/${objId}`)
+    );
 
 /**
  * Record an object's standing against a GCN event.
@@ -756,7 +913,10 @@ export const postGcnEventSource = async (
     dateobs: string,
     payload: GcnEventObjPost
 ): Promise<GcnEventObjIdResponse> =>
-    Http.decode(GcnEventObjIdResponse, await Http.post(client, `/api/sources_in_gcn/${dateobs}`, Http.body(payload)));
+    Http.decode(
+        GcnEventObjIdResponse,
+        await Http.post(client, `/api/sources_in_gcn/${dateobs}`, Http.body(payload))
+    );
 
 /**
  * Options for updating an object's standing against a GCN event.
@@ -795,7 +955,11 @@ export const updateGcnEventSource = async (
         await Http.patch(
             client,
             `/api/sources_in_gcn/${dateobs}/${objId}`,
-            Http.body({ status, explanation: options.explanation, notes: options.notes })
+            Http.body({
+                status,
+                explanation: options.explanation,
+                notes: options.notes,
+            })
         )
     );
 
@@ -815,7 +979,10 @@ export const deleteGcnEventSource = async (
     dateobs: string,
     objId: string
 ): Promise<GcnEventObjIdResponse> =>
-    Http.decode(GcnEventObjIdResponse, await Http.del(client, `/api/sources_in_gcn/${dateobs}/${objId}`));
+    Http.decode(
+        GcnEventObjIdResponse,
+        await Http.del(client, `/api/sources_in_gcn/${dateobs}/${objId}`)
+    );
 
 /** @internal */
 const AssociatedGcns = v.object({ gcns: Schemas.list(v.string()) });
@@ -827,8 +994,12 @@ const AssociatedGcns = v.object({ gcns: Schemas.list(v.string()) });
  * @category Requests
  * @param objId - Object ID, e.g. `"ZTF20abcdef"`.
  */
-export const fetchGcnEventsAssociatedWithSource = async (client: Http.Client, objId: string): Promise<Array<string>> =>
-    Http.decode(AssociatedGcns, await Http.get(client, `/api/associated_gcns/${objId}`)).gcns;
+export const fetchGcnEventsAssociatedWithSource = async (
+    client: Http.Client,
+    objId: string
+): Promise<Array<string>> =>
+    Http.decode(AssociatedGcns, await Http.get(client, `/api/associated_gcns/${objId}`))
+        .gcns;
 
 /**
  * Crossmatch an object against the GCN events of a time window.

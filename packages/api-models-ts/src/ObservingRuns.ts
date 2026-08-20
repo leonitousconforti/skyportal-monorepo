@@ -93,7 +93,9 @@ export interface ObservingRunUpdate {
  * @since 1.0.0
  * @category Models
  */
-export const ObservingRunPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const ObservingRunPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

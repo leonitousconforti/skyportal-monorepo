@@ -9,7 +9,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.annotations import (
     Annotation as Annotation,
+)
+from skyportal_py_models.annotations import (
     AnnotationDetail as AnnotationDetail,
+)
+from skyportal_py_models.annotations import (
     AnnotationPostResponse as AnnotationPostResponse,
 )
 

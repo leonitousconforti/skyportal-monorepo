@@ -6,9 +6,12 @@
 
 import * as v from "valibot";
 
+import {
+    MovingObjectObservation,
+    type MovingObjectFollowupPost,
+} from "skyportal-js-models/MovingObjects";
+
 import * as Http from "./Http.ts";
-import { MovingObjectObservation } from "skyportal-js-models/MovingObjects";
-import type { MovingObjectFollowupPost } from "skyportal-js-models/MovingObjects";
 
 export * from "skyportal-js-models/MovingObjects";
 
@@ -32,5 +35,9 @@ export const postMovingObjectFollowup = async (
 ): Promise<Array<MovingObjectObservation>> =>
     Http.decode(
         v.array(MovingObjectObservation),
-        await Http.post(client, `/api/moving_object/${objName}/followup`, Http.body(payload))
+        await Http.post(
+            client,
+            `/api/moving_object/${objName}/followup`,
+            Http.body(payload)
+        )
     );

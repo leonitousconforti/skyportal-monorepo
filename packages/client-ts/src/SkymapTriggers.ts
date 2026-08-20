@@ -4,8 +4,9 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import { SkymapTriggerQueue } from "skyportal-js-models/SkymapTriggers";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/SkymapTriggers";
 
@@ -19,8 +20,14 @@ export * from "skyportal-js-models/SkymapTriggers";
  * @category Requests
  * @param allocationId - ID of the allocation whose queue is retrieved.
  */
-export const fetchSkymapTriggers = async (client: Http.Client, allocationId: number): Promise<SkymapTriggerQueue> =>
-    Http.decode(SkymapTriggerQueue, await Http.get(client, `/api/skymap_trigger/${allocationId}`));
+export const fetchSkymapTriggers = async (
+    client: Http.Client,
+    allocationId: number
+): Promise<SkymapTriggerQueue> =>
+    Http.decode(
+        SkymapTriggerQueue,
+        await Http.get(client, `/api/skymap_trigger/${allocationId}`)
+    );
 
 /**
  * Options for sending a skymap-based trigger.

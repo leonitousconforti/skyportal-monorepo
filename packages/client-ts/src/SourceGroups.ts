@@ -4,8 +4,9 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import type { SourceGroupsPost } from "skyportal-js-models/SourceGroups";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/SourceGroups";
 
@@ -16,7 +17,10 @@ export * from "skyportal-js-models/SourceGroups";
  * @category Requests
  * @param payload - The object and the groups to save it to or unsave it from.
  */
-export const postSourceGroups = async (client: Http.Client, payload: SourceGroupsPost): Promise<void> => {
+export const postSourceGroups = async (
+    client: Http.Client,
+    payload: SourceGroupsPost
+): Promise<void> => {
     await Http.post(
         client,
         "/api/source_groups",

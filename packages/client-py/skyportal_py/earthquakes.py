@@ -7,11 +7,23 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.earthquakes import (
     Earthquake as Earthquake,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakeMeasurement as EarthquakeMeasurement,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakeNotice as EarthquakeNotice,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakePost as EarthquakePost,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakePostResponse as EarthquakePostResponse,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakePrediction as EarthquakePrediction,
+)
+from skyportal_py_models.earthquakes import (
     EarthquakesPage as EarthquakesPage,
 )
 

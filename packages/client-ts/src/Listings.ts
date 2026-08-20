@@ -6,9 +6,13 @@
 
 import * as v from "valibot";
 
+import {
+    Listing,
+    ListingPostResponse,
+    type ListingPost,
+} from "skyportal-js-models/Listings";
+
 import * as Http from "./Http.ts";
-import { Listing, ListingPostResponse } from "skyportal-js-models/Listings";
-import type { ListingPost } from "skyportal-js-models/Listings";
 
 export * from "skyportal-js-models/Listings";
 
@@ -34,12 +38,21 @@ export interface FetchListingsOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchListings = async (client: Http.Client, options: FetchListingsOptions = {}): Promise<Array<Listing>> =>
+export const fetchListings = async (
+    client: Http.Client,
+    options: FetchListingsOptions = {}
+): Promise<Array<Listing>> =>
     Http.decode(
         v.array(Listing),
-        await Http.get(client, options.userId === undefined ? "/api/listing" : `/api/listing/${options.userId}`, {
-            listName: options.listName,
-        })
+        await Http.get(
+            client,
+            options.userId === undefined
+                ? "/api/listing"
+                : `/api/listing/${options.userId}`,
+            {
+                listName: options.listName,
+            }
+        )
     );
 
 /**
@@ -49,8 +62,14 @@ export const fetchListings = async (client: Http.Client, options: FetchListingsO
  * @category Requests
  * @param payload - The entry to create.
  */
-export const postListing = async (client: Http.Client, payload: ListingPost): Promise<ListingPostResponse> =>
-    Http.decode(ListingPostResponse, await Http.post(client, "/api/listing", Http.body(payload)));
+export const postListing = async (
+    client: Http.Client,
+    payload: ListingPost
+): Promise<ListingPostResponse> =>
+    Http.decode(
+        ListingPostResponse,
+        await Http.post(client, "/api/listing", Http.body(payload))
+    );
 
 /**
  * Options for updating a listing.
@@ -103,7 +122,10 @@ export const updateListing = async (
  * @category Requests
  * @param listingId - ID of the listing to remove.
  */
-export const deleteListing = async (client: Http.Client, listingId: number): Promise<void> => {
+export const deleteListing = async (
+    client: Http.Client,
+    listingId: number
+): Promise<void> => {
     await Http.del(client, `/api/listing/${listingId}`);
 };
 
@@ -132,5 +154,9 @@ export const deleteListingByName = async (
     listName: string,
     options: DeleteListingByNameOptions = {}
 ): Promise<void> => {
-    await Http.del(client, "/api/listing", Http.body({ obj_id: objId, list_name: listName, user_id: options.userId }));
+    await Http.del(
+        client,
+        "/api/listing",
+        Http.body({ obj_id: objId, list_name: listName, user_id: options.userId })
+    );
 };

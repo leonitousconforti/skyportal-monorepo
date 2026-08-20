@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    Taxonomy,
+    TaxonomyPostResponse,
+    type TaxonomyPost,
+    type TaxonomyPut,
+} from "skyportal-js-models/Taxonomies";
+
 import * as Http from "./Http.ts";
-import { Taxonomy, TaxonomyPostResponse } from "skyportal-js-models/Taxonomies";
-import type { TaxonomyPost, TaxonomyPut } from "skyportal-js-models/Taxonomies";
 
 export * from "skyportal-js-models/Taxonomies";
 
@@ -28,7 +33,10 @@ export const fetchTaxonomies = async (client: Http.Client): Promise<Array<Taxono
  * @category Requests
  * @param taxonomyId - ID of the taxonomy.
  */
-export const fetchTaxonomy = async (client: Http.Client, taxonomyId: number): Promise<Taxonomy> =>
+export const fetchTaxonomy = async (
+    client: Http.Client,
+    taxonomyId: number
+): Promise<Taxonomy> =>
     Http.decode(Taxonomy, await Http.get(client, `/api/taxonomy/${taxonomyId}`));
 
 /**
@@ -40,10 +48,17 @@ export const fetchTaxonomy = async (client: Http.Client, taxonomyId: number): Pr
  * @category Requests
  * @param payload - The taxonomy to create.
  */
-export const postTaxonomy = async (client: Http.Client, payload: TaxonomyPost): Promise<TaxonomyPostResponse> =>
+export const postTaxonomy = async (
+    client: Http.Client,
+    payload: TaxonomyPost
+): Promise<TaxonomyPostResponse> =>
     Http.decode(
         TaxonomyPostResponse,
-        await Http.post(client, "/api/taxonomy", Http.body({ isLatest: true, ...payload }))
+        await Http.post(
+            client,
+            "/api/taxonomy",
+            Http.body({ isLatest: true, ...payload })
+        )
     );
 
 /**
@@ -59,7 +74,11 @@ export const postTaxonomy = async (client: Http.Client, payload: TaxonomyPost): 
  * @param taxonomyId - ID of the taxonomy to update.
  * @param payload - The fields to change.
  */
-export const updateTaxonomy = async (client: Http.Client, taxonomyId: number, payload: TaxonomyPut): Promise<void> => {
+export const updateTaxonomy = async (
+    client: Http.Client,
+    taxonomyId: number,
+    payload: TaxonomyPut
+): Promise<void> => {
     await Http.put(client, `/api/taxonomy/${taxonomyId}`, Http.body(payload));
 };
 
@@ -73,6 +92,9 @@ export const updateTaxonomy = async (client: Http.Client, taxonomyId: number, pa
  * @category Requests
  * @param taxonomyId - ID of the taxonomy to delete.
  */
-export const deleteTaxonomy = async (client: Http.Client, taxonomyId: number): Promise<void> => {
+export const deleteTaxonomy = async (
+    client: Http.Client,
+    taxonomyId: number
+): Promise<void> => {
     await Http.del(client, `/api/taxonomy/${taxonomyId}`);
 };

@@ -6,9 +6,16 @@
 
 import * as v from "valibot";
 
+import {
+    PhotometryPoint,
+    PhotometryRangePoint,
+    PhotometryPostResponse,
+    PhotometryValidationResponse,
+    type PhotometryPost,
+    type PhotometryUpdate,
+} from "skyportal-js-models/Photometry";
+
 import * as Http from "./Http.ts";
-import { PhotometryPoint, PhotometryRangePoint, PhotometryPostResponse, PhotometryValidationResponse } from "skyportal-js-models/Photometry";
-import type { PhotometryPost, PhotometryUpdate } from "skyportal-js-models/Photometry";
 
 export * from "skyportal-js-models/Photometry";
 
@@ -101,8 +108,14 @@ export const fetchPhotometry = async (
  * @category Requests
  * @param payload - The photometry point to post.
  */
-export const postPhotometry = async (client: Http.Client, payload: PhotometryPost): Promise<PhotometryPostResponse> =>
-    Http.decode(PhotometryPostResponse, await Http.post(client, "/api/photometry", Http.body(payload)));
+export const postPhotometry = async (
+    client: Http.Client,
+    payload: PhotometryPost
+): Promise<PhotometryPostResponse> =>
+    Http.decode(
+        PhotometryPostResponse,
+        await Http.post(client, "/api/photometry", Http.body(payload))
+    );
 
 /**
  * Options for an upsert.
@@ -194,7 +207,10 @@ export const fetchPhotometryPoint = async (
  * @category Requests
  * @param photometryId - ID of the photometry point to delete.
  */
-export const deletePhotometry = async (client: Http.Client, photometryId: number): Promise<void> => {
+export const deletePhotometry = async (
+    client: Http.Client,
+    photometryId: number
+): Promise<void> => {
     await Http.del(client, `/api/photometry/${photometryId}`);
 };
 
@@ -303,7 +319,9 @@ export const fetchPhotometryRange = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchPhotometryOrigins = async (client: Http.Client): Promise<Array<string>> =>
+export const fetchPhotometryOrigins = async (
+    client: Http.Client
+): Promise<Array<string>> =>
     Http.decode(v.array(v.string()), await Http.get(client, "/api/photometry/origins"));
 
 /**
@@ -314,8 +332,14 @@ export const fetchPhotometryOrigins = async (client: Http.Client): Promise<Array
  * @param uploadId - The upload ID returned when the photometry was uploaded in
  *   bulk. Requires the "Delete bulk photometry" permission.
  */
-export const bulkDeletePhotometry = async (client: Http.Client, uploadId: string): Promise<string> =>
-    Http.decode(v.string(), await Http.del(client, `/api/photometry/bulk_delete/${uploadId}`));
+export const bulkDeletePhotometry = async (
+    client: Http.Client,
+    uploadId: string
+): Promise<string> =>
+    Http.decode(
+        v.string(),
+        await Http.del(client, `/api/photometry/bulk_delete/${uploadId}`)
+    );
 
 /**
  * Options for a photometry validation.
@@ -354,7 +378,11 @@ export const postPhotometryValidation = async (
 ): Promise<PhotometryValidationResponse> =>
     Http.decode(
         PhotometryValidationResponse,
-        await Http.post(client, `/api/photometry/${photometryId}/validation`, Http.body(options))
+        await Http.post(
+            client,
+            `/api/photometry/${photometryId}/validation`,
+            Http.body(options)
+        )
     );
 
 /**
@@ -377,7 +405,11 @@ export const updatePhotometryValidation = async (
 ): Promise<PhotometryValidationResponse> =>
     Http.decode(
         PhotometryValidationResponse,
-        await Http.patch(client, `/api/photometry/${photometryId}/validation`, Http.body(options))
+        await Http.patch(
+            client,
+            `/api/photometry/${photometryId}/validation`,
+            Http.body(options)
+        )
     );
 
 /**
@@ -394,4 +426,7 @@ export const deletePhotometryValidation = async (
     client: Http.Client,
     photometryId: number
 ): Promise<PhotometryValidationResponse> =>
-    Http.decode(PhotometryValidationResponse, await Http.del(client, `/api/photometry/${photometryId}/validation`));
+    Http.decode(
+        PhotometryValidationResponse,
+        await Http.del(client, `/api/photometry/${photometryId}/validation`)
+    );

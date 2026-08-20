@@ -9,31 +9,83 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.gcn_events import (
     DefaultGcnTag as DefaultGcnTag,
+)
+from skyportal_py_models.gcn_events import (
     DefaultGcnTagPost as DefaultGcnTagPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnCatalogQuery as GcnCatalogQuery,
+)
+from skyportal_py_models.gcn_events import (
     GcnEvent as GcnEvent,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventCrossmatchRequeue as GcnEventCrossmatchRequeue,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventCrossmatchState as GcnEventCrossmatchState,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventIdResponse as GcnEventIdResponse,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventInstrumentFields as GcnEventInstrumentFields,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventLocalization as GcnEventLocalization,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventObj as GcnEventObj,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventObjCrossmatchPost as GcnEventObjCrossmatchPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventObjIdResponse as GcnEventObjIdResponse,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventObjPost as GcnEventObjPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventPost as GcnEventPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventPostResponse as GcnEventPostResponse,
-    GcnEventTachInfo as GcnEventTachInfo,
-    GcnEventTagPostResponse as GcnEventTagPostResponse,
-    GcnEventUser as GcnEventUser,
+)
+from skyportal_py_models.gcn_events import (
     GcnEventsPage as GcnEventsPage,
+)
+from skyportal_py_models.gcn_events import (
+    GcnEventTachInfo as GcnEventTachInfo,
+)
+from skyportal_py_models.gcn_events import (
+    GcnEventTagPostResponse as GcnEventTagPostResponse,
+)
+from skyportal_py_models.gcn_events import (
+    GcnEventUser as GcnEventUser,
+)
+from skyportal_py_models.gcn_events import (
     GcnNotice as GcnNotice,
+)
+from skyportal_py_models.gcn_events import (
     GcnProperty as GcnProperty,
+)
+from skyportal_py_models.gcn_events import (
     GcnReport as GcnReport,
+)
+from skyportal_py_models.gcn_events import (
     GcnReportPost as GcnReportPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnSummary as GcnSummary,
+)
+from skyportal_py_models.gcn_events import (
     GcnSummaryPost as GcnSummaryPost,
+)
+from skyportal_py_models.gcn_events import (
     GcnTag as GcnTag,
+)
+from skyportal_py_models.gcn_events import (
     GcnTrigger as GcnTrigger,
 )
 from skyportal_py_models.observation_plans import ObservationPlanRequest

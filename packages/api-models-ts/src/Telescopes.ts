@@ -112,7 +112,9 @@ export interface TelescopePost {
  * @since 1.0.0
  * @category Models
  */
-export const TelescopePostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const TelescopePostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

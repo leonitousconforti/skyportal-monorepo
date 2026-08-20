@@ -39,7 +39,9 @@ export type GitLogEntry = v.InferOutput<typeof GitLogEntry>;
  * @since 1.0.0
  * @category Models
  */
-export const SysInfo = Schemas.model(v.strictObject({ gitlog: Schemas.list(GitLogEntry) }));
+export const SysInfo = Schemas.model(
+    v.strictObject({ gitlog: Schemas.list(GitLogEntry) })
+);
 
 /**
  * @since 1.0.0

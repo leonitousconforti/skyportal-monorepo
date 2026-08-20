@@ -6,9 +6,16 @@
 
 import * as v from "valibot";
 
+import {
+    Instrument,
+    InstrumentLog,
+    InstrumentPostResponse,
+    InstrumentLogPostResponse,
+    type InstrumentPost,
+    type InstrumentPut,
+} from "skyportal-js-models/Instruments";
+
 import * as Http from "./Http.ts";
-import { Instrument, InstrumentLog, InstrumentPostResponse, InstrumentLogPostResponse } from "skyportal-js-models/Instruments";
-import type { InstrumentPost, InstrumentPut } from "skyportal-js-models/Instruments";
 
 export * from "skyportal-js-models/Instruments";
 
@@ -33,7 +40,10 @@ export const fetchInstruments = async (
     client: Http.Client,
     options: FetchInstrumentsOptions = {}
 ): Promise<Array<Instrument>> =>
-    Http.decode(v.array(Instrument), await Http.get(client, "/api/instrument", { name: options.name }));
+    Http.decode(
+        v.array(Instrument),
+        await Http.get(client, "/api/instrument", { name: options.name })
+    );
 
 /**
  * Options for retrieving a single instrument.
@@ -109,8 +119,14 @@ export const fetchInstrument = async (
  * @category Requests
  * @param payload - The instrument to create.
  */
-export const postInstrument = async (client: Http.Client, payload: InstrumentPost): Promise<InstrumentPostResponse> =>
-    Http.decode(InstrumentPostResponse, await Http.post(client, "/api/instrument", Http.body(payload)));
+export const postInstrument = async (
+    client: Http.Client,
+    payload: InstrumentPost
+): Promise<InstrumentPostResponse> =>
+    Http.decode(
+        InstrumentPostResponse,
+        await Http.post(client, "/api/instrument", Http.body(payload))
+    );
 
 /**
  * Update an instrument.
@@ -144,7 +160,10 @@ export const updateInstrument = async (
  * @category Requests
  * @param instrumentId - ID of the instrument to delete.
  */
-export const deleteInstrument = async (client: Http.Client, instrumentId: number): Promise<void> => {
+export const deleteInstrument = async (
+    client: Http.Client,
+    instrumentId: number
+): Promise<void> => {
     await Http.del(client, `/api/instrument/${instrumentId}`);
 };
 
@@ -158,7 +177,10 @@ export const deleteInstrument = async (client: Http.Client, instrumentId: number
  * @category Requests
  * @param instrumentId - ID of the instrument whose fields to delete.
  */
-export const deleteInstrumentFields = async (client: Http.Client, instrumentId: number): Promise<void> => {
+export const deleteInstrumentFields = async (
+    client: Http.Client,
+    instrumentId: number
+): Promise<void> => {
     await Http.del(client, `/api/instrument/${instrumentId}/fields`);
 };
 
@@ -277,5 +299,9 @@ export const updateInstrumentStatus = async (
     instrumentId: number,
     options: UpdateInstrumentStatusOptions = {}
 ): Promise<void> => {
-    await Http.put(client, `/api/instrument/${instrumentId}/status`, Http.body(options));
+    await Http.put(
+        client,
+        `/api/instrument/${instrumentId}/status`,
+        Http.body(options)
+    );
 };

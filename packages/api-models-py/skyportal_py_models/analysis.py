@@ -10,7 +10,6 @@ from pydantic import BaseModel, ConfigDict, Field
 from skyportal_py_models.groups import Group
 from skyportal_py_models.users import User
 
-
 AnalysisType = Literal["lightcurve_fitting", "spectrum_fitting", "meta_analysis"]
 
 

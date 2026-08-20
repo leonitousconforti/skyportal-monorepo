@@ -7,7 +7,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.listings import (
     Listing as Listing,
+)
+from skyportal_py_models.listings import (
     ListingPost as ListingPost,
+)
+from skyportal_py_models.listings import (
     ListingPostResponse as ListingPostResponse,
 )
 

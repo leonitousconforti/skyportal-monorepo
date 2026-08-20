@@ -6,10 +6,23 @@
 
 import * as v from "valibot";
 
-import * as Http from "./Http.ts";
+import {
+    ObservationPlanRequest,
+    ObservationPlanRequestsPage,
+    AllocationObservationPlansPage,
+    ObservationPlanIdsResponse,
+    ObservationPlanManualPostResponse,
+    ObservationPlanGeoJson,
+    ObservationPlanSimSurveyResponse,
+    DefaultObservationPlanPostResponse,
+    DefaultObservationPlanRequest,
+    type ObservationPlanPost,
+    type ObservationPlanManualPost,
+    type DefaultObservationPlanPost,
+} from "skyportal-js-models/ObservationPlans";
 import * as SurveyEfficiency from "skyportal-js-models/SurveyEfficiency";
-import { ObservationPlanRequest, ObservationPlanRequestsPage, AllocationObservationPlansPage, ObservationPlanIdsResponse, ObservationPlanManualPostResponse, ObservationPlanGeoJson, ObservationPlanSimSurveyResponse, DefaultObservationPlanPostResponse, DefaultObservationPlanRequest } from "skyportal-js-models/ObservationPlans";
-import type { ObservationPlanPost, ObservationPlanManualPost, DefaultObservationPlanPost } from "skyportal-js-models/ObservationPlans";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/ObservationPlans";
 
@@ -24,7 +37,10 @@ export const postObservationPlan = async (
     client: Http.Client,
     payload: ObservationPlanPost
 ): Promise<ObservationPlanIdsResponse> =>
-    Http.decode(ObservationPlanIdsResponse, await Http.post(client, "/api/observation_plan", Http.body(payload)));
+    Http.decode(
+        ObservationPlanIdsResponse,
+        await Http.post(client, "/api/observation_plan", Http.body(payload))
+    );
 
 /**
  * Options for a batch of observation plan requests.
@@ -87,7 +103,8 @@ export const fetchObservationPlan = async (
     Http.decode(
         ObservationPlanRequest,
         await Http.get(client, `/api/observation_plan/${observationPlanRequestId}`, {
-            includePlannedObservations: options.includePlannedObservations === true ? true : undefined,
+            includePlannedObservations:
+                options.includePlannedObservations === true ? true : undefined,
         })
     );
 
@@ -101,7 +118,10 @@ export const fetchObservationPlan = async (
  * @category Requests
  * @param observationPlanRequestId - ID of the observation plan request.
  */
-export const fetchObservationPlanRubin = (client: Http.Client, observationPlanRequestId: number): Promise<unknown> =>
+export const fetchObservationPlanRubin = (
+    client: Http.Client,
+    observationPlanRequestId: number
+): Promise<unknown> =>
     Http.get(client, `/api/observation_plan/${observationPlanRequestId}`, {
         includePlannedObservations: true,
         rubinFormat: true,
@@ -153,7 +173,8 @@ export const fetchObservationPlans = async (
             startDate: options.startDate,
             endDate: options.endDate,
             status: options.status,
-            includePlannedObservations: options.includePlannedObservations === true ? true : undefined,
+            includePlannedObservations:
+                options.includePlannedObservations === true ? true : undefined,
         })
     );
 
@@ -167,7 +188,10 @@ export const fetchObservationPlans = async (
  * @param observationPlanRequestId - ID of the observation plan request to
  *   delete.
  */
-export const deleteObservationPlan = async (client: Http.Client, observationPlanRequestId: number): Promise<void> => {
+export const deleteObservationPlan = async (
+    client: Http.Client,
+    observationPlanRequestId: number
+): Promise<void> => {
     await Http.del(client, `/api/observation_plan/${observationPlanRequestId}`);
 };
 
@@ -193,8 +217,13 @@ export const postObservationPlanManual = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchObservationPlanNames = async (client: Http.Client): Promise<Array<string>> =>
-    Http.decode(v.array(v.string()), await Http.get(client, "/api/observation_plan/plan_names"));
+export const fetchObservationPlanNames = async (
+    client: Http.Client
+): Promise<Array<string>> =>
+    Http.decode(
+        v.array(v.string()),
+        await Http.get(client, "/api/observation_plan/plan_names")
+    );
 
 /** @internal */
 const PlanNameExists = v.object({ exists: v.boolean() });
@@ -208,8 +237,14 @@ const PlanNameExists = v.object({ exists: v.boolean() });
  * @category Requests
  * @param name - The plan name to check.
  */
-export const fetchObservationPlanNameExists = async (client: Http.Client, name: string): Promise<boolean> =>
-    Http.decode(PlanNameExists, await Http.get(client, "/api/observation_plan/plan_names", { name })).exists;
+export const fetchObservationPlanNameExists = async (
+    client: Http.Client,
+    name: string
+): Promise<boolean> =>
+    Http.decode(
+        PlanNameExists,
+        await Http.get(client, "/api/observation_plan/plan_names", { name })
+    ).exists;
 
 /**
  * Submit an observation plan's pointings to treasuremap.space.
@@ -226,7 +261,10 @@ export const postObservationPlanTreasuremap = async (
     client: Http.Client,
     observationPlanRequestId: number
 ): Promise<void> => {
-    await Http.post(client, `/api/observation_plan/${observationPlanRequestId}/treasuremap`);
+    await Http.post(
+        client,
+        `/api/observation_plan/${observationPlanRequestId}/treasuremap`
+    );
 };
 
 /**
@@ -241,7 +279,10 @@ export const deleteObservationPlanTreasuremap = async (
     client: Http.Client,
     observationPlanRequestId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/observation_plan/${observationPlanRequestId}/treasuremap`);
+    await Http.del(
+        client,
+        `/api/observation_plan/${observationPlanRequestId}/treasuremap`
+    );
 };
 
 /**
@@ -254,8 +295,14 @@ export const deleteObservationPlanTreasuremap = async (
  * @param observationPlanRequestId - ID of the observation plan request to
  *   summarize.
  */
-export const fetchObservationPlanGcn = async (client: Http.Client, observationPlanRequestId: number): Promise<string> =>
-    Http.decode(v.string(), await Http.get(client, `/api/observation_plan/${observationPlanRequestId}/gcn`));
+export const fetchObservationPlanGcn = async (
+    client: Http.Client,
+    observationPlanRequestId: number
+): Promise<string> =>
+    Http.decode(
+        v.string(),
+        await Http.get(client, `/api/observation_plan/${observationPlanRequestId}/gcn`)
+    );
 
 /**
  * Submit an observation plan request to the telescope queue.
@@ -272,8 +319,13 @@ export const postObservationPlanQueue = async (
     client: Http.Client,
     observationPlanRequestId: number
 ): Promise<ObservationPlanRequest | null> => {
-    const data = await Http.post(client, `/api/observation_plan/${observationPlanRequestId}/queue`);
-    return data === null || data === undefined ? null : Http.decode(ObservationPlanRequest, data);
+    const data = await Http.post(
+        client,
+        `/api/observation_plan/${observationPlanRequestId}/queue`
+    );
+    return data === null || data === undefined
+        ? null
+        : Http.decode(ObservationPlanRequest, data);
 };
 
 /**
@@ -290,7 +342,10 @@ export const deleteObservationPlanQueue = async (
 ): Promise<ObservationPlanRequest> =>
     Http.decode(
         ObservationPlanRequest,
-        await Http.del(client, `/api/observation_plan/${observationPlanRequestId}/queue`)
+        await Http.del(
+            client,
+            `/api/observation_plan/${observationPlanRequestId}/queue`
+        )
     );
 
 /**
@@ -301,7 +356,10 @@ export const deleteObservationPlanQueue = async (
  * @param observationPlanRequestId - ID of the observation plan request to
  *   animate.
  */
-export const fetchObservationPlanMovie = (client: Http.Client, observationPlanRequestId: number): Promise<Uint8Array> =>
+export const fetchObservationPlanMovie = (
+    client: Http.Client,
+    observationPlanRequestId: number
+): Promise<Uint8Array> =>
     Http.getContent(client, `/api/observation_plan/${observationPlanRequestId}/movie`);
 
 /**
@@ -361,19 +419,23 @@ export const fetchObservationPlanSimSurvey = async (
 ): Promise<ObservationPlanSimSurveyResponse> =>
     Http.decode(
         ObservationPlanSimSurveyResponse,
-        await Http.get(client, `/api/observation_plan/${observationPlanRequestId}/simsurvey`, {
-            numberInjections: options.numberOfInjections ?? 1000,
-            numberDetections: options.numberOfDetections ?? 1,
-            detectionThreshold: options.detectionThreshold ?? 5,
-            minimumPhase: options.minimumPhase ?? 0,
-            maximumPhase: options.maximumPhase ?? 3,
-            modelName: options.modelName ?? "kilonova",
-            optionalInjectionParameters:
-                options.optionalInjectionParameters === undefined
-                    ? undefined
-                    : JSON.stringify(options.optionalInjectionParameters),
-            group_ids: Http.commaSeparated(options.groupIds),
-        })
+        await Http.get(
+            client,
+            `/api/observation_plan/${observationPlanRequestId}/simsurvey`,
+            {
+                numberInjections: options.numberOfInjections ?? 1000,
+                numberDetections: options.numberOfDetections ?? 1,
+                detectionThreshold: options.detectionThreshold ?? 5,
+                minimumPhase: options.minimumPhase ?? 0,
+                maximumPhase: options.maximumPhase ?? 3,
+                modelName: options.modelName ?? "kilonova",
+                optionalInjectionParameters:
+                    options.optionalInjectionParameters === undefined
+                        ? undefined
+                        : JSON.stringify(options.optionalInjectionParameters),
+                group_ids: Http.commaSeparated(options.groupIds),
+            }
+        )
     );
 
 /**
@@ -388,7 +450,10 @@ export const deleteObservationPlanSimSurvey = async (
     client: Http.Client,
     surveyEfficiencyAnalysisId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/observation_plan/${surveyEfficiencyAnalysisId}/simsurvey`);
+    await Http.del(
+        client,
+        `/api/observation_plan/${surveyEfficiencyAnalysisId}/simsurvey`
+    );
 };
 
 /**
@@ -404,7 +469,11 @@ export const deleteObservationPlanSimSurvey = async (
 export const fetchObservationPlanSimSurveyPlot = (
     client: Http.Client,
     surveyEfficiencyAnalysisId: number
-): Promise<Uint8Array> => Http.getContent(client, `/api/observation_plan/${surveyEfficiencyAnalysisId}/simsurvey/plot`);
+): Promise<Uint8Array> =>
+    Http.getContent(
+        client,
+        `/api/observation_plan/${surveyEfficiencyAnalysisId}/simsurvey/plot`
+    );
 
 /**
  * Retrieve the GeoJSON field contours of an observation plan.
@@ -419,7 +488,10 @@ export const fetchObservationPlanGeoJson = async (
 ): Promise<ObservationPlanGeoJson> =>
     Http.decode(
         ObservationPlanGeoJson,
-        await Http.get(client, `/api/observation_plan/${observationPlanRequestId}/geojson`)
+        await Http.get(
+            client,
+            `/api/observation_plan/${observationPlanRequestId}/geojson`
+        )
     );
 
 /**
@@ -435,7 +507,10 @@ export const fetchObservationPlanSurveyEfficiency = async (
 ): Promise<Array<SurveyEfficiency.SurveyEfficiencyForObservationPlan>> =>
     Http.decode(
         v.array(SurveyEfficiency.SurveyEfficiencyForObservationPlan),
-        await Http.get(client, `/api/observation_plan/${observationPlanRequestId}/survey_efficiency`)
+        await Http.get(
+            client,
+            `/api/observation_plan/${observationPlanRequestId}/survey_efficiency`
+        )
     );
 
 /**
@@ -521,7 +596,10 @@ export const fetchDefaultObservationPlan = async (
 ): Promise<DefaultObservationPlanRequest> =>
     Http.decode(
         DefaultObservationPlanRequest,
-        await Http.get(client, `/api/default_observation_plan/${defaultObservationPlanId}`)
+        await Http.get(
+            client,
+            `/api/default_observation_plan/${defaultObservationPlanId}`
+        )
     );
 
 /**
@@ -533,7 +611,10 @@ export const fetchDefaultObservationPlan = async (
 export const fetchDefaultObservationPlans = async (
     client: Http.Client
 ): Promise<Array<DefaultObservationPlanRequest>> =>
-    Http.decode(v.array(DefaultObservationPlanRequest), await Http.get(client, "/api/default_observation_plan"));
+    Http.decode(
+        v.array(DefaultObservationPlanRequest),
+        await Http.get(client, "/api/default_observation_plan")
+    );
 
 /**
  * Delete a default observation plan request.

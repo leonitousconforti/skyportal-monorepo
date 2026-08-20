@@ -8,7 +8,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from skyportal_py_models.streams import Stream
 
-
 #: The registered ``BrokerAPI`` provider classes (upstream ``BROKERS``).
 BrokerClassname = Literal[
     "GENERICBROKER",

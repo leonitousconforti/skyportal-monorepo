@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    ObservingRun,
+    ObservingRunPostResponse,
+    type ObservingRunPost,
+    type ObservingRunUpdate,
+} from "skyportal-js-models/ObservingRuns";
+
 import * as Http from "./Http.ts";
-import { ObservingRun, ObservingRunPostResponse } from "skyportal-js-models/ObservingRuns";
-import type { ObservingRunPost, ObservingRunUpdate } from "skyportal-js-models/ObservingRuns";
 
 export * from "skyportal-js-models/ObservingRuns";
 
@@ -18,7 +23,9 @@ export * from "skyportal-js-models/ObservingRuns";
  * @since 1.0.0
  * @category Requests
  */
-export const fetchObservingRuns = async (client: Http.Client): Promise<Array<ObservingRun>> =>
+export const fetchObservingRuns = async (
+    client: Http.Client
+): Promise<Array<ObservingRun>> =>
     Http.decode(v.array(ObservingRun), await Http.get(client, "/api/observing_run"));
 
 /**
@@ -28,7 +35,10 @@ export const fetchObservingRuns = async (client: Http.Client): Promise<Array<Obs
  * @category Requests
  * @param runId - ID of the observing run.
  */
-export const fetchObservingRun = async (client: Http.Client, runId: number): Promise<ObservingRun> =>
+export const fetchObservingRun = async (
+    client: Http.Client,
+    runId: number
+): Promise<ObservingRun> =>
     Http.decode(ObservingRun, await Http.get(client, `/api/observing_run/${runId}`));
 
 /**
@@ -42,7 +52,10 @@ export const postObservingRun = async (
     client: Http.Client,
     payload: ObservingRunPost
 ): Promise<ObservingRunPostResponse> =>
-    Http.decode(ObservingRunPostResponse, await Http.post(client, "/api/observing_run", Http.body(payload)));
+    Http.decode(
+        ObservingRunPostResponse,
+        await Http.post(client, "/api/observing_run", Http.body(payload))
+    );
 
 /**
  * Delete an observing run.
@@ -51,7 +64,10 @@ export const postObservingRun = async (
  * @category Requests
  * @param runId - ID of the observing run to delete.
  */
-export const deleteObservingRun = async (client: Http.Client, runId: number): Promise<void> => {
+export const deleteObservingRun = async (
+    client: Http.Client,
+    runId: number
+): Promise<void> => {
     await Http.del(client, `/api/observing_run/${runId}`);
 };
 

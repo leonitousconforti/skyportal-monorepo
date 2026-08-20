@@ -3,13 +3,15 @@ import { describe, expect, it } from "vitest";
 
 describe("strict models", () => {
     it("rejects a field the client does not know about", () => {
-        expect(() => Http.decode(Streams.Stream, { id: 1, name: "ztf", surprise: true })).toThrow(
-            Http.SkyPortalValidationError
-        );
+        expect(() =>
+            Http.decode(Streams.Stream, { id: 1, name: "ztf", surprise: true })
+        ).toThrow(Http.SkyPortalValidationError);
     });
 
     it("names the offending field in the error message", () => {
-        expect(() => Http.decode(Streams.Stream, { id: 1, name: "ztf", surprise: true })).toThrow(/surprise/);
+        expect(() =>
+            Http.decode(Streams.Stream, { id: 1, name: "ztf", surprise: true })
+        ).toThrow(/surprise/);
     });
 
     it("accepts a payload carrying only the required fields", () => {
@@ -48,7 +50,14 @@ describe("strict models", () => {
     it("decodes a source's saved-group join columns alongside the group itself", () => {
         const source = Http.decode(Sources.Source, {
             id: "ZTF20abcdef",
-            groups: [{ id: 1, name: "Program A", active: true, saved_at: "2026-01-01T00:00:00" }],
+            groups: [
+                {
+                    id: 1,
+                    name: "Program A",
+                    active: true,
+                    saved_at: "2026-01-01T00:00:00",
+                },
+            ],
         });
         expect(source.groups[0]?.name).toBe("Program A");
         expect(source.groups[0]?.active).toBe(true);

@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    type FollowupPriority,
+    Assignment,
+    AssignmentPostResponse,
+    type AssignmentPost,
+} from "skyportal-js-models/Assignments";
+
 import * as Http from "./Http.ts";
-import { FollowupPriority, Assignment, AssignmentPostResponse } from "skyportal-js-models/Assignments";
-import type { AssignmentPost } from "skyportal-js-models/Assignments";
 
 export * from "skyportal-js-models/Assignments";
 
@@ -19,7 +24,10 @@ export * from "skyportal-js-models/Assignments";
  * @category Requests
  * @param assignmentId - ID of the assignment.
  */
-export const fetchAssignment = async (client: Http.Client, assignmentId: number): Promise<Assignment> =>
+export const fetchAssignment = async (
+    client: Http.Client,
+    assignmentId: number
+): Promise<Assignment> =>
     Http.decode(Assignment, await Http.get(client, `/api/assignment/${assignmentId}`));
 
 /**
@@ -28,7 +36,9 @@ export const fetchAssignment = async (client: Http.Client, assignmentId: number)
  * @since 1.0.0
  * @category Requests
  */
-export const fetchAssignments = async (client: Http.Client): Promise<Array<Assignment>> =>
+export const fetchAssignments = async (
+    client: Http.Client
+): Promise<Array<Assignment>> =>
     Http.decode(v.array(Assignment), await Http.get(client, "/api/assignment"));
 
 /**
@@ -38,8 +48,14 @@ export const fetchAssignments = async (client: Http.Client): Promise<Array<Assig
  * @category Requests
  * @param payload - The assignment to create.
  */
-export const postAssignment = async (client: Http.Client, payload: AssignmentPost): Promise<AssignmentPostResponse> =>
-    Http.decode(AssignmentPostResponse, await Http.post(client, "/api/assignment", Http.body(payload)));
+export const postAssignment = async (
+    client: Http.Client,
+    payload: AssignmentPost
+): Promise<AssignmentPostResponse> =>
+    Http.decode(
+        AssignmentPostResponse,
+        await Http.post(client, "/api/assignment", Http.body(payload))
+    );
 
 /**
  * Options for updating an assignment.
@@ -80,6 +96,9 @@ export const updateAssignment = async (
  * @category Requests
  * @param assignmentId - ID of the assignment to delete.
  */
-export const deleteAssignment = async (client: Http.Client, assignmentId: number): Promise<void> => {
+export const deleteAssignment = async (
+    client: Http.Client,
+    assignmentId: number
+): Promise<void> => {
     await Http.del(client, `/api/assignment/${assignmentId}`);
 };

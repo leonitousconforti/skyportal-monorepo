@@ -6,8 +6,13 @@
 
 import * as v from "valibot";
 
+import {
+    type GroupAdmissionRequestStatus,
+    GroupAdmissionRequest,
+    GroupAdmissionRequestPostResponse,
+} from "skyportal-js-models/GroupAdmissionRequests";
+
 import * as Http from "./Http.ts";
-import { GroupAdmissionRequestStatus, GroupAdmissionRequest, GroupAdmissionRequestPostResponse } from "skyportal-js-models/GroupAdmissionRequests";
 
 export * from "skyportal-js-models/GroupAdmissionRequests";
 
@@ -23,7 +28,10 @@ export const fetchGroupAdmissionRequest = async (
     client: Http.Client,
     admissionRequestId: number
 ): Promise<GroupAdmissionRequest> =>
-    Http.decode(GroupAdmissionRequest, await Http.get(client, `/api/group_admission_requests/${admissionRequestId}`));
+    Http.decode(
+        GroupAdmissionRequest,
+        await Http.get(client, `/api/group_admission_requests/${admissionRequestId}`)
+    );
 
 /**
  * Options for listing group admission requests.
@@ -48,7 +56,9 @@ export const fetchGroupAdmissionRequests = async (
 ): Promise<Array<GroupAdmissionRequest>> =>
     Http.decode(
         v.array(GroupAdmissionRequest),
-        await Http.get(client, "/api/group_admission_requests", { groupID: options.groupId })
+        await Http.get(client, "/api/group_admission_requests", {
+            groupID: options.groupId,
+        })
     );
 
 /**
@@ -90,7 +100,9 @@ export const updateGroupAdmissionRequest = async (
     admissionRequestId: number,
     status: GroupAdmissionRequestStatus
 ): Promise<void> => {
-    await Http.patch(client, `/api/group_admission_requests/${admissionRequestId}`, { status });
+    await Http.patch(client, `/api/group_admission_requests/${admissionRequestId}`, {
+        status,
+    });
 };
 
 /**
@@ -101,6 +113,9 @@ export const updateGroupAdmissionRequest = async (
  * @param admissionRequestId - ID of the admission request. Only the requesting
  *   user may delete it.
  */
-export const deleteGroupAdmissionRequest = async (client: Http.Client, admissionRequestId: number): Promise<void> => {
+export const deleteGroupAdmissionRequest = async (
+    client: Http.Client,
+    admissionRequestId: number
+): Promise<void> => {
     await Http.del(client, `/api/group_admission_requests/${admissionRequestId}`);
 };

@@ -73,10 +73,14 @@ export type SpatialCatalog = v.InferOutput<typeof SpatialCatalog>;
  * @since 1.0.0
  * @category Models
  */
-export const SpatialCatalogPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SpatialCatalogPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type SpatialCatalogPostResponse = v.InferOutput<typeof SpatialCatalogPostResponse>;
+export type SpatialCatalogPostResponse = v.InferOutput<
+    typeof SpatialCatalogPostResponse
+>;

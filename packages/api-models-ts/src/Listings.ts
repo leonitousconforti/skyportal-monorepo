@@ -62,7 +62,9 @@ export interface ListingPost {
  * @since 1.0.0
  * @category Models
  */
-export const ListingPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const ListingPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

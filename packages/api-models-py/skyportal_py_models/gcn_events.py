@@ -11,14 +11,18 @@ from skyportal_py_models.allocations import Allocation
 from skyportal_py_models.comments import Comment
 from skyportal_py_models.filters import Filter
 from skyportal_py_models.groups import Group
-from skyportal_py_models.localizations import Localization, LocalizationCenter, LocalizationProperty, LocalizationTag
+from skyportal_py_models.localizations import (
+    Localization,
+    LocalizationCenter,
+    LocalizationProperty,
+    LocalizationTag,
+)
 from skyportal_py_models.mmadetectors import MMADetector
 from skyportal_py_models.observation_plans import ObservationPlanRequest
 from skyportal_py_models.reminders import Reminder
 from skyportal_py_models.sources import Source
 from skyportal_py_models.survey_efficiency import SurveyEfficiencyForObservations
 from skyportal_py_models.users import User
-
 
 # Every model below whose upstream row hangs off a ``GcnEvent`` keeps its
 # ``gcnevent`` back-reference as ``dict[str, Any]``: :class:`GcnEvent` already

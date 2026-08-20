@@ -42,7 +42,8 @@ export const JsonObject = v.record(v.string(), v.unknown());
  * @since 1.0.0
  * @category Schemas
  */
-export const nullish = <const TSchema extends v.GenericSchema>(schema: TSchema) => v.nullish(schema);
+export const nullish = <const TSchema extends v.GenericSchema>(schema: TSchema) =>
+    v.nullish(schema);
 
 /**
  * A list-valued field that falls back to empty when the server omits it.

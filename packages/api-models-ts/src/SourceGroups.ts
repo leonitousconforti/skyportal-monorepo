@@ -4,7 +4,6 @@
  * @since 1.0.0
  */
 
-
 /**
  * Payload for saving or unsaving a source to or from groups.
  *

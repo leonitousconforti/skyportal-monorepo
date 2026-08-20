@@ -18,16 +18,21 @@ const stubClient = (reply: (request: Request) => Response) => {
     return { client, requests };
 };
 
-const envelope = (data: unknown): Response => new Response(JSON.stringify({ status: "success", data }));
+const envelope = (data: unknown): Response =>
+    new Response(JSON.stringify({ status: "success", data }));
 
 describe("createClient", () => {
     it("sends the token header and resolves paths against the base URL", async () => {
-        const { client, requests } = stubClient(() => envelope({ id: "ZTF20abcdef", ra: 10.5, dec: -20.25 }));
+        const { client, requests } = stubClient(() =>
+            envelope({ id: "ZTF20abcdef", ra: 10.5, dec: -20.25 })
+        );
 
         await client.fetchSource("ZTF20abcdef");
 
         const request = requests[0];
-        expect(new URL(request.url).origin + new URL(request.url).pathname).toBe(`${BASE_URL}/api/sources/ZTF20abcdef`);
+        expect(new URL(request.url).origin + new URL(request.url).pathname).toBe(
+            `${BASE_URL}/api/sources/ZTF20abcdef`
+        );
         expect(request.headers.get("Authorization")).toBe("token abc123");
         expect(request.method).toBe("GET");
     });
@@ -57,7 +62,9 @@ describe("createClient", () => {
     });
 
     it("maps camelCase options onto the endpoint's wire query parameters", async () => {
-        const { client, requests } = stubClient(() => envelope({ sources: [{ id: "ZTF20abcdef" }], totalMatches: 42 }));
+        const { client, requests } = stubClient(() =>
+            envelope({ sources: [{ id: "ZTF20abcdef" }], totalMatches: 42 })
+        );
 
         const page = await client.fetchSources({
             numPerPage: 1,
@@ -110,9 +117,13 @@ describe("createClient", () => {
     });
 
     it("returns raw bytes from the endpoints that serve files", async () => {
-        const { client } = stubClient(() => new Response(new Uint8Array([137, 80, 78, 71])));
+        const { client } = stubClient(
+            () => new Response(new Uint8Array([137, 80, 78, 71]))
+        );
 
-        const chart = await client.fetchSourceFinder("ZTF20abcdef", { outputType: "png" });
+        const chart = await client.fetchSourceFinder("ZTF20abcdef", {
+            outputType: "png",
+        });
 
         expect(chart).toEqual(new Uint8Array([137, 80, 78, 71]));
     });
@@ -120,9 +131,12 @@ describe("createClient", () => {
     it("raises SkyPortalError on an error envelope", async () => {
         const { client } = stubClient(
             () =>
-                new Response(JSON.stringify({ status: "error", message: "Invalid object ID" }), {
-                    status: 400,
-                })
+                new Response(
+                    JSON.stringify({ status: "error", message: "Invalid object ID" }),
+                    {
+                        status: 400,
+                    }
+                )
         );
 
         await expect(client.fetchSource("nope")).rejects.toThrow(Http.SkyPortalError);

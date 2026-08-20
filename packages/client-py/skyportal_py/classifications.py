@@ -7,13 +7,27 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.classifications import (
     Classification as Classification,
+)
+from skyportal_py_models.classifications import (
     ClassificationEdit as ClassificationEdit,
+)
+from skyportal_py_models.classifications import (
     ClassificationPost as ClassificationPost,
+)
+from skyportal_py_models.classifications import (
     ClassificationPostResponse as ClassificationPostResponse,
-    ClassificationUpdate as ClassificationUpdate,
-    ClassificationVote as ClassificationVote,
+)
+from skyportal_py_models.classifications import (
     ClassificationsPage as ClassificationsPage,
+)
+from skyportal_py_models.classifications import (
     ClassificationsPostResponse as ClassificationsPostResponse,
+)
+from skyportal_py_models.classifications import (
+    ClassificationUpdate as ClassificationUpdate,
+)
+from skyportal_py_models.classifications import (
+    ClassificationVote as ClassificationVote,
 )
 
 

@@ -4,8 +4,9 @@
  * @since 1.0.0
  */
 
-import * as Http from "./Http.ts";
 import type { CatalogQueryPost } from "skyportal-js-models/CatalogQueries";
+
+import * as Http from "./Http.ts";
 
 export * from "skyportal-js-models/CatalogQueries";
 
@@ -20,7 +21,10 @@ export * from "skyportal-js-models/CatalogQueries";
  * @category Requests
  * @param payload - The query to submit.
  */
-export const postCatalogQuery = async (client: Http.Client, payload: CatalogQueryPost): Promise<void> => {
+export const postCatalogQuery = async (
+    client: Http.Client,
+    payload: CatalogQueryPost
+): Promise<void> => {
     await Http.post(client, "/api/catalog_queries", Http.body(payload));
 };
 

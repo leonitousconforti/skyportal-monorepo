@@ -7,7 +7,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.tags import (
     ObjTag as ObjTag,
+)
+from skyportal_py_models.tags import (
     ObjTagOption as ObjTagOption,
+)
+from skyportal_py_models.tags import (
     ObjTagPostResponse as ObjTagPostResponse,
 )
 

@@ -106,7 +106,9 @@ export const GroupEntries = {
     single_user_group: v.optional(v.boolean(), false),
     streams: Schemas.nullish(v.array(Streams.Stream)),
     filters: Schemas.nullish(v.array(Filters.Filter)),
-    group_users: Schemas.nullish(v.array(v.lazy((): v.GenericSchema<unknown, GroupUser> => GroupUser))),
+    group_users: Schemas.nullish(
+        v.array(v.lazy((): v.GenericSchema<unknown, GroupUser> => GroupUser))
+    ),
     users: Schemas.nullish(v.array(GroupMember)),
 };
 

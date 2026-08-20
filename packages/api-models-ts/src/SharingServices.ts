@@ -80,7 +80,9 @@ export const SharingServiceGroupAutoPublisher = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type SharingServiceGroupAutoPublisher = v.InferOutput<typeof SharingServiceGroupAutoPublisher>;
+export type SharingServiceGroupAutoPublisher = v.InferOutput<
+    typeof SharingServiceGroupAutoPublisher
+>;
 
 /**
  * A group's access to a service (upstream `SharingServiceGroup`).
@@ -218,7 +220,9 @@ export const SharingServiceSubmissionsPage = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type SharingServiceSubmissionsPage = v.InferOutput<typeof SharingServiceSubmissionsPage>;
+export type SharingServiceSubmissionsPage = v.InferOutput<
+    typeof SharingServiceSubmissionsPage
+>;
 
 /**
  * Payload for creating or updating a sharing service.
@@ -273,7 +277,9 @@ export interface SharingServiceSubmissionPost {
  * @since 1.0.0
  * @category Models
  */
-export const SharingServicePutResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SharingServicePutResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -287,13 +293,17 @@ export type SharingServicePutResponse = v.InferOutput<typeof SharingServicePutRe
  * @since 1.0.0
  * @category Models
  */
-export const SharingServiceCoauthorPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SharingServiceCoauthorPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type SharingServiceCoauthorPostResponse = v.InferOutput<typeof SharingServiceCoauthorPostResponse>;
+export type SharingServiceCoauthorPostResponse = v.InferOutput<
+    typeof SharingServiceCoauthorPostResponse
+>;
 
 /**
  * Result of granting or editing a group's access to a service.
@@ -301,13 +311,17 @@ export type SharingServiceCoauthorPostResponse = v.InferOutput<typeof SharingSer
  * @since 1.0.0
  * @category Models
  */
-export const SharingServiceGroupPutResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const SharingServiceGroupPutResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type SharingServiceGroupPutResponse = v.InferOutput<typeof SharingServiceGroupPutResponse>;
+export type SharingServiceGroupPutResponse = v.InferOutput<
+    typeof SharingServiceGroupPutResponse
+>;
 
 /**
  * Result of adding auto-publishers to a sharing service group.
@@ -325,4 +339,6 @@ export const SharingServiceAutoPublishersPostResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type SharingServiceAutoPublishersPostResponse = v.InferOutput<typeof SharingServiceAutoPublishersPostResponse>;
+export type SharingServiceAutoPublishersPostResponse = v.InferOutput<
+    typeof SharingServiceAutoPublishersPostResponse
+>;

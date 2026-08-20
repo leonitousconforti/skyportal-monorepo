@@ -195,7 +195,6 @@ class PhotometryUpdate(BaseModel):
 class PhotometryRangePoint(_SerializedPhotometry):
     """A photometry point as serialized by the date-range query."""
 
-
     # ``GET /api/photometry/range`` calls ``serialize`` with its defaults, so
     # this is the plain serialized point: same keys as
     # :class:`PhotometryPoint` minus the photometric-series extras.

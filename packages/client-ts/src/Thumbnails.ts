@@ -4,9 +4,15 @@
  * @since 1.0.0
  */
 
+import {
+    type ThumbnailType,
+    Thumbnail,
+    ThumbnailPostResponse,
+    ThumbnailPathReport,
+    type ThumbnailPost,
+} from "skyportal-js-models/Thumbnails";
+
 import * as Http from "./Http.ts";
-import { ThumbnailType, Thumbnail, ThumbnailPostResponse, ThumbnailPathReport } from "skyportal-js-models/Thumbnails";
-import type { ThumbnailPost } from "skyportal-js-models/Thumbnails";
 
 export * from "skyportal-js-models/Thumbnails";
 
@@ -17,7 +23,10 @@ export * from "skyportal-js-models/Thumbnails";
  * @category Requests
  * @param thumbnailId - ID of the thumbnail.
  */
-export const fetchThumbnail = async (client: Http.Client, thumbnailId: number): Promise<Thumbnail> =>
+export const fetchThumbnail = async (
+    client: Http.Client,
+    thumbnailId: number
+): Promise<Thumbnail> =>
     Http.decode(Thumbnail, await Http.get(client, `/api/thumbnail/${thumbnailId}`));
 
 /**
@@ -30,8 +39,14 @@ export const fetchThumbnail = async (client: Http.Client, thumbnailId: number): 
  * @category Requests
  * @param payload - The thumbnail to upload.
  */
-export const postThumbnail = async (client: Http.Client, payload: ThumbnailPost): Promise<ThumbnailPostResponse> =>
-    Http.decode(ThumbnailPostResponse, await Http.post(client, "/api/thumbnail", Http.body(payload)));
+export const postThumbnail = async (
+    client: Http.Client,
+    payload: ThumbnailPost
+): Promise<ThumbnailPostResponse> =>
+    Http.decode(
+        ThumbnailPostResponse,
+        await Http.post(client, "/api/thumbnail", Http.body(payload))
+    );
 
 /**
  * Options for updating a thumbnail.
@@ -92,7 +107,10 @@ export const updateThumbnail = async (
  * @category Requests
  * @param thumbnailId - ID of the thumbnail to delete.
  */
-export const deleteThumbnail = async (client: Http.Client, thumbnailId: number): Promise<void> => {
+export const deleteThumbnail = async (
+    client: Http.Client,
+    thumbnailId: number
+): Promise<void> => {
     await Http.del(client, `/api/thumbnail/${thumbnailId}`);
 };
 

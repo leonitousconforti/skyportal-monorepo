@@ -134,7 +134,9 @@ export const ClassificationPostResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type ClassificationPostResponse = v.InferOutput<typeof ClassificationPostResponse>;
+export type ClassificationPostResponse = v.InferOutput<
+    typeof ClassificationPostResponse
+>;
 
 /**
  * Result of posting a batch of classifications.
@@ -152,7 +154,9 @@ export const ClassificationsPostResponse = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type ClassificationsPostResponse = v.InferOutput<typeof ClassificationsPostResponse>;
+export type ClassificationsPostResponse = v.InferOutput<
+    typeof ClassificationsPostResponse
+>;
 
 /**
  * One page of results from a classifications query.

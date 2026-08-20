@@ -33,6 +33,7 @@
         "oxlint": "1.77.0",
         "oxlint-tsgolint": "7.0.2001",
         "rimraf": "6.1.3",
+        "skyportal-js-models": "workspace:^",
         "tsx": "4.23.11",
         "typescript": "7.0.2",
         "valibot": "1.1.0",

@@ -7,6 +7,8 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.news_feed import (
     NewsFeedAuthorInfo as NewsFeedAuthorInfo,
+)
+from skyportal_py_models.news_feed import (
     NewsFeedItem as NewsFeedItem,
 )
 

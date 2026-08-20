@@ -9,7 +9,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.system import (
     DBInfo as DBInfo,
+)
+from skyportal_py_models.system import (
     GitLogEntry as GitLogEntry,
+)
+from skyportal_py_models.system import (
     SysInfo as SysInfo,
 )
 

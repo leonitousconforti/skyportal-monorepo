@@ -7,6 +7,8 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.group_admission_requests import (
     GroupAdmissionRequest as GroupAdmissionRequest,
+)
+from skyportal_py_models.group_admission_requests import (
     GroupAdmissionRequestPostResponse as GroupAdmissionRequestPostResponse,
 )
 

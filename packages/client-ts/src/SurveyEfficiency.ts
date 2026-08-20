@@ -6,8 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    SurveyEfficiencyForObservations,
+    SurveyEfficiencyForObservationPlan,
+    DefaultSurveyEfficiencyRequest,
+    DefaultSurveyEfficiencyPostResponse,
+} from "skyportal-js-models/SurveyEfficiency";
+
 import * as Http from "./Http.ts";
-import { SurveyEfficiencyForObservations, SurveyEfficiencyForObservationPlan, DefaultSurveyEfficiencyRequest, DefaultSurveyEfficiencyPostResponse } from "skyportal-js-models/SurveyEfficiency";
 
 export * from "skyportal-js-models/SurveyEfficiency";
 
@@ -25,7 +31,10 @@ export const fetchSurveyEfficiencyForObservations = async (
 ): Promise<SurveyEfficiencyForObservations> =>
     Http.decode(
         SurveyEfficiencyForObservations,
-        await Http.get(client, `/api/survey_efficiency/observations/${surveyEfficiencyAnalysisId}`)
+        await Http.get(
+            client,
+            `/api/survey_efficiency/observations/${surveyEfficiencyAnalysisId}`
+        )
     );
 
 /**
@@ -75,7 +84,10 @@ export const fetchSurveyEfficiencyForObservationPlan = async (
 ): Promise<SurveyEfficiencyForObservationPlan> =>
     Http.decode(
         SurveyEfficiencyForObservationPlan,
-        await Http.get(client, `/api/survey_efficiency/observation_plan/${surveyEfficiencyAnalysisId}`)
+        await Http.get(
+            client,
+            `/api/survey_efficiency/observation_plan/${surveyEfficiencyAnalysisId}`
+        )
     );
 
 /**
@@ -170,7 +182,10 @@ export const fetchDefaultSurveyEfficiency = async (
 ): Promise<DefaultSurveyEfficiencyRequest> =>
     Http.decode(
         DefaultSurveyEfficiencyRequest,
-        await Http.get(client, `/api/default_survey_efficiency/${defaultSurveyEfficiencyId}`)
+        await Http.get(
+            client,
+            `/api/default_survey_efficiency/${defaultSurveyEfficiencyId}`
+        )
     );
 
 /**
@@ -185,7 +200,10 @@ export const fetchDefaultSurveyEfficiency = async (
 export const fetchDefaultSurveyEfficiencies = async (
     client: Http.Client
 ): Promise<Array<DefaultSurveyEfficiencyRequest>> =>
-    Http.decode(v.array(DefaultSurveyEfficiencyRequest), await Http.get(client, "/api/default_survey_efficiency"));
+    Http.decode(
+        v.array(DefaultSurveyEfficiencyRequest),
+        await Http.get(client, "/api/default_survey_efficiency")
+    );
 
 /**
  * Delete a default survey efficiency request.
@@ -199,5 +217,8 @@ export const deleteDefaultSurveyEfficiency = async (
     client: Http.Client,
     defaultSurveyEfficiencyId: number
 ): Promise<void> => {
-    await Http.del(client, `/api/default_survey_efficiency/${defaultSurveyEfficiencyId}`);
+    await Http.del(
+        client,
+        `/api/default_survey_efficiency/${defaultSurveyEfficiencyId}`
+    );
 };

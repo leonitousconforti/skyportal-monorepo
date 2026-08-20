@@ -55,7 +55,9 @@ export const SurveyEfficiencyForObservations = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type SurveyEfficiencyForObservations = v.InferOutput<typeof SurveyEfficiencyForObservations>;
+export type SurveyEfficiencyForObservations = v.InferOutput<
+    typeof SurveyEfficiencyForObservations
+>;
 
 /**
  * An efficiency analysis (upstream `SurveyEfficiencyForObservationPlan`).
@@ -94,7 +96,9 @@ export const SurveyEfficiencyForObservationPlan = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type SurveyEfficiencyForObservationPlan = v.InferOutput<typeof SurveyEfficiencyForObservationPlan>;
+export type SurveyEfficiencyForObservationPlan = v.InferOutput<
+    typeof SurveyEfficiencyForObservationPlan
+>;
 
 /**
  * A default efficiency request (upstream `DefaultSurveyEfficiencyRequest`).
@@ -117,7 +121,9 @@ export const DefaultSurveyEfficiencyRequest = Schemas.model(
  * @since 1.0.0
  * @category Models
  */
-export type DefaultSurveyEfficiencyRequest = v.InferOutput<typeof DefaultSurveyEfficiencyRequest>;
+export type DefaultSurveyEfficiencyRequest = v.InferOutput<
+    typeof DefaultSurveyEfficiencyRequest
+>;
 
 /**
  * Result of creating a default survey efficiency request.
@@ -125,10 +131,14 @@ export type DefaultSurveyEfficiencyRequest = v.InferOutput<typeof DefaultSurveyE
  * @since 1.0.0
  * @category Models
  */
-export const DefaultSurveyEfficiencyPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const DefaultSurveyEfficiencyPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type DefaultSurveyEfficiencyPostResponse = v.InferOutput<typeof DefaultSurveyEfficiencyPostResponse>;
+export type DefaultSurveyEfficiencyPostResponse = v.InferOutput<
+    typeof DefaultSurveyEfficiencyPostResponse
+>;

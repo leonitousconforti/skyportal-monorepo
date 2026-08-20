@@ -6,9 +6,18 @@
 
 import * as v from "valibot";
 
+import {
+    FollowupRequest,
+    FollowupRequestsPage,
+    FollowupRequestPostResponse,
+    DefaultFollowupRequest,
+    DefaultFollowupRequestPostResponse,
+    PhotometryRequestStatus,
+    type FollowupRequestPost,
+    type DefaultFollowupRequestPost,
+} from "skyportal-js-models/FollowupRequests";
+
 import * as Http from "./Http.ts";
-import { FollowupRequest, FollowupRequestsPage, FollowupRequestPostResponse, DefaultFollowupRequest, DefaultFollowupRequestPostResponse, PhotometryRequestStatus } from "skyportal-js-models/FollowupRequests";
-import type { FollowupRequestPost, DefaultFollowupRequestPost } from "skyportal-js-models/FollowupRequests";
 
 export * from "skyportal-js-models/FollowupRequests";
 
@@ -132,7 +141,10 @@ export const postFollowupRequest = async (
     client: Http.Client,
     payload: FollowupRequestPost
 ): Promise<FollowupRequestPostResponse> =>
-    Http.decode(FollowupRequestPostResponse, await Http.post(client, "/api/followup_request", Http.body(payload)));
+    Http.decode(
+        FollowupRequestPostResponse,
+        await Http.post(client, "/api/followup_request", Http.body(payload))
+    );
 
 /**
  * Delete a follow-up request.
@@ -141,7 +153,10 @@ export const postFollowupRequest = async (
  * @category Requests
  * @param followupRequestId - ID of the follow-up request to delete.
  */
-export const deleteFollowupRequest = async (client: Http.Client, followupRequestId: number): Promise<void> => {
+export const deleteFollowupRequest = async (
+    client: Http.Client,
+    followupRequestId: number
+): Promise<void> => {
     await Http.del(client, `/api/followup_request/${followupRequestId}`);
 };
 
@@ -228,7 +243,10 @@ export const postFollowupRequestComment = async (
  * @category Requests
  * @param followupRequestId - ID of the follow-up request to watch.
  */
-export const postFollowupRequestWatcher = async (client: Http.Client, followupRequestId: number): Promise<void> => {
+export const postFollowupRequestWatcher = async (
+    client: Http.Client,
+    followupRequestId: number
+): Promise<void> => {
     await Http.post(client, `/api/followup_request/watch/${followupRequestId}`, {});
 };
 
@@ -239,7 +257,10 @@ export const postFollowupRequestWatcher = async (client: Http.Client, followupRe
  * @category Requests
  * @param followupRequestId - ID of the follow-up request to stop watching.
  */
-export const deleteFollowupRequestWatcher = async (client: Http.Client, followupRequestId: number): Promise<void> => {
+export const deleteFollowupRequestWatcher = async (
+    client: Http.Client,
+    followupRequestId: number
+): Promise<void> => {
     await Http.del(client, `/api/followup_request/watch/${followupRequestId}`);
 };
 
@@ -383,7 +404,10 @@ export const fetchDefaultFollowupRequest = async (
 ): Promise<DefaultFollowupRequest> =>
     Http.decode(
         DefaultFollowupRequest,
-        await Http.get(client, `/api/default_followup_request/${defaultFollowupRequestId}`)
+        await Http.get(
+            client,
+            `/api/default_followup_request/${defaultFollowupRequestId}`
+        )
     );
 
 /**
@@ -392,8 +416,13 @@ export const fetchDefaultFollowupRequest = async (
  * @since 1.0.0
  * @category Requests
  */
-export const fetchDefaultFollowupRequests = async (client: Http.Client): Promise<Array<DefaultFollowupRequest>> =>
-    Http.decode(v.array(DefaultFollowupRequest), await Http.get(client, "/api/default_followup_request"));
+export const fetchDefaultFollowupRequests = async (
+    client: Http.Client
+): Promise<Array<DefaultFollowupRequest>> =>
+    Http.decode(
+        v.array(DefaultFollowupRequest),
+        await Http.get(client, "/api/default_followup_request")
+    );
 
 /**
  * Create a default follow-up request.

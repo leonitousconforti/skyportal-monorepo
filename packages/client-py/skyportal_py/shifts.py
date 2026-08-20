@@ -7,15 +7,35 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.shifts import (
     Shift as Shift,
+)
+from skyportal_py_models.shifts import (
     ShiftComment as ShiftComment,
+)
+from skyportal_py_models.shifts import (
     ShiftCommentAuthor as ShiftCommentAuthor,
+)
+from skyportal_py_models.shifts import (
     ShiftGroup as ShiftGroup,
+)
+from skyportal_py_models.shifts import (
     ShiftGroupMember as ShiftGroupMember,
+)
+from skyportal_py_models.shifts import (
     ShiftPost as ShiftPost,
+)
+from skyportal_py_models.shifts import (
     ShiftPostResponse as ShiftPostResponse,
+)
+from skyportal_py_models.shifts import (
     ShiftSummaryReport as ShiftSummaryReport,
+)
+from skyportal_py_models.shifts import (
     ShiftSummarySection as ShiftSummarySection,
+)
+from skyportal_py_models.shifts import (
     ShiftUserMembership as ShiftUserMembership,
+)
+from skyportal_py_models.shifts import (
     ShiftUserPostResponse as ShiftUserPostResponse,
 )
 

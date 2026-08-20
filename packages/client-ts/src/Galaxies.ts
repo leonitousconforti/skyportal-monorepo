@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    GalaxiesPage,
+    GalaxyCatalogCount,
+    type GalaxyCatalogPost,
+    type GalaxyCatalogAsciiPost,
+} from "skyportal-js-models/Galaxies";
+
 import * as Http from "./Http.ts";
-import { GalaxiesPage, GalaxyCatalogCount } from "skyportal-js-models/Galaxies";
-import type { GalaxyCatalogPost, GalaxyCatalogAsciiPost } from "skyportal-js-models/Galaxies";
 
 export * from "skyportal-js-models/Galaxies";
 
@@ -71,7 +76,10 @@ export interface FetchGalaxiesOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchGalaxies = async (client: Http.Client, options: FetchGalaxiesOptions = {}): Promise<GalaxiesPage> =>
+export const fetchGalaxies = async (
+    client: Http.Client,
+    options: FetchGalaxiesOptions = {}
+): Promise<GalaxiesPage> =>
     Http.decode(
         GalaxiesPage,
         await Http.get(client, "/api/galaxy_catalog", {
@@ -104,8 +112,13 @@ export const fetchGalaxies = async (client: Http.Client, options: FetchGalaxiesO
  * @since 1.0.0
  * @category Requests
  */
-export const fetchGalaxyCatalogs = async (client: Http.Client): Promise<Array<GalaxyCatalogCount>> =>
-    Http.decode(v.array(GalaxyCatalogCount), await Http.get(client, "/api/galaxy_catalog", { catalogNamesOnly: true }));
+export const fetchGalaxyCatalogs = async (
+    client: Http.Client
+): Promise<Array<GalaxyCatalogCount>> =>
+    Http.decode(
+        v.array(GalaxyCatalogCount),
+        await Http.get(client, "/api/galaxy_catalog", { catalogNamesOnly: true })
+    );
 
 /**
  * Ingest a galaxy catalog. Requires the System admin ACL.
@@ -117,7 +130,10 @@ export const fetchGalaxyCatalogs = async (client: Http.Client): Promise<Array<Ga
  * @category Requests
  * @param payload - The catalog to ingest.
  */
-export const postGalaxyCatalog = async (client: Http.Client, payload: GalaxyCatalogPost): Promise<void> => {
+export const postGalaxyCatalog = async (
+    client: Http.Client,
+    payload: GalaxyCatalogPost
+): Promise<void> => {
     await Http.post(client, "/api/galaxy_catalog", Http.body(payload));
 };
 
@@ -131,7 +147,10 @@ export const postGalaxyCatalog = async (client: Http.Client, payload: GalaxyCata
  * @category Requests
  * @param catalogName - Name of the galaxy catalog to delete.
  */
-export const deleteGalaxyCatalog = async (client: Http.Client, catalogName: string): Promise<void> => {
+export const deleteGalaxyCatalog = async (
+    client: Http.Client,
+    catalogName: string
+): Promise<void> => {
     await Http.del(client, `/api/galaxy_catalog/${catalogName}`);
 };
 
@@ -145,7 +164,10 @@ export const deleteGalaxyCatalog = async (client: Http.Client, catalogName: stri
  * @category Requests
  * @param payload - The catalog to upload.
  */
-export const postGalaxyCatalogAscii = async (client: Http.Client, payload: GalaxyCatalogAsciiPost): Promise<void> => {
+export const postGalaxyCatalogAscii = async (
+    client: Http.Client,
+    payload: GalaxyCatalogAsciiPost
+): Promise<void> => {
     await Http.post(client, "/api/galaxy_catalog/ascii", Http.body(payload));
 };
 

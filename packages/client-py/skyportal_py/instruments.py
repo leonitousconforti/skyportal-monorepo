@@ -9,11 +9,23 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.instruments import (
     Instrument as Instrument,
+)
+from skyportal_py_models.instruments import (
     InstrumentField as InstrumentField,
+)
+from skyportal_py_models.instruments import (
     InstrumentLog as InstrumentLog,
+)
+from skyportal_py_models.instruments import (
     InstrumentLogPostResponse as InstrumentLogPostResponse,
+)
+from skyportal_py_models.instruments import (
     InstrumentPost as InstrumentPost,
+)
+from skyportal_py_models.instruments import (
     InstrumentPostResponse as InstrumentPostResponse,
+)
+from skyportal_py_models.instruments import (
     InstrumentPut as InstrumentPut,
 )
 

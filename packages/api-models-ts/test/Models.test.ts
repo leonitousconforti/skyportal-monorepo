@@ -5,12 +5,19 @@ import { describe, expect, it } from "vitest";
 
 describe("strict models", () => {
     it("rejects a field the models do not know about", () => {
-        const result = v.safeParse(Streams.Stream, { id: 1, name: "ztf", surprise: true });
+        const result = v.safeParse(Streams.Stream, {
+            id: 1,
+            name: "ztf",
+            surprise: true,
+        });
         expect(result.success).toBe(false);
     });
 
     it("accepts a payload carrying only the required fields", () => {
-        expect(v.parse(Streams.Stream, { id: 1, name: "ztf" })).toEqual({ id: 1, name: "ztf" });
+        expect(v.parse(Streams.Stream, { id: 1, name: "ztf" })).toEqual({
+            id: 1,
+            name: "ztf",
+        });
     });
 
     it("defaults list-valued fields to empty rather than undefined", () => {
@@ -21,7 +28,12 @@ describe("strict models", () => {
     });
 
     it("accepts the null a nullable column comes back as", () => {
-        const telescope = v.parse(Telescopes.Telescope, { id: 1, name: "Palomar 1.5m", lat: null, robotic: null });
+        const telescope = v.parse(Telescopes.Telescope, {
+            id: 1,
+            name: "Palomar 1.5m",
+            lat: null,
+            robotic: null,
+        });
         expect(telescope.lat).toBeNull();
     });
 

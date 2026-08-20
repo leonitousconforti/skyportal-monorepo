@@ -79,13 +79,17 @@ export type PublicSourcePage = v.InferOutput<typeof PublicSourcePage>;
  * @since 1.0.0
  * @category Models
  */
-export const PublicSourcePagePostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const PublicSourcePagePostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
  * @category Models
  */
-export type PublicSourcePagePostResponse = v.InferOutput<typeof PublicSourcePagePostResponse>;
+export type PublicSourcePagePostResponse = v.InferOutput<
+    typeof PublicSourcePagePostResponse
+>;
 
 /**
  * A public release of source pages (upstream `PublicRelease`).
@@ -161,7 +165,9 @@ export interface PublicReleaseUpdate {
  * @since 1.0.0
  * @category Models
  */
-export const PublicReleasePostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const PublicReleasePostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

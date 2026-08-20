@@ -78,7 +78,9 @@ export interface FilterPatch {
  * @since 1.0.0
  * @category Models
  */
-export const FilterPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const FilterPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

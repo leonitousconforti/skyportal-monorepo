@@ -9,12 +9,26 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.photometry import (
     PhotometryPoint as PhotometryPoint,
+)
+from skyportal_py_models.photometry import (
     PhotometryPost as PhotometryPost,
+)
+from skyportal_py_models.photometry import (
     PhotometryPostResponse as PhotometryPostResponse,
+)
+from skyportal_py_models.photometry import (
     PhotometryRangePoint as PhotometryRangePoint,
+)
+from skyportal_py_models.photometry import (
     PhotometryUpdate as PhotometryUpdate,
+)
+from skyportal_py_models.photometry import (
     PhotometryValidation as PhotometryValidation,
+)
+from skyportal_py_models.photometry import (
     PhotometryValidationResponse as PhotometryValidationResponse,
+)
+from skyportal_py_models.photometry import (
     _SerializedPhotometry as _SerializedPhotometry,
 )
 

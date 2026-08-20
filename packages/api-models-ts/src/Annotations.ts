@@ -87,7 +87,9 @@ export type AnnotationDetail = v.InferOutput<typeof AnnotationDetail>;
  * @since 1.0.0
  * @category Models
  */
-export const AnnotationPostResponse = Schemas.model(v.strictObject({ annotation_id: Schemas.Integer }));
+export const AnnotationPostResponse = Schemas.model(
+    v.strictObject({ annotation_id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

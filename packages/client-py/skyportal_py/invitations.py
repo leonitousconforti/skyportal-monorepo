@@ -7,8 +7,14 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.invitations import (
     Invitation as Invitation,
+)
+from skyportal_py_models.invitations import (
     InvitationPost as InvitationPost,
+)
+from skyportal_py_models.invitations import (
     InvitationPostResponse as InvitationPostResponse,
+)
+from skyportal_py_models.invitations import (
     InvitationsPage as InvitationsPage,
 )
 

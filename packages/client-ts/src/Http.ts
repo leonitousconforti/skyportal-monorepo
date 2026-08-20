@@ -15,7 +15,13 @@ import * as v from "valibot";
  * @since 1.0.0
  * @category Models
  */
-export type QueryValue = string | number | boolean | ReadonlyArray<string | number | boolean> | null | undefined;
+export type QueryValue =
+    | string
+    | number
+    | boolean
+    | ReadonlyArray<string | number | boolean>
+    | null
+    | undefined;
 
 /**
  * The query parameters of a request, before `null`/`undefined` values are
@@ -123,7 +129,10 @@ export class SkyPortalValidationError extends Error {
  * @since 1.0.0
  * @category Decoding
  */
-export const decode = <TSchema extends v.GenericSchema>(schema: TSchema, data: unknown): v.InferOutput<TSchema> => {
+export const decode = <TSchema extends v.GenericSchema>(
+    schema: TSchema,
+    data: unknown
+): v.InferOutput<TSchema> => {
     const result = v.safeParse(schema, data);
     if (result.success) {
         return result.output;
@@ -160,7 +169,10 @@ export const unwrap = async (response: Response): Promise<unknown> => {
     try {
         payload = await response.json();
     } catch {
-        throw new SkyPortalError(`SkyPortal returned a non-JSON response (HTTP ${response.status})`, response.status);
+        throw new SkyPortalError(
+            `SkyPortal returned a non-JSON response (HTTP ${response.status})`,
+            response.status
+        );
     }
 
     const envelope = envelopeOf(payload);
@@ -169,7 +181,9 @@ export const unwrap = async (response: Response): Promise<unknown> => {
     }
 
     throw new SkyPortalError(
-        envelope.message !== null && envelope.message !== undefined && envelope.message !== ""
+        envelope.message !== null &&
+            envelope.message !== undefined &&
+            envelope.message !== ""
             ? envelope.message
             : `HTTP ${response.status}`,
         response.status
@@ -193,7 +207,11 @@ export const unwrapContent = async (response: Response): Promise<Uint8Array> => 
     let message = `HTTP ${response.status}`;
     try {
         const envelope = envelopeOf(await response.json());
-        if (envelope.message !== null && envelope.message !== undefined && envelope.message !== "") {
+        if (
+            envelope.message !== null &&
+            envelope.message !== undefined &&
+            envelope.message !== ""
+        ) {
             message = envelope.message;
         }
     } catch {
@@ -226,11 +244,14 @@ export const params = (query: QueryParams): QueryParams => {
  * @since 1.0.0
  * @category Requests
  */
-export const commaSeparated = (values: ReadonlyArray<string | number> | null | undefined): string | undefined =>
+export const commaSeparated = (
+    values: ReadonlyArray<string | number> | null | undefined
+): string | undefined =>
     values === null || values === undefined ? undefined : values.join(",");
 
 /** @internal */
-const send = async (client: Client, options: RequestOptions): Promise<unknown> => unwrap(await client.request(options));
+const send = async (client: Client, options: RequestOptions): Promise<unknown> =>
+    unwrap(await client.request(options));
 
 /**
  * Issue a GET request and unwrap its envelope.
@@ -241,7 +262,12 @@ const send = async (client: Client, options: RequestOptions): Promise<unknown> =
  * @since 1.0.0
  * @category Requests
  */
-export const get = (client: Client, path: string, query?: QueryParams, body?: unknown): Promise<unknown> =>
+export const get = (
+    client: Client,
+    path: string,
+    query?: QueryParams,
+    body?: unknown
+): Promise<unknown> =>
     send(client, { method: "GET", path, body, query: query && params(query) });
 
 /**
@@ -250,7 +276,12 @@ export const get = (client: Client, path: string, query?: QueryParams, body?: un
  * @since 1.0.0
  * @category Requests
  */
-export const post = (client: Client, path: string, body?: unknown, query?: QueryParams): Promise<unknown> =>
+export const post = (
+    client: Client,
+    path: string,
+    body?: unknown,
+    query?: QueryParams
+): Promise<unknown> =>
     send(client, { method: "POST", path, body, query: query && params(query) });
 
 /**
@@ -259,7 +290,12 @@ export const post = (client: Client, path: string, body?: unknown, query?: Query
  * @since 1.0.0
  * @category Requests
  */
-export const put = (client: Client, path: string, body?: unknown, query?: QueryParams): Promise<unknown> =>
+export const put = (
+    client: Client,
+    path: string,
+    body?: unknown,
+    query?: QueryParams
+): Promise<unknown> =>
     send(client, { method: "PUT", path, body, query: query && params(query) });
 
 /**
@@ -268,7 +304,12 @@ export const put = (client: Client, path: string, body?: unknown, query?: QueryP
  * @since 1.0.0
  * @category Requests
  */
-export const patch = (client: Client, path: string, body?: unknown, query?: QueryParams): Promise<unknown> =>
+export const patch = (
+    client: Client,
+    path: string,
+    body?: unknown,
+    query?: QueryParams
+): Promise<unknown> =>
     send(client, { method: "PATCH", path, body, query: query && params(query) });
 
 /**
@@ -279,7 +320,12 @@ export const patch = (client: Client, path: string, body?: unknown, query?: Quer
  * @since 1.0.0
  * @category Requests
  */
-export const del = (client: Client, path: string, body?: unknown, query?: QueryParams): Promise<unknown> =>
+export const del = (
+    client: Client,
+    path: string,
+    body?: unknown,
+    query?: QueryParams
+): Promise<unknown> =>
     send(client, { method: "DELETE", path, body, query: query && params(query) });
 
 /**
@@ -290,7 +336,11 @@ export const del = (client: Client, path: string, body?: unknown, query?: QueryP
  * @since 1.0.0
  * @category Requests
  */
-export const head = async (client: Client, path: string, query?: QueryParams): Promise<boolean> =>
+export const head = async (
+    client: Client,
+    path: string,
+    query?: QueryParams
+): Promise<boolean> =>
     (await client.request({ method: "HEAD", path, query: query && params(query) })).ok;
 
 /**
@@ -299,8 +349,11 @@ export const head = async (client: Client, path: string, query?: QueryParams): P
  * @since 1.0.0
  * @category Requests
  */
-export const postForm = (client: Client, path: string, formData: FormData): Promise<unknown> =>
-    send(client, { method: "POST", path, formData });
+export const postForm = (
+    client: Client,
+    path: string,
+    formData: FormData
+): Promise<unknown> => send(client, { method: "POST", path, formData });
 
 /**
  * Issue a GET request for an endpoint that returns a file rather than a JSON
@@ -309,8 +362,14 @@ export const postForm = (client: Client, path: string, formData: FormData): Prom
  * @since 1.0.0
  * @category Requests
  */
-export const getContent = async (client: Client, path: string, query?: QueryParams): Promise<Uint8Array> =>
-    unwrapContent(await client.request({ method: "GET", path, query: query && params(query) }));
+export const getContent = async (
+    client: Client,
+    path: string,
+    query?: QueryParams
+): Promise<Uint8Array> =>
+    unwrapContent(
+        await client.request({ method: "GET", path, query: query && params(query) })
+    );
 
 /**
  * Strip the fields a payload did not set, mirroring pydantic's

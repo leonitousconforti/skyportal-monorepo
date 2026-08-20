@@ -363,8 +363,12 @@ export const GcnEvent = Schemas.model(
         users: Schemas.nullish(v.array(Users.User)),
         groups: Schemas.nullish(v.array(Groups.Group)),
         sent_by: Schemas.nullish(Users.User),
-        observationplan_requests: Schemas.nullish(v.array(ObservationPlans.ObservationPlanRequest)),
-        survey_efficiency_analyses: Schemas.nullish(v.array(SurveyEfficiency.SurveyEfficiencyForObservations)),
+        observationplan_requests: Schemas.nullish(
+            v.array(ObservationPlans.ObservationPlanRequest)
+        ),
+        survey_efficiency_analyses: Schemas.nullish(
+            v.array(SurveyEfficiency.SurveyEfficiencyForObservations)
+        ),
         crossmatch_states: Schemas.nullish(v.array(GcnEventCrossmatchState)),
     })
 );
@@ -445,7 +449,9 @@ export type GcnEventPostResponse = v.InferOutput<typeof GcnEventPostResponse>;
  * @since 1.0.0
  * @category Models
  */
-export const GcnEventIdResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const GcnEventIdResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -459,7 +465,9 @@ export type GcnEventIdResponse = v.InferOutput<typeof GcnEventIdResponse>;
  * @since 1.0.0
  * @category Models
  */
-export const GcnEventTagPostResponse = Schemas.model(v.strictObject({ gcntag_id: Schemas.Integer }));
+export const GcnEventTagPostResponse = Schemas.model(
+    v.strictObject({ gcntag_id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0
@@ -630,7 +638,12 @@ export interface DefaultGcnTagPost {
  * @since 1.0.0
  * @category Models
  */
-export const GcnEventObjStatus = v.picklist(["pending", "confirmed", "ambiguous", "rejected"]);
+export const GcnEventObjStatus = v.picklist([
+    "pending",
+    "confirmed",
+    "ambiguous",
+    "rejected",
+]);
 
 /**
  * @since 1.0.0
@@ -690,7 +703,9 @@ export interface GcnEventObjPost {
  * @since 1.0.0
  * @category Models
  */
-export const GcnEventObjIdResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const GcnEventObjIdResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

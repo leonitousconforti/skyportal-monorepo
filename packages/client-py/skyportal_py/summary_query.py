@@ -7,7 +7,11 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.summary_query import (
     SummaryQueryMatch as SummaryQueryMatch,
+)
+from skyportal_py_models.summary_query import (
     SummaryQueryPost as SummaryQueryPost,
+)
+from skyportal_py_models.summary_query import (
     SummaryQueryResults as SummaryQueryResults,
 )
 

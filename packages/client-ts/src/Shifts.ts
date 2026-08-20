@@ -6,9 +6,15 @@
 
 import * as v from "valibot";
 
+import {
+    Shift,
+    ShiftPostResponse,
+    ShiftUserPostResponse,
+    ShiftSummaryReport,
+    type ShiftPost,
+} from "skyportal-js-models/Shifts";
+
 import * as Http from "./Http.ts";
-import { Shift, ShiftPostResponse, ShiftUserPostResponse, ShiftSummaryReport } from "skyportal-js-models/Shifts";
-import type { ShiftPost } from "skyportal-js-models/Shifts";
 
 export * from "skyportal-js-models/Shifts";
 
@@ -21,7 +27,10 @@ export * from "skyportal-js-models/Shifts";
  * @category Requests
  * @param shiftId - ID of the shift.
  */
-export const fetchShift = async (client: Http.Client, shiftId: number): Promise<Shift> =>
+export const fetchShift = async (
+    client: Http.Client,
+    shiftId: number
+): Promise<Shift> =>
     Http.decode(Shift, await Http.get(client, `/api/shifts/${shiftId}`));
 
 /**
@@ -51,7 +60,10 @@ export interface FetchShiftsOptions {
  * @since 1.0.0
  * @category Requests
  */
-export const fetchShifts = async (client: Http.Client, options: FetchShiftsOptions = {}): Promise<Array<Shift>> =>
+export const fetchShifts = async (
+    client: Http.Client,
+    options: FetchShiftsOptions = {}
+): Promise<Array<Shift>> =>
     Http.decode(
         v.array(Shift),
         await Http.get(client, "/api/shifts", {
@@ -68,8 +80,14 @@ export const fetchShifts = async (client: Http.Client, options: FetchShiftsOptio
  * @category Requests
  * @param payload - The shift to create.
  */
-export const postShift = async (client: Http.Client, payload: ShiftPost): Promise<ShiftPostResponse> =>
-    Http.decode(ShiftPostResponse, await Http.post(client, "/api/shifts", Http.body(payload)));
+export const postShift = async (
+    client: Http.Client,
+    payload: ShiftPost
+): Promise<ShiftPostResponse> =>
+    Http.decode(
+        ShiftPostResponse,
+        await Http.post(client, "/api/shifts", Http.body(payload))
+    );
 
 /**
  * Options for updating a shift.
@@ -124,7 +142,10 @@ export const updateShift = async (
  * @category Requests
  * @param shiftId - ID of the shift to delete.
  */
-export const deleteShift = async (client: Http.Client, shiftId: number): Promise<void> => {
+export const deleteShift = async (
+    client: Http.Client,
+    shiftId: number
+): Promise<void> => {
     await Http.del(client, `/api/shifts/${shiftId}`);
 };
 
@@ -216,7 +237,11 @@ export const updateShiftUser = async (
  * @param shiftId - ID of the shift.
  * @param userId - ID of the user to remove.
  */
-export const deleteShiftUser = async (client: Http.Client, shiftId: number, userId: number): Promise<void> => {
+export const deleteShiftUser = async (
+    client: Http.Client,
+    shiftId: number,
+    userId: number
+): Promise<void> => {
     await Http.del(client, `/api/shifts/${shiftId}/users/${userId}`);
 };
 
@@ -255,7 +280,9 @@ export const fetchShiftSummary = async (
         ShiftSummaryReport,
         await Http.get(
             client,
-            options.shiftId === undefined ? "/api/shifts/summary" : `/api/shifts/summary/${options.shiftId}`,
+            options.shiftId === undefined
+                ? "/api/shifts/summary"
+                : `/api/shifts/summary/${options.shiftId}`,
             { startDate: options.startDate, endDate: options.endDate }
         )
     );

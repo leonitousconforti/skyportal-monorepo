@@ -6,9 +6,16 @@
 
 import * as v from "valibot";
 
+import {
+    Classification,
+    ClassificationPostResponse,
+    ClassificationsPostResponse,
+    ClassificationsPage,
+    type ClassificationPost,
+    type ClassificationUpdate,
+} from "skyportal-js-models/Classifications";
+
 import * as Http from "./Http.ts";
-import { Classification, ClassificationPostResponse, ClassificationsPostResponse, ClassificationsPage } from "skyportal-js-models/Classifications";
-import type { ClassificationPost, ClassificationUpdate } from "skyportal-js-models/Classifications";
 
 export * from "skyportal-js-models/Classifications";
 
@@ -56,7 +63,10 @@ export const postClassification = async (
     client: Http.Client,
     payload: ClassificationPost
 ): Promise<ClassificationPostResponse> =>
-    Http.decode(ClassificationPostResponse, await Http.post(client, "/api/classification", Http.body(payload)));
+    Http.decode(
+        ClassificationPostResponse,
+        await Http.post(client, "/api/classification", Http.body(payload))
+    );
 
 /**
  * Post several classifications in one request.
@@ -84,7 +94,10 @@ export const postClassifications = async (
  * @category Requests
  * @param classificationId - ID of the classification to delete.
  */
-export const deleteClassification = async (client: Http.Client, classificationId: number): Promise<void> => {
+export const deleteClassification = async (
+    client: Http.Client,
+    classificationId: number
+): Promise<void> => {
     await Http.del(client, `/api/classification/${classificationId}`);
 };
 
@@ -179,7 +192,11 @@ export const updateClassification = async (
     classificationId: number,
     payload: ClassificationUpdate
 ): Promise<void> => {
-    await Http.put(client, `/api/classification/${classificationId}`, Http.body(payload));
+    await Http.put(
+        client,
+        `/api/classification/${classificationId}`,
+        Http.body(payload)
+    );
 };
 
 /**
@@ -241,7 +258,10 @@ export const postClassificationVote = async (
  * @category Requests
  * @param classificationId - ID of the classification whose vote is removed.
  */
-export const deleteClassificationVote = async (client: Http.Client, classificationId: number): Promise<void> => {
+export const deleteClassificationVote = async (
+    client: Http.Client,
+    classificationId: number
+): Promise<void> => {
     await Http.del(client, `/api/classification/votes/${classificationId}`);
 };
 

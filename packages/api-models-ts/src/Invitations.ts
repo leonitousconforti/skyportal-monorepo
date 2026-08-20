@@ -96,7 +96,9 @@ export interface InvitationPost {
  * @since 1.0.0
  * @category Models
  */
-export const InvitationPostResponse = Schemas.model(v.strictObject({ id: Schemas.Integer }));
+export const InvitationPostResponse = Schemas.model(
+    v.strictObject({ id: Schemas.Integer })
+);
 
 /**
  * @since 1.0.0

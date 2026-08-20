@@ -4,9 +4,13 @@
  * @since 1.0.0
  */
 
+import {
+    InvitationsPage,
+    InvitationPostResponse,
+    type InvitationPost,
+} from "skyportal-js-models/Invitations";
+
 import * as Http from "./Http.ts";
-import { InvitationsPage, InvitationPostResponse } from "skyportal-js-models/Invitations";
-import type { InvitationPost } from "skyportal-js-models/Invitations";
 
 export * from "skyportal-js-models/Invitations";
 
@@ -68,8 +72,14 @@ export const fetchInvitations = async (
  * @category Requests
  * @param payload - The invitation to create.
  */
-export const postInvitation = async (client: Http.Client, payload: InvitationPost): Promise<InvitationPostResponse> =>
-    Http.decode(InvitationPostResponse, await Http.post(client, "/api/invitations", Http.body(payload)));
+export const postInvitation = async (
+    client: Http.Client,
+    payload: InvitationPost
+): Promise<InvitationPostResponse> =>
+    Http.decode(
+        InvitationPostResponse,
+        await Http.post(client, "/api/invitations", Http.body(payload))
+    );
 
 /**
  * Options for updating an invitation.
@@ -124,6 +134,9 @@ export const updateInvitation = async (
  * @param invitationId - ID of the invitation to delete. Only the inviting user
  *   may delete it.
  */
-export const deleteInvitation = async (client: Http.Client, invitationId: number): Promise<void> => {
+export const deleteInvitation = async (
+    client: Http.Client,
+    invitationId: number
+): Promise<void> => {
     await Http.del(client, `/api/invitations/${invitationId}`);
 };

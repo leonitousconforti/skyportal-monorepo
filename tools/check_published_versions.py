@@ -35,10 +35,12 @@ if len(set(versions.values())) > 1:
     listed = ", ".join(f"{n}={v}" for n, v in sorted(versions.items()))
     errors.append(f"published packages must share one version, got: {listed}")
 
-for name, (_, deps, path) in published.items():
+for _, deps, path in published.values():
     rel = path.relative_to(root)
     for dep in deps:
         match = PIN.match(dep.strip())
+        if match is None:
+            continue
         target = match.group(1)
         if target not in versions:
             continue

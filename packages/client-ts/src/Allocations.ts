@@ -6,9 +6,14 @@
 
 import * as v from "valibot";
 
+import {
+    Allocation,
+    AllocationPostResponse,
+    type AllocationPost,
+    type AllocationUpdate,
+} from "skyportal-js-models/Allocations";
+
 import * as Http from "./Http.ts";
-import { Allocation, AllocationPostResponse } from "skyportal-js-models/Allocations";
-import type { AllocationPost, AllocationUpdate } from "skyportal-js-models/Allocations";
 
 export * from "skyportal-js-models/Allocations";
 
@@ -110,8 +115,14 @@ export const fetchAllocation = async (
  * @category Requests
  * @param payload - The allocation to create.
  */
-export const postAllocation = async (client: Http.Client, payload: AllocationPost): Promise<AllocationPostResponse> =>
-    Http.decode(AllocationPostResponse, await Http.post(client, "/api/allocation", Http.body(payload)));
+export const postAllocation = async (
+    client: Http.Client,
+    payload: AllocationPost
+): Promise<AllocationPostResponse> =>
+    Http.decode(
+        AllocationPostResponse,
+        await Http.post(client, "/api/allocation", Http.body(payload))
+    );
 
 /**
  * Update an allocation.
@@ -139,7 +150,10 @@ export const updateAllocation = async (
  * @param allocationId - ID of the allocation to delete. Requires the "Manage
  *   allocations" permission.
  */
-export const deleteAllocation = async (client: Http.Client, allocationId: number): Promise<void> => {
+export const deleteAllocation = async (
+    client: Http.Client,
+    allocationId: number
+): Promise<void> => {
     await Http.del(client, `/api/allocation/${allocationId}`);
 };
 

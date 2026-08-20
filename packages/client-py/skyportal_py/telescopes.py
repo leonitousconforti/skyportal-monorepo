@@ -7,9 +7,17 @@ import httpx
 from skyportal_py._http import unwrap
 from skyportal_py_models.telescopes import (
     Ephemeris as Ephemeris,
+)
+from skyportal_py_models.telescopes import (
     Telescope as Telescope,
+)
+from skyportal_py_models.telescopes import (
     TelescopePost as TelescopePost,
+)
+from skyportal_py_models.telescopes import (
     TelescopePostResponse as TelescopePostResponse,
+)
+from skyportal_py_models.telescopes import (
     TelescopePut as TelescopePut,
 )
 

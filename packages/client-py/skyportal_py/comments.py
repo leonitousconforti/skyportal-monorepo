@@ -9,10 +9,20 @@ import httpx
 from skyportal_py._http import unwrap, unwrap_content
 from skyportal_py_models.comments import (
     Comment as Comment,
+)
+from skyportal_py_models.comments import (
     CommentAttachment as CommentAttachment,
+)
+from skyportal_py_models.comments import (
     CommentAttachmentBatch as CommentAttachmentBatch,
+)
+from skyportal_py_models.comments import (
     CommentAttachmentCounts as CommentAttachmentCounts,
+)
+from skyportal_py_models.comments import (
     CommentDetail as CommentDetail,
+)
+from skyportal_py_models.comments import (
     CommentPostResponse as CommentPostResponse,
 )
 
