@@ -1,71 +1,79 @@
 # Releasing
 
-Two release trains, one per language. Within each, the packages release **in
-lockstep**: one version, one tag, one changelog.
+Every package in this repository releases **together**: one version, one
+`vX.Y.Z` tag, one changelog, one GitHub release, two registries.
 
-| directory                | distribution          | registry | notes                       |
-| ------------------------ | --------------------- | -------- | --------------------------- |
-| `packages/api-models-py` | `skyportal-py-models` | PyPI     | towncrier, `pypi-v*` tags   |
-| `packages/client-py`     | `skyportal-py`        | PyPI     | pins the models exactly     |
-| `packages/api-models-ts` | `skyportal-js-models` | npm      | changesets                  |
-| `packages/client-ts`     | `skyportal-js`        | npm      | `workspace:^` on the models |
+| directory                | distribution          | registry |
+| ------------------------ | --------------------- | -------- |
+| `packages/api-models-py` | `skyportal-py-models` | PyPI     |
+| `packages/client-py`     | `skyportal-py`        | PyPI     |
+| `packages/api-models-ts` | `skyportal-js-models` | npm      |
+| `packages/client-ts`     | `skyportal-js`        | npm      |
 
-All commands run inside the nix dev shell (`nix develop`), which provides uv,
-node and pnpm. CI itself is `nix flake check`; see the README.
+[knope](https://knope.tech) drives it, configured in `knope.toml`. Nobody
+edits a version number or `CHANGELOG.md` by hand.
 
-## Python
+## Change files
 
-Versions are static and bumped with `uv version`; the `pypi-v*` tag marks the
-release commit. Because uv drops the version specifier for workspace sources,
-nothing in the normal `uv lock` / `uv sync` path notices a half-finished bump,
-so `tools/check_published_versions.py` enforces it in CI and again before
-upload.
+Every user-facing change to any package gets a Markdown file in `.changeset/`,
+written by `nix develop -c knope document-change` or by hand, named anything
+ending in `.md`:
 
-1.  Bump every published package to the same new version, and update the exact
-    pin `skyportal-py` has on `skyportal-py-models`:
+```markdown
+---
+default: minor
+---
 
-        uv version --package skyportal-py --bump minor
-        uv version --package skyportal-py-models --bump minor
-        python3 tools/check_published_versions.py
+`fetch_sources` / `fetchSources` gained the `include_hosts` filter.
+```
 
-2.  Preview, then compile the changelog. This inserts a section into
-    `CHANGES.md` and deletes the consumed fragments from `changes.d/`:
+`default` is the one package knope knows about (all four published packages
+release together), and the change type is `major`, `minor` or `patch`. While
+the version is below 1.0, knope follows the usual 0.x convention: `major`
+bumps the minor number and `minor`/`patch` bump the patch number. The body
+becomes the changelog entry, so write it for users and name the package when it
+is not obvious which one you changed. knope reads _every_ `.md` file in that
+directory, so nothing else may live there.
 
-        uv run towncrier build --draft --version X.Y.Z
-        uv run towncrier build --version X.Y.Z
+Pull requests that change nothing user-facing (CI, docs, internal refactors)
+can skip the file by carrying the `skip-changelog` label; CI fails otherwise.
 
-3.  Commit and land on `main` (use the `skip-changelog` label if it goes through
-    a pull request), then tag and push:
+## Day to day
 
-        git tag pypi-vX.Y.Z
-        git push origin main --tags
+1. A pull request adds its change file (above).
+2. On every push to `main`, `release.yml` runs `knope prepare-release`, which
+   reads the pending change files, bumps all four `pyproject.toml` /
+   `package.json` versions (and the exact `skyportal-py-models` pin inside
+   `skyportal-py`), prepends a section to `CHANGELOG.md`, deletes the consumed
+   change files, and opens or force-updates the `release` pull request. Nothing
+   happens if there are no change files.
+3. Merging the release pull request runs `knope release`, which tags the merge
+   commit `vX.Y.Z` and publishes a GitHub release with the changelog section as
+   its notes.
+4. The published GitHub release triggers `publish-python.yml` (builds both
+   wheels with uv, uploads via PyPI trusted publishing) and `publish-npm.yml`
+   (builds both packages with pnpm, uploads via npm trusted publishing with
+   provenance). Both run inside the Nix dev shell, so they use the same
+   toolchain as `nix flake check`.
 
-4.  Publish a GitHub release for the tag, pasting the new `CHANGES.md` section
-    as the notes:
+## Checking locally
 
-        gh release create pypi-vX.Y.Z --title "skyportal-py X.Y.Z"
+    nix develop -c knope prepare-release --dry-run    # what the next release would be
+    nix flake check                                    # includes a lockstep-versions check
 
-    Publishing the GitHub release is what triggers the upload; a tag alone does
-    nothing. `publish-python.yml` refuses to continue unless every package's
-    committed version matches the tag, then builds them all and uploads them
-    together via trusted publishing.
+## Secrets and setup
 
-### Adding another published Python package
+- `KNOPE_TOKEN`: a fine-grained personal access token with contents and
+  pull-request write access to this repository. `prepare-release` pushes the
+  `release` branch and opens the PR with it; a PR opened with the default
+  `GITHUB_TOKEN` would not trigger CI.
+- PyPI: register both distributions as trusted publishers pointing at
+  `publish-python.yml`.
+- npm: register both packages as trusted publishers pointing at
+  `publish-npm.yml`.
 
-1. Create it under `packages/` with a static `version` matching the other
-   published packages, and no `Private :: Do Not Upload` classifier (that
-   classifier is what marks a package as internal).
-2. Add it to `workspace.members` and `dependencies` in the root `pyproject.toml`.
-3. Add its distribution name to `PACKAGES` in `publish-python.yml`.
-4. Register it as a PyPI trusted publisher pointing at `publish-python.yml`.
+## Adding a package
 
-## TypeScript
-
-[Changesets](https://github.com/changesets/changesets) drives the npm
-releases. `skyportal-js` and `skyportal-js-models` are a `fixed` group, so they
-always bump together.
-
-1. Every user-facing PR adds a changeset (`pnpm changeset`).
-2. On merge to `main`, `release-js.yml` opens or updates a "Version Packages"
-   PR that bumps both `package.json` files and `CHANGELOG.md`s.
-3. Merging that PR publishes both packages to npm with provenance.
+Add its `pyproject.toml` or `package.json` to `versioned_files` in
+`knope.toml` at the current shared version, add it to the relevant publish
+workflow, and register it with the registry. It joins the existing train.

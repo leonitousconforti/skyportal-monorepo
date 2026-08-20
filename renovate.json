@@ -23,7 +23,7 @@
     "packageRules": [
         {
             "description": "Group the Python linting and typing tools into one PR",
-            "matchPackageNames": ["ruff", "ty", "towncrier"],
+            "matchPackageNames": ["ruff", "ty"],
             "groupName": "python build tools packages",
             "addLabels": ["pypi"]
         },
@@ -55,12 +55,6 @@
             "description": "Group all @vitest/* packages into one PR",
             "matchPackageNames": ["/^@vitest//", "vitest", "vite"],
             "groupName": "vitest packages",
-            "addLabels": ["pnpm"]
-        },
-        {
-            "description": "Group all @changesets/* packages into one PR",
-            "matchPackageNames": ["/^@changesets//"],
-            "groupName": "changesets packages",
             "addLabels": ["pnpm"]
         },
         {

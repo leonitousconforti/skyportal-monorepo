@@ -1,0 +1,66 @@
+# One release train for every package in this repository: the two PyPI
+# packages and the two npm packages always share a version, a tag (vX.Y.Z), a
+# changelog and a GitHub release. Changes are described by change files in
+# .changeset/ (see .changeset/README.md); `knope prepare-release` turns them
+# into version bumps and a changelog entry, `knope release` tags and publishes
+# the GitHub release, which in turn triggers the PyPI and npm uploads.
+
+[package]
+versioned_files = [
+    "packages/api-models-py/pyproject.toml",
+    "packages/client-py/pyproject.toml",
+    # skyportal-py pins skyportal-py-models exactly; keep the pin in lockstep.
+    { path = "packages/client-py/pyproject.toml", regex = "skyportal-py-models==(?<version>\\d+\\.\\d+\\.\\d+)" },
+    "packages/api-models-ts/package.json",
+    "packages/client-ts/package.json",
+]
+changelog = "CHANGELOG.md"
+
+# `nix develop -c knope document-change`: interactively write a change file.
+[[workflows]]
+name = "document-change"
+
+[[workflows.steps]]
+type = "CreateChangeFile"
+
+# Run by release.yml on every push to main: bump versions, write the changelog,
+# delete the consumed change files, and open (or update) the release PR.
+[[workflows]]
+name = "prepare-release"
+
+[[workflows.steps]]
+type = "Command"
+command = "git switch --force-create release"
+
+[[workflows.steps]]
+type = "PrepareRelease"
+
+[[workflows.steps]]
+type = "Command"
+command = "git commit -m \"chore: release $version\""
+
+[[workflows.steps]]
+type = "Command"
+command = "git push --force --set-upstream origin release"
+
+[[workflows.steps]]
+type = "CreatePullRequest"
+base = "main"
+
+[workflows.steps.title]
+template = "chore: release $version"
+
+[workflows.steps.body]
+template = "Merging this pull request releases every package at $version to PyPI and npm.\n\n$changelog"
+
+# Run by release.yml when the release PR lands: tag vX.Y.Z and publish the
+# GitHub release with the changelog entry as its notes.
+[[workflows]]
+name = "release"
+
+[[workflows.steps]]
+type = "Release"
+
+[github]
+owner = "leonitousconforti"
+repo = "skyportal-monorepo"

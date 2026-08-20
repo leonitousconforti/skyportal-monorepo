@@ -75,7 +75,7 @@
             version = "0";
             inherit src pnpm;
             fetcherVersion = 4;
-            hash = "sha256-MNi6hz+lZ45c0b4eLPpj54fJFE3hFRVCQ4M34EeX6qM=";
+            hash = "sha256-7t0C5YRlAiQFV3yRZJoo7KVVBODIAELcJWh8C+1drA0=";
           };
 
           # A derivation with the workspace checked out and node_modules in place.
@@ -152,8 +152,19 @@
             python-types = mkPyCheck "python-types" ''
               ty check
             '';
-            python-versions = mkPyCheck "python-versions" ''
-              python3 tools/check_published_versions.py
+            # knope keeps the four versions and the models pin in lockstep; this
+            # catches a hand edit that breaks that.
+            versions = mkPyCheck "versions" ''
+              python3 - <<'PY'
+              import json, re, sys, tomllib
+              py = {p: tomllib.load(open(f"packages/{p}/pyproject.toml", "rb"))["project"] for p in ("api-models-py", "client-py")}
+              js = {p: json.load(open(f"packages/{p}/package.json")) for p in ("api-models-ts", "client-ts")}
+              versions = {p: d["version"] for p, d in (py | js).items()}
+              pin = next(d for d in py["client-py"]["dependencies"] if d.startswith("skyportal-py-models"))
+              versions["client-py pin"] = pin.split("==")[1]
+              if len(set(versions.values())) != 1:
+                  sys.exit(f"versions out of lockstep: {versions}")
+              PY
             '';
 
             # Typecheck, lint, build and test the TypeScript workspace, and make
@@ -215,6 +226,7 @@
                 pkgs.uv
                 nodejs
                 pnpm
+                pkgs.knope
                 pkgs.nixd
                 pkgs.nixfmt
               ];

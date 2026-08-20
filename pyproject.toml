@@ -8,7 +8,7 @@ requires-python = ">=3.11"
 dependencies = ["skyportal-py", "skyportal-py-models"]
 
 [dependency-groups]
-dev = ["ruff", "towncrier", "ty"]
+dev = ["ruff", "ty"]
 test = ["pytest", "respx"]
 
 [tool.uv]
@@ -84,35 +84,3 @@ convention = "numpy"
 
 [tool.coverage.run]
 omit = ["*/conftest.py", "*/tests/*"]
-
-# One changelog for every Python package published to PyPI from packages/. They
-# share a version and a `pypi-v*` tag, so a per-package changelog would just
-# fragment the same release notes. The TypeScript packages use changesets.
-[tool.towncrier]
-directory = "changes.d"
-filename = "CHANGES.md"
-start_string = "<!-- towncrier release notes start -->\n"
-underlines = ["", "", ""]
-title_format = "## {version} ({project_date})"
-issue_format = "[#{issue}](https://github.com/skyportal/skyportal-monorepo/pull/{issue})"
-ignore = ["README.md"]
-
-[[tool.towncrier.type]]
-directory = "breaking"
-name = "Breaking changes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "feature"
-name = "New features"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "bugfix"
-name = "Bug fixes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "misc"
-name = "Other changes"
-showcontent = true

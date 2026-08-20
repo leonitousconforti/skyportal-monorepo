@@ -28,12 +28,11 @@ in, model out.
 │   ├── api-models-ts/     src/<Resource>.ts, Schemas.ts
 │   └── client-ts/         src/<Resource>.ts, Http.ts, Client.ts
 ├── tools/
-│   ├── schema-parity/     proves the Python and TypeScript models agree
-│   └── check_published_versions.py
-├── pyproject.toml         uv workspace root + ruff/ty/towncrier config
+│   └── schema-parity/     proves the Python and TypeScript models agree
+├── pyproject.toml         uv workspace root + ruff/ty config
 ├── package.json           pnpm workspace root + tsc/oxlint/vitest config
-├── changes.d/             towncrier fragments (Python releases)
-├── .changeset/            changesets (TypeScript releases)
+├── knope.toml             one release train for all four packages
+├── .changeset/            change files, one per user-facing change (see RELEASING.md)
 └── flake.nix              dev shell: uv, node, pnpm
 ```
 
@@ -90,9 +89,9 @@ pnpm test
 When `pnpm-lock.yaml` changes, `nix build .#js` fails with a hash mismatch;
 copy the `got:` hash into `pnpmDeps.hash` in `flake.nix`.
 
-Releases: see [RELEASING.md](RELEASING.md). The two Python packages release
-in lockstep (towncrier, `pypi-v*` tags); the two TypeScript packages release
-in lockstep (changesets).
+Releases: see [RELEASING.md](RELEASING.md). All four packages release together
+under one version, driven by [knope](https://knope.tech) from the change files
+in `.changeset/`.
 
 ## Decisions and open questions
 
@@ -112,9 +111,10 @@ in lockstep (changesets).
   `interface` in TypeScript and a pydantic class in Python. Interfaces have no
   runtime value, so the parity check can only see them from the Python side.
   Turning them into valibot schemas would close that gap.
-- **Versions.** The Python packages start at 0.4.0 (the last `skyportal-py`
-  release was 0.3.0), the TypeScript packages at 0.3.0 (last `skyportal-js`
-  was 0.2.0). Both are a minor bump because the models moved to a new package.
+- **Versions.** All four packages start at 0.4.0: a minor bump over the last
+  `skyportal-py` (0.3.0) because the models moved to a new package, and the
+  npm packages (last `skyportal-js` was 0.2.0) join that number so there is one
+  release train.
 - **History.** The files were copied from
   [skyportal-py](https://github.com/leonitousconforti/skyportal-py) and
   [skyportal-js](https://github.com/leonitousconforti/skyportal-js) without

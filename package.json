@@ -12,17 +12,13 @@
         "build": "pnpm -r build",
         "test": "vitest",
         "coverage": "vitest --coverage",
-        "schema-parity": "tsx tools/schema-parity/dump-ts.ts",
-        "changeset-version": "changeset version",
-        "changeset-publish": "pnpm build && changeset publish"
+        "schema-parity": "tsx tools/schema-parity/dump-ts.ts"
     },
     "devDependencies": {
         "@babel/cli": "8.0.4",
         "@babel/core": "8.0.1",
         "@babel/plugin-transform-export-namespace-from": "8.0.1",
         "@babel/plugin-transform-modules-commonjs": "8.0.1",
-        "@changesets/cli": "3.0.1",
-        "@changesets/config": "4.0.0",
         "@effect/build-utils": "0.8.9",
         "@effect/tsgo": "0.36.1",
         "@types/node": "25.9.5",

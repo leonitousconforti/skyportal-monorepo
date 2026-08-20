@@ -11,6 +11,7 @@ on:
     # have a branch status to gate the automerge on.
     branches: [main, "renovate/**"]
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: [main]
 
 concurrency:
@@ -27,3 +28,21 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix flake check --keep-going --print-build-logs
+
+  # Every pull request documents its change for the release notes, or says
+  # explicitly that it has none.
+  change-file:
+    if: >-
+      ${{ github.event_name == 'pull_request'
+        && github.event.pull_request.user.login != 'renovate[bot]'
+        && !contains(github.event.pull_request.labels.*.name, 'skip-changelog') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+      - run: |
+          if ! git diff --name-only --diff-filter=A "origin/${{ github.base_ref }}...HEAD" | grep -q '^\.changeset/.*\.md$'; then
+            echo "::error::Add a change file in .changeset/ (nix develop -c knope document-change) or label the PR skip-changelog."
+            exit 1
+          fi
