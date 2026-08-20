@@ -50,6 +50,8 @@
         "clean": "rimraf *.tsbuildinfo dist coverage",
         "codegen": "build-utils prepare-v4",
         "check": "tsc -b tsconfig.json",
+        "lint": "oxlint && oxfmt --check",
+        "lint-fix": "oxlint --fix && oxfmt --write",
         "build": "tsc -b tsconfig.build.json && pnpm babel",
         "babel": "babel dist --plugins annotate-pure-calls --out-dir dist --source-maps",
         "test": "vitest"

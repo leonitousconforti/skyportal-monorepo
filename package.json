@@ -7,8 +7,8 @@
         "clean": "pnpm -r clean && rimraf *.tsbuildinfo coverage",
         "codegen": "pnpm -r codegen",
         "check": "tsc -b tsconfig.json",
-        "lint": "oxlint && oxfmt --check",
-        "lint-fix": "oxlint --fix && oxfmt --write",
+        "lint": "pnpm -r --stream lint",
+        "lint-fix": "pnpm -r --stream lint-fix",
         "build": "pnpm -r build",
         "test": "vitest",
         "coverage": "vitest --coverage"
