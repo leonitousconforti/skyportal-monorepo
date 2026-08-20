@@ -28,7 +28,7 @@
         "skyportal-js-models": "workspace:^",
         "tsx": "4.23.11",
         "typescript": "7.0.2",
-        "valibot": "1.1.0",
+        "valibot": "1.4.2",
         "vitest": "4.1.11"
     },
     "engines": {
