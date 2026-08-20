@@ -14,9 +14,6 @@
     "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
         "editor.defaultFormatter": "oxc.oxc-vscode"
     },
-    "[nix]": {
-        "editor.defaultFormatter": "jnoortheen.nix-ide"
-    },
 
     "vitest.runtime": "node",
     "vitest.configSearchPatternExclude": "{**/node_modules/**,**/vendor/**,**/.*/**,**/*.d.ts}",
