@@ -150,8 +150,6 @@
               shellHook = ''
                 unset PYTHONPATH
                 export REPO_ROOT=$(git rev-parse --show-toplevel)
-                # Editors look for a workspace .venv; point it at the Nix-built one.
-                ln -sfn ${devEnv} "$REPO_ROOT/.venv"
               '';
             };
 
