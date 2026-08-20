@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
     pyproject-nix = {
       url = "github:pyproject-nix/pyproject.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,183 +27,124 @@
       pyproject-nix,
       uv2nix,
       pyproject-build-systems,
-      ...
     }:
     let
       inherit (nixpkgs) lib;
-      forAllSystems = lib.genAttrs lib.systems.flakeExposed;
-
-      # ---- Python: the uv workspace, as read from uv.lock --------------------
       workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
-      pyOverlay = workspace.mkPyprojectOverlay { sourcePreference = "wheel"; };
-      editableOverlay = workspace.mkEditablePyprojectOverlay { root = "$REPO_ROOT"; };
 
       perSystem =
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          mkPythonSet =
+
+          # ---- Python: uv.lock -> a virtualenv per interpreter ------------------
+          venvFor =
             python:
-            (pkgs.callPackage pyproject-nix.build.packages { inherit python; }).overrideScope (
-              lib.composeManyExtensions [
-                pyproject-build-systems.overlays.wheel
-                pyOverlay
-              ]
-            );
-          pythonSet = mkPythonSet pkgs.python3;
-
-          # Every Python package plus the dev and test dependency groups.
-          pyEnv = pythonSet.mkVirtualEnv "skyportal-monorepo-env" workspace.deps.all;
-
-          # The interpreters the packages claim to support (requires-python).
-          supportedPythons = {
-            "3.11" = pkgs.python311;
-            "3.12" = pkgs.python312;
-            "3.13" = pkgs.python313;
-            "3.14" = pkgs.python314;
-          };
-
-          # Only what the repo declares: what `uv sync --locked` would give.
-          src = lib.cleanSource ./.;
-
-          # ---- JavaScript: the pnpm workspace, as read from pnpm-lock.yaml ------
-          nodejs = pkgs.nodejs_24;
-          pnpm = pkgs.pnpm_11;
-          pnpmDeps = pkgs.fetchPnpmDeps {
-            pname = "skyportal-monorepo";
-            version = "0";
-            inherit src pnpm;
-            fetcherVersion = 4;
-            hash = "sha256-MTwmVHNyOwvKuMcbmm0UAtym0gLEvXmXHqstb1h6Nnc=";
-          };
-
-          # A derivation with the workspace checked out and node_modules in place.
-          mkJsDerivation =
-            name: attrs:
-            pkgs.stdenv.mkDerivation (
-              {
-                pname = name;
-                version = "0";
-                inherit src pnpmDeps;
-                nativeBuildInputs = [
-                  nodejs
-                  pnpm
-                  pkgs.pnpmConfigHook
+            let
+              pythonSet = (pkgs.callPackage pyproject-nix.build.packages { inherit python; }).overrideScope (
+                lib.composeManyExtensions [
+                  pyproject-build-systems.overlays.wheel
+                  (workspace.mkPyprojectOverlay { sourcePreference = "wheel"; })
                 ]
-                ++ (attrs.nativeBuildInputs or [ ]);
-                dontConfigure = false;
-                doCheck = false;
-                dontFixup = true;
-              }
-              // (builtins.removeAttrs attrs [ "nativeBuildInputs" ])
-            );
+              );
+            in
+            {
+              inherit pythonSet;
+              venv = pythonSet.mkVirtualEnv "skyportal-monorepo-env" workspace.deps.all;
+            };
+          default = venvFor pkgs.python3;
 
-          # ---- Checks ----------------------------------------------------------
-          mkPyCheckWith =
-            env: name: script:
+          pyCheck =
+            name: venv: script:
             pkgs.runCommand "check-${name}"
               {
-                nativeBuildInputs = [ env ];
-                inherit src;
-                # httpx builds an SSL context when a client is created, even for
-                # tests that never hit the network; give it a CA bundle.
+                nativeBuildInputs = [ venv ];
+                # httpx builds an SSL context on client creation, even offline.
                 SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
               }
               ''
-                cp -r $src source && chmod -R u+w source && cd source
+                cp -r ${self} source && chmod -R u+w source && cd source
                 ${script}
                 touch $out
               '';
-          mkPyCheck = mkPyCheckWith pyEnv;
-        in
-        rec {
-          packages = {
-            skyportal-py-models = pythonSet.skyportal-py-models;
-            skyportal-py = pythonSet.skyportal-py;
-            python-env = pyEnv;
 
-            # Both TypeScript packages, built (dist/) and ready to pack.
-            js = mkJsDerivation "skyportal-js" {
-              buildPhase = ''
-                runHook preBuild
-                pnpm build
-                runHook postBuild
-              '';
-              installPhase = ''
-                runHook preInstall
-                mkdir -p $out
-                for p in packages/api-models-ts packages/client-ts; do
-                  mkdir -p $out/$p
-                  cp -r $p/dist $p/package.json $p/README.md $p/LICENSE $out/$p/
-                done
-                runHook postInstall
-              '';
+          # ---- TypeScript: pnpm-lock.yaml -> node_modules, then the usual scripts
+          pnpm = pkgs.pnpm_11;
+          js = pkgs.stdenv.mkDerivation {
+            name = "skyportal-js";
+            src = self;
+            nativeBuildInputs = [
+              pkgs.nodejs_24
+              pnpm
+              pkgs.pnpmConfigHook
+            ];
+            pnpmDeps = pkgs.fetchPnpmDeps {
+              pname = "skyportal-monorepo";
+              version = "0";
+              src = self;
+              inherit pnpm;
+              fetcherVersion = 4;
+              hash = "sha256-MTwmVHNyOwvKuMcbmm0UAtym0gLEvXmXHqstb1h6Nnc=";
             };
-
-            default = packages.js;
+            buildPhase = ''
+              cp -r packages /tmp/before && pnpm codegen
+              diff -r -x node_modules /tmp/before packages   # generated index.ts files are current
+              pnpm check && pnpm lint && pnpm build && pnpm test --run
+            '';
+            installPhase = ''
+              for p in packages/*-ts; do
+                mkdir -p $out/$p && cp -r $p/dist $p/package.json $p/README.md $p/LICENSE $out/$p/
+              done
+            '';
+            dontFixup = true;
           };
+        in
+        {
+          packages.default = js;
 
           checks = {
-            python-lint = mkPyCheck "python-lint" ''
+            inherit js;
+            python-lint = pyCheck "python-lint" default.venv ''
               ruff check packages
               ruff format --check packages
-            '';
-            python-types = mkPyCheck "python-types" ''
               ty check
             '';
-            # Typecheck, lint, build and test the TypeScript workspace, and make
-            # sure the generated index.ts files are current.
-            js = mkJsDerivation "check-js" {
-              buildPhase = ''
-                runHook preBuild
-                cp -r packages/api-models-ts/src/index.ts /tmp/models-index.ts
-                cp -r packages/client-ts/src/index.ts /tmp/client-index.ts
-                pnpm codegen
-                diff -u /tmp/models-index.ts packages/api-models-ts/src/index.ts
-                diff -u /tmp/client-index.ts packages/client-ts/src/index.ts
-                pnpm check
-                pnpm lint
-                pnpm build
-                pnpm test --run
-                runHook postBuild
-              '';
-              installPhase = "touch $out";
-            };
           }
-          // lib.mapAttrs' (
-            version: python:
-            lib.nameValuePair "python-tests-${version}" (
-              mkPyCheckWith
-                ((mkPythonSet python).mkVirtualEnv "skyportal-monorepo-env-${version}" workspace.deps.all)
-                "python-tests-${version}"
-                ''
-                  pytest packages -q -p no:cacheprovider
-                ''
-            )
-          ) supportedPythons
-          // lib.mapAttrs' (name: pkg: lib.nameValuePair "build-${name}" pkg) (
-            lib.filterAttrs (n: _: n != "default") packages
-          );
+          //
+            lib.mapAttrs'
+              (
+                version: python:
+                lib.nameValuePair "python-tests-${version}" (
+                  pyCheck "python-tests-${version}" (venvFor python).venv "pytest packages -q -p no:cacheprovider"
+                )
+              )
+              {
+                "3.11" = pkgs.python311;
+                "3.12" = pkgs.python312;
+                "3.13" = pkgs.python313;
+                "3.14" = pkgs.python314;
+              };
 
           devShells.default =
             let
-              editableSet = pythonSet.overrideScope editableOverlay;
-              devEnv = editableSet.mkVirtualEnv "skyportal-monorepo-dev-env" workspace.deps.all;
+              editable = default.pythonSet.overrideScope (
+                workspace.mkEditablePyprojectOverlay { root = "$REPO_ROOT"; }
+              );
             in
             pkgs.mkShell {
               packages = [
-                devEnv
+                (editable.mkVirtualEnv "skyportal-monorepo-dev-env" workspace.deps.all)
                 pkgs.uv
-                nodejs
+                pkgs.nodejs_24
                 pnpm
                 pkgs.knope
                 pkgs.nixd
                 pkgs.nixfmt
               ];
               env = {
-                # uv is for editing the lockfile; the venv itself comes from Nix.
+                # uv edits the lockfile; the venv itself comes from Nix.
                 UV_NO_SYNC = "1";
-                UV_PYTHON = editableSet.python.interpreter;
+                UV_PYTHON = editable.python.interpreter;
                 UV_PYTHON_DOWNLOADS = "never";
               };
               shellHook = ''
@@ -215,11 +155,13 @@
 
           formatter = pkgs.nixfmt;
         };
+
+      systems = lib.genAttrs lib.systems.flakeExposed perSystem;
     in
     {
-      packages = forAllSystems (system: (perSystem system).packages);
-      checks = forAllSystems (system: (perSystem system).checks);
-      devShells = forAllSystems (system: (perSystem system).devShells);
-      formatter = forAllSystems (system: (perSystem system).formatter);
+      packages = lib.mapAttrs (_: s: s.packages) systems;
+      checks = lib.mapAttrs (_: s: s.checks) systems;
+      devShells = lib.mapAttrs (_: s: s.devShells) systems;
+      formatter = lib.mapAttrs (_: s: s.formatter) systems;
     };
 }

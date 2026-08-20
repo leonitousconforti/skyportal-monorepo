@@ -39,7 +39,7 @@ pnpm add --filter skyportal-js <dep>   # then update pnpmDeps.hash in flake.nix:
 ```
 
 Set `pnpmDeps.hash` to `sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=`, run
-`nix build .#js`, copy the `got:` hash back. Renovate handles routine bumps.
+`nix build`, copy the `got:` hash back. Renovate handles routine bumps.
 
 ## Adding a package
 
