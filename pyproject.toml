@@ -29,6 +29,3 @@ root = ["packages/api-models-py", "packages/client-py"]
 
 [tool.ty.src]
 include = ["packages/api-models-py", "packages/client-py"]
-
-[tool.coverage.run]
-omit = ["*/conftest.py", "*/tests/*"]

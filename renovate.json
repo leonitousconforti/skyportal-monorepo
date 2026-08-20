@@ -6,56 +6,97 @@
         ":dependencyDashboard",
         "helpers:pinGitHubActionDigests"
     ],
-    "labels": ["dependencies", "renovate"],
+    "labels": [
+        "dependencies",
+        "renovate"
+    ],
     "automerge": true,
     "automergeType": "branch",
-    "enabledManagers": ["github-actions", "nix", "npm", "pep621"],
+    "enabledManagers": [
+        "github-actions",
+        "nix",
+        "npm",
+        "pep621"
+    ],
     "nix": {
         "enabled": true
     },
     "lockFileMaintenance": {
         "enabled": true,
-        "schedule": ["before 5am on monday"],
+        "schedule": [
+            "before 5am on monday"
+        ],
         "commitMessageAction": "Refresh",
-        "addLabels": ["lockfile-maintenance"],
+        "addLabels": [
+            "lockfile-maintenance"
+        ],
         "automerge": true
     },
     "packageRules": [
         {
             "description": "Group the Python linting and typing tools into one PR",
-            "matchPackageNames": ["ruff", "ty"],
+            "matchPackageNames": [
+                "ruff",
+                "ty"
+            ],
             "groupName": "python build tools packages",
-            "addLabels": ["pypi"]
+            "addLabels": [
+                "pypi"
+            ]
         },
         {
             "description": "Group the Python test tooling into one PR",
-            "matchPackageNames": ["pytest", "/^pytest-/", "respx"],
+            "matchPackageNames": [
+                "pytest",
+                "/^pytest-/",
+                "respx"
+            ],
             "groupName": "python test packages",
-            "addLabels": ["pypi"]
+            "addLabels": [
+                "pypi"
+            ]
         },
         {
             "description": "Group the packaging backend into one PR",
-            "matchPackageNames": ["setuptools"],
+            "matchPackageNames": [
+                "setuptools"
+            ],
             "groupName": "packaging packages",
-            "addLabels": ["pypi"]
+            "addLabels": [
+                "pypi"
+            ]
         },
         {
             "description": "Group all @types/* packages into one PR",
-            "matchPackageNames": ["/^@types//"],
+            "matchPackageNames": [
+                "/^@types//"
+            ],
             "groupName": "types packages",
-            "addLabels": ["pnpm"]
+            "addLabels": [
+                "pnpm"
+            ]
         },
         {
             "description": "Group all @babel/* packages into one PR",
-            "matchPackageNames": ["/^@babel//", "babel-plugin-annotate-pure-calls"],
+            "matchPackageNames": [
+                "/^@babel//",
+                "babel-plugin-annotate-pure-calls"
+            ],
             "groupName": "babel packages",
-            "addLabels": ["pnpm"]
+            "addLabels": [
+                "pnpm"
+            ]
         },
         {
-            "description": "Group all @vitest/* packages into one PR",
-            "matchPackageNames": ["/^@vitest//", "vitest", "vite"],
+            "description": "Group vitest packages into one PR",
+            "matchPackageNames": [
+                "vitest",
+                "vite"
+            ],
             "groupName": "vitest packages",
-            "addLabels": ["pnpm"]
+            "addLabels": [
+                "pnpm"
+            ]
         },
         {
             "description": "Group the TypeScript build tools into one PR",
@@ -69,39 +110,65 @@
                 "tsx"
             ],
             "groupName": "typescript build tools packages",
-            "addLabels": ["pnpm"]
+            "addLabels": [
+                "pnpm"
+            ]
         },
         {
             "description": "Let registry releases soak for a day before proposing them, so yanked or broken uploads never reach a PR",
-            "matchManagers": ["pep621", "npm"],
+            "matchManagers": [
+                "pep621",
+                "npm"
+            ],
             "minimumReleaseAge": "1 day"
         },
         {
             "description": "Pin GitHub Actions to a full commit SHA and keep that SHA at the latest release",
-            "matchManagers": ["github-actions"],
+            "matchManagers": [
+                "github-actions"
+            ],
             "pinDigests": true,
-            "addLabels": ["github-actions"]
+            "addLabels": [
+                "github-actions"
+            ]
         },
         {
             "description": "Keep the Nix flake inputs (flake.lock) current",
-            "matchManagers": ["nix"],
-            "addLabels": ["nix"]
+            "matchManagers": [
+                "nix"
+            ],
+            "addLabels": [
+                "nix"
+            ]
         },
         {
             "description": "Never automerge runtime dependency updates, since they ship to users",
-            "matchManagers": ["pep621"],
-            "matchDepTypes": ["project.dependencies", "project.optional-dependencies"],
+            "matchManagers": [
+                "pep621"
+            ],
+            "matchDepTypes": [
+                "project.dependencies",
+                "project.optional-dependencies"
+            ],
             "automerge": false
         },
         {
             "description": "Never automerge npm runtime or peer dependency updates",
-            "matchManagers": ["npm"],
-            "matchDepTypes": ["dependencies", "peerDependencies"],
+            "matchManagers": [
+                "npm"
+            ],
+            "matchDepTypes": [
+                "dependencies",
+                "peerDependencies"
+            ],
             "automerge": false
         },
         {
             "description": "Never automerge ruff or typescript, since minor releases can change lint, format or type-checking behaviour",
-            "matchPackageNames": ["ruff", "typescript"],
+            "matchPackageNames": [
+                "ruff",
+                "typescript"
+            ],
             "automerge": false
         }
     ]

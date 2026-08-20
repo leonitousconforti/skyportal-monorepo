@@ -84,11 +84,11 @@
               src = self;
               inherit pnpm;
               fetcherVersion = 4;
-              hash = "sha256-MTwmVHNyOwvKuMcbmm0UAtym0gLEvXmXHqstb1h6Nnc=";
+              hash = "sha256-tTagK+zZqExt+iK/0VVa/4Y/JvnYDv7A95gJA8lX3zI=";
             };
             buildPhase = ''
-              cp -r packages /tmp/before && pnpm codegen
-              diff -r -x node_modules /tmp/before packages   # generated index.ts files are current
+              cp -r packages "$NIX_BUILD_TOP/before" && pnpm codegen
+              diff -r -x node_modules "$NIX_BUILD_TOP/before" packages   # generated index.ts files are current
               pnpm check && pnpm lint && pnpm build && pnpm test --run
             '';
             installPhase = ''

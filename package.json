@@ -4,14 +4,13 @@
     "license": "BSD-3-Clause",
     "type": "module",
     "scripts": {
-        "clean": "pnpm -r clean && rimraf *.tsbuildinfo coverage",
+        "clean": "pnpm -r clean && rimraf *.tsbuildinfo",
         "codegen": "pnpm -r codegen",
         "check": "tsc -b tsconfig.json",
         "lint": "pnpm -r --stream lint",
         "lint-fix": "pnpm -r --stream lint-fix",
         "build": "pnpm -r build",
-        "test": "vitest",
-        "coverage": "vitest --coverage"
+        "test": "vitest"
     },
     "devDependencies": {
         "@babel/cli": "8.0.4",
@@ -21,7 +20,6 @@
         "@effect/build-utils": "0.8.9",
         "@effect/tsgo": "0.36.1",
         "@types/node": "25.9.5",
-        "@vitest/coverage-v8": "4.1.11",
         "babel-plugin-annotate-pure-calls": "0.5.0",
         "oxfmt": "0.62.0",
         "oxlint": "1.77.0",

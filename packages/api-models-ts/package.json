@@ -47,7 +47,7 @@
         "provenance": true
     },
     "scripts": {
-        "clean": "rimraf *.tsbuildinfo dist coverage",
+        "clean": "rimraf *.tsbuildinfo dist",
         "codegen": "build-utils prepare-v4",
         "check": "tsc -b tsconfig.json",
         "lint": "oxlint && oxfmt --check",
