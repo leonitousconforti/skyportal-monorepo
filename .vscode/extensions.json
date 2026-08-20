@@ -1,15 +1,10 @@
 {
     "recommendations": [
-        "mkhl.direnv",
-        "jnoortheen.nix-ide",
-        "editorconfig.editorconfig",
-        "ms-python.python",
-        "charliermarsh.ruff",
-        "astral-sh.ty",
         "TypeScriptTeam.native-preview",
-        "oxc.oxc-vscode",
-        "vitest.explorer",
+        "editorconfig.editorconfig",
+        "streetsidesoftware.code-spell-checker",
         "yoavbls.pretty-ts-errors",
-        "streetsidesoftware.code-spell-checker"
+        "vitest.explorer",
+        "oxc.oxc-vscode"
     ]
 }
