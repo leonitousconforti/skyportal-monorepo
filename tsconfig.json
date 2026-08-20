@@ -1,0 +1,5 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "files": [],
+    "references": [{ "path": "packages/api-models-ts" }, { "path": "packages/client-ts" }]
+}

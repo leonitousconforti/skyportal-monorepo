@@ -1,0 +1,60 @@
+{
+    "name": "skyportal-js-models",
+    "version": "0.3.0",
+    "description": "Valibot request and response models for the SkyPortal API",
+    "keywords": [
+        "astronomy",
+        "skyportal",
+        "time-domain"
+    ],
+    "homepage": "https://github.com/skyportal/skyportal-monorepo",
+    "bugs": {
+        "url": "https://github.com/skyportal/skyportal-monorepo/issues",
+        "email": "leo@leoconforti.us"
+    },
+    "license": "BSD-3-Clause",
+    "author": "Leo Conforti <leo@leoconforti.us> (https://leoconforti.us)",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skyportal/skyportal-monorepo.git",
+        "directory": "packages/api-models-ts"
+    },
+    "files": [
+        "src/**/*.ts",
+        "dist/**/*.js",
+        "dist/**/*.js.map",
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map"
+    ],
+    "type": "module",
+    "sideEffects": [],
+    "exports": {
+        "./package.json": "./package.json",
+        ".": "./src/index.ts",
+        "./*": "./src/*.ts",
+        "./internal/*": null,
+        "./*/index": null
+    },
+    "publishConfig": {
+        "exports": {
+            "./package.json": "./package.json",
+            ".": "./dist/index.js",
+            "./*": "./dist/*.js",
+            "./internal/*": null,
+            "./*/index": null
+        },
+        "access": "public",
+        "provenance": true
+    },
+    "scripts": {
+        "clean": "rimraf *.tsbuildinfo dist coverage",
+        "codegen": "build-utils prepare-v4",
+        "check": "tsc -b tsconfig.json",
+        "build": "tsc -b tsconfig.build.json && pnpm babel",
+        "babel": "babel dist --plugins annotate-pure-calls --out-dir dist --source-maps",
+        "test": "vitest"
+    },
+    "dependencies": {
+        "valibot": "1.1.0"
+    }
+}

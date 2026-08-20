@@ -1,0 +1,22 @@
+# direnv / nix
+.direnv/
+
+# Python
+.venv/
+*.egg-info/
+**/__pycache__/
+**/*.pyc
+dist/
+build/
+
+# TypeScript / pnpm
+node_modules/
+*.tsbuildinfo
+coverage/
+
+# Schema-parity dumps
+tools/schema-parity/out/
+
+# Other
+tmp/
+.DS_Store

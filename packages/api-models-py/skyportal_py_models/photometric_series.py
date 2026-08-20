@@ -1,0 +1,140 @@
+"""Request and response models for ``/api/photometric_series``."""
+
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Any, Literal
+
+from pydantic import BaseModel, ConfigDict, Field
+
+from skyportal_py_models.groups import Group
+from skyportal_py_models.streams import Stream
+
+
+class PhotometricSeries(BaseModel):
+    """A photometric series: one light curve of one object in one series."""
+
+    # ``PhotometricSeries.to_dict`` returns the mapper columns plus ``data``
+    # (the light curve in the requested ``dataFormat``), ``group_ids``,
+    # ``stream_ids``, ``groups`` and ``streams``; the group/stream entries are
+    # trimmed to a few columns. ``magref`` and ``e_magref`` are upstream hybrid
+    # properties derived from ``ref_flux``/``ref_fluxerr``: they are accepted on
+    # upload but are not part of the serialized output. ``obj``, ``instrument``,
+    # ``owner``, ``followup_request`` and ``assignment`` are lazy-loaded
+    # relationships that these endpoints never touch, so they are never
+    # returned.
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: int
+    created_at: datetime | None = None
+    modified: datetime | None = None
+    obj_id: str | None = None
+    series_name: str | None = None
+    series_obj_id: str | None = None
+    filter: str | None = None
+    channel: str | None = None
+    origin: str | None = None
+    filename: str | None = None
+    ra: float | None = None
+    dec: float | None = None
+    ra_unc: float | None = None
+    dec_unc: float | None = None
+    mjd_first: float | None = None
+    mjd_mid: float | None = None
+    mjd_last: float | None = None
+    mjd_last_detected: float | None = None
+    mag_first: float | None = None
+    mag_last: float | None = None
+    mag_last_detected: float | None = None
+    is_detected: bool | None = None
+    exp_time: float | None = None
+    frame_rate: float | None = None
+    num_exp: int | None = None
+    time_stamp_alignment: Literal["start", "middle", "end"] | None = None
+    limiting_mag: float | None = None
+    ref_flux: float | None = None
+    ref_fluxerr: float | None = None
+    magref: float | None = None
+    e_magref: float | None = None
+    mean_mag: float | None = None
+    rms_mag: float | None = None
+    robust_mag: float | None = None
+    robust_rms: float | None = None
+    median_snr: float | None = None
+    best_snr: float | None = None
+    worst_snr: float | None = None
+    medians: dict[str, Any] | None = None
+    maxima: dict[str, Any] | None = None
+    minima: dict[str, Any] | None = None
+    stds: dict[str, Any] | None = None
+    altdata: dict[str, Any] | None = None
+    hash: str | None = None
+    autodelete: bool | None = None
+    instrument_id: int | None = None
+    followup_request_id: int | None = None
+    assignment_id: int | None = None
+    owner_id: int | None = None
+    group_ids: list[int] = Field(default_factory=list)
+    stream_ids: list[int] = Field(default_factory=list)
+    groups: list[Group] = Field(default_factory=list)
+    streams: list[Stream] = Field(default_factory=list)
+    data: dict[str, list[Any]] | str | None = None
+
+
+class PhotometricSeriesPage(BaseModel):
+    """One page of results from a photometric series query."""
+
+    model_config = ConfigDict(extra="forbid", validate_by_name=True)
+
+    series: list[PhotometricSeries] = Field(default_factory=list)
+    total_matches: int = Field(alias="totalMatches", default=0)
+    page_number: int = Field(alias="pageNumber", default=1)
+    num_per_page: int = Field(alias="numPerPage", default=100)
+
+
+class PhotometricSeriesPost(BaseModel):
+    """Payload for uploading or updating a photometric series.
+
+    ``data`` is either a mapping of column name to list of values, or a
+    base64-encoded HDF5 bytestream written with ``pandas.HDFStore``. It must
+    contain an ``mjd`` column and either a ``flux`` or a ``mag`` column.
+    ``ra``, ``dec``, ``exp_time`` and ``filter`` are inferred from the data
+    columns when not given explicitly. ``data`` is required when creating a
+    series and optional when updating one.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    data: dict[str, list[Any]] | str | None = None
+    series_name: str | None = None
+    series_obj_id: str | None = None
+    obj_id: str | None = None
+    instrument_id: int | None = None
+    group_ids: list[int] | str | None = None
+    stream_ids: list[int] | None = None
+    ra: float | None = None
+    dec: float | None = None
+    ra_unc: float | None = None
+    dec_unc: float | None = None
+    exp_time: float | None = None
+    filter: str | None = None
+    channel: str | None = None
+    origin: str | None = None
+    limiting_mag: float | None = None
+    magref: float | None = None
+    e_magref: float | None = None
+    ref_flux: float | None = None
+    ref_fluxerr: float | None = None
+    followup_request_id: int | None = None
+    assignment_id: int | None = None
+    time_stamp_alignment: Literal["start", "middle", "end"] | None = None
+    altdata: dict[str, Any] | None = None
+
+
+class PhotometricSeriesPostResponse(BaseModel):
+    """Result of uploading or updating a photometric series."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: int

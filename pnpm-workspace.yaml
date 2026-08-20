@@ -1,0 +1,23 @@
+packages:
+    - packages/api-models-ts
+    - packages/client-ts
+
+hoist: false
+hoistPattern: []
+autoInstallPeers: false
+dedupePeerDependents: false
+strictPeerDependencies: true
+
+publicHoistPattern:
+    - "vitest"
+    - "@types/*"
+    - "@vitest/*"
+
+peerDependencyRules:
+    allowedVersions:
+        typescript: "7.0.2"
+        # babel-plugin-annotate-pure-calls still declares a `@babel/core: ^7.0.0` peer.
+        "@babel/core": "8.0.1"
+
+allowBuilds:
+    esbuild: true
