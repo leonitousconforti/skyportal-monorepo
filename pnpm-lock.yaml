@@ -54,8 +54,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       valibot:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@7.0.2)
+        specifier: 1.4.2
+        version: 1.4.2(typescript@7.0.2)
       vitest:
         specifier: 4.1.11
         version: 4.1.11(@types/node@25.9.5)(tsx@4.23.11)
@@ -63,8 +63,8 @@ importers:
   packages/api-models-ts:
     dependencies:
       valibot:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@7.0.2)
+        specifier: 1.4.2
+        version: 1.4.2(typescript@7.0.2)
 
   packages/client-ts:
     dependencies:
@@ -72,8 +72,8 @@ importers:
         specifier: workspace:^
         version: link:../api-models-ts
       valibot:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@7.0.2)
+        specifier: 1.4.2
+        version: 1.4.2(typescript@7.0.2)
 
 packages:
 
@@ -1297,8 +1297,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  valibot@1.1.0:
-    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+  valibot@1.4.2:
+    resolution: {integrity: sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -2299,7 +2299,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  valibot@1.1.0(typescript@7.0.2):
+  valibot@1.4.2(typescript@7.0.2):
     optionalDependencies:
       typescript: 7.0.2
 
